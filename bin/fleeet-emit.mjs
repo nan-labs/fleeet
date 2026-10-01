@@ -12,6 +12,7 @@
 //   FLEEET_TOKEN     — bearer token for auth
 //   FLEEET_RUN_ID    — reuse existing run_id (or generates one for session_start)
 //   FLEEET_AGENT     — agent name (defaults to $USER or 'unknown')
+//   FLEEET_SURFACE   — optional surface label, e.g. "Claude Code" (max 32 chars)
 //
 // Flags:
 //   --task, --summary, --trigger, --source.repo, --progress.commits, etc.
@@ -37,6 +38,7 @@ const LOCAL_SPOOL = join(process.cwd(), ".fleeet", "events.jsonl");
 const ENDPOINT = (process.env.FLEEET_ENDPOINT || "https://fleeet.space").replace(/\/+$/, "");
 const TOKEN = process.env.FLEEET_TOKEN;
 const AGENT = process.env.FLEEET_AGENT || process.env.USER || userInfo().username || "unknown";
+const SURFACE = (process.env.FLEEET_SURFACE || "").trim().slice(0, 32);
 
 function help() {
   console.log(`fleeet-emit — emit fleeet events from the command line
@@ -55,6 +57,8 @@ Flags:
   --summary        — one sentence, present tense, no period
   --trigger        — user|routine|agent (default: user)
   --source.repo    — e.g. "owner/repo"
+  --project        — project name (optional)
+  --surface        — surface label (overrides FLEEET_SURFACE)
   --progress.commits N
   --blocker.kind   — ambiguity|missing_credential|failing_dep|design_call|access|other
   --blocker.question
@@ -66,6 +70,7 @@ Environment:
   FLEEET_TOKEN     — bearer token
   FLEEET_RUN_ID    — reuse existing run_id
   FLEEET_AGENT     — agent name (default: $USER)
+  FLEEET_SURFACE   — surface label, e.g. "Claude Code" (optional, max 32 chars)
 
 Examples:
   fleeet-emit session_start --task "fix the nav bug" --summary "starting work on nav z-index"
@@ -124,6 +129,7 @@ function buildEvent({ event, flags }) {
     ts: new Date().toISOString(),
     agent: AGENT,
     trigger: flags.trigger || "user",
+    ...(SURFACE && { surface: SURFACE }),
     ...flags,
   };
 

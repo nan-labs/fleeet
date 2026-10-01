@@ -4,11 +4,22 @@
   "title": "fleeet agent check-in event",
   "description": "A single status event posted by an agent to fleeet. Four types: session_start, heartbeat, blocked, session_end.",
   "type": "object",
-  "required": ["event", "run_id", "ts", "agent", "summary"],
+  "required": [
+    "event",
+    "run_id",
+    "ts",
+    "agent",
+    "summary"
+  ],
   "properties": {
     "event": {
       "type": "string",
-      "enum": ["session_start", "heartbeat", "blocked", "session_end"],
+      "enum": [
+        "session_start",
+        "heartbeat",
+        "blocked",
+        "session_end"
+      ],
       "description": "The kind of check-in."
     },
     "run_id": {
@@ -27,6 +38,18 @@
       "maxLength": 64,
       "description": "Human-readable name of the agent. e.g. 'claude-sonnet-4', 'ronan-dev-agent'."
     },
+    "surface": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 32,
+      "description": "Optional surface the agent is running in, e.g. 'claude.ai', 'Claude Code', 'Cursor'."
+    },
+    "project": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80,
+      "description": "Optional project or repo name the work belongs to."
+    },
     "summary": {
       "type": "string",
       "minLength": 1,
@@ -35,7 +58,11 @@
     },
     "trigger": {
       "type": "string",
-      "enum": ["user", "routine", "agent"],
+      "enum": [
+        "user",
+        "routine",
+        "agent"
+      ],
       "default": "user",
       "description": "What initiated this work. 'user' = human prompt/task, 'routine' = cron/scheduled, 'agent' = autonomous agent decision. Default: user."
     },
@@ -47,11 +74,23 @@
       "type": "object",
       "description": "Where to look for exhaust that corresponds to this run. Fleeet uses this to reconcile self-reports against reality.",
       "properties": {
-        "repo": { "type": "string", "description": "e.g. 'ronan/fleeet'" },
-        "branch": { "type": "string" },
-        "linear_issue": { "type": "string", "description": "e.g. 'ENG-1204'" },
-        "cowork_session_id": { "type": "string" },
-        "vercel_project": { "type": "string" }
+        "repo": {
+          "type": "string",
+          "description": "e.g. 'ronan/fleeet'"
+        },
+        "branch": {
+          "type": "string"
+        },
+        "linear_issue": {
+          "type": "string",
+          "description": "e.g. 'ENG-1204'"
+        },
+        "cowork_session_id": {
+          "type": "string"
+        },
+        "vercel_project": {
+          "type": "string"
+        }
       },
       "additionalProperties": true
     },
@@ -59,21 +98,43 @@
       "type": "object",
       "description": "Only meaningful on heartbeat.",
       "properties": {
-        "commits": { "type": "integer", "minimum": 0 },
-        "files_changed": { "type": "integer", "minimum": 0 },
-        "tests_passing": { "type": "integer", "minimum": 0 },
-        "tests_failing": { "type": "integer", "minimum": 0 }
+        "commits": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "files_changed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "tests_passing": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "tests_failing": {
+          "type": "integer",
+          "minimum": 0
+        }
       },
       "additionalProperties": false
     },
     "blocker": {
       "type": "object",
       "description": "Required on blocked events.",
-      "required": ["kind", "question"],
+      "required": [
+        "kind",
+        "question"
+      ],
       "properties": {
         "kind": {
           "type": "string",
-          "enum": ["ambiguity", "missing_credential", "failing_dep", "design_call", "access", "other"]
+          "enum": [
+            "ambiguity",
+            "missing_credential",
+            "failing_dep",
+            "design_call",
+            "access",
+            "other"
+          ]
         },
         "question": {
           "type": "string",
@@ -82,7 +143,9 @@
         },
         "options": {
           "type": "array",
-          "items": { "type": "string" },
+          "items": {
+            "type": "string"
+          },
           "description": "If the agent has plausible answers, list them. Two or three max."
         }
       }
@@ -90,24 +153,46 @@
     "outcome": {
       "type": "object",
       "description": "Only on session_end.",
-      "required": ["status"],
+      "required": [
+        "status"
+      ],
       "properties": {
         "status": {
           "type": "string",
-          "enum": ["shipped", "abandoned", "handed_off", "failed"]
+          "enum": [
+            "shipped",
+            "abandoned",
+            "handed_off",
+            "failed"
+          ]
         },
         "artefacts": {
           "type": "array",
           "items": {
             "type": "object",
-            "required": ["kind", "url"],
+            "required": [
+              "kind",
+              "url"
+            ],
             "properties": {
               "kind": {
                 "type": "string",
-                "enum": ["pr", "commit", "deploy", "doc", "design", "other"]
+                "enum": [
+                  "pr",
+                  "commit",
+                  "deploy",
+                  "doc",
+                  "design",
+                  "other"
+                ]
               },
-              "url": { "type": "string", "format": "uri" },
-              "label": { "type": "string" }
+              "url": {
+                "type": "string",
+                "format": "uri"
+              },
+              "label": {
+                "type": "string"
+              }
             }
           }
         },
@@ -120,16 +205,46 @@
   },
   "allOf": [
     {
-      "if": { "properties": { "event": { "const": "session_start" } } },
-      "then": { "required": ["task"] }
+      "if": {
+        "properties": {
+          "event": {
+            "const": "session_start"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "task"
+        ]
+      }
     },
     {
-      "if": { "properties": { "event": { "const": "blocked" } } },
-      "then": { "required": ["blocker"] }
+      "if": {
+        "properties": {
+          "event": {
+            "const": "blocked"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "blocker"
+        ]
+      }
     },
     {
-      "if": { "properties": { "event": { "const": "session_end" } } },
-      "then": { "required": ["outcome"] }
+      "if": {
+        "properties": {
+          "event": {
+            "const": "session_end"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "outcome"
+        ]
+      }
     }
   ]
 }

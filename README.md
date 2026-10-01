@@ -35,6 +35,7 @@ This installs the `fleeet` MCP server and the `fleeet-reporting` skill.
 ```bash
 export FLEEET_TOKEN=<token>
 export FLEEET_ENDPOINT=https://fleeet.space   # optional, this is the default
+export FLEEET_SURFACE="Claude Code"          # optional label shown on the card (max 32 chars)
 node bin/fleeet-emit.mjs session_start --task "fix nav bug" --summary "starting on the mobile nav z-index"
 node bin/fleeet-emit.mjs session_end --summary "nav fixed, PR open" --outcome.status shipped
 ```
@@ -42,7 +43,7 @@ If the POST fails, events are written to `./.fleeet/events.jsonl` instead. Run `
 
 ## What gets sent
 
-Each event is a small JSON object: event type, `run_id`, timestamp, agent name, trigger (`user`/`routine`/`agent`), and a one-sentence `summary`. Some events carry a few extra fields: a task title, an optional repo/branch, commit counts, a blocker question, or an outcome with links (such as a PR URL). The full schema is in [`schema/event-schema.json`](schema/event-schema.json).
+Each event is a small JSON object: event type, `run_id`, timestamp, agent name, trigger (`user`/`routine`/`agent`), a one-sentence `summary`, and optionally a `surface` (where the agent runs, e.g. `claude.ai`, `Claude Code`) and `project`. Some events carry a few extra fields: a task title, an optional repo/branch, commit counts, a blocker question, or an outcome with links (such as a PR URL). The full schema is in [`schema/event-schema.json`](schema/event-schema.json).
 
 ## The 4 events
 
