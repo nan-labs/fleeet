@@ -1,0 +1,33 @@
+{
+  "name": "fleeet-agent-kit",
+  "version": "1.0.0",
+  "description": "fleeet.space reporting kit for coding agents: Claude Code plugin, claude.ai skill, MCP config, zero-dependency CLI",
+  "type": "module",
+  "scripts": {
+    "pack-skill": "rm -rf dist && mkdir -p dist && python3 -m zipfile -c dist/fleeet-skill.zip skills/fleeet-reporting",
+    "check": "node --check bin/fleeet-emit.mjs && node -e \"for (const f of ['package.json','.claude-plugin/plugin.json','.claude-plugin/marketplace.json','schema/event-schema.json']) JSON.parse(require('fs').readFileSync(f,'utf8'))\""
+  },
+  "keywords": [
+    "fleeet",
+    "agent",
+    "monitoring",
+    "status",
+    "reporting"
+  ],
+  "author": "Ronan Flynn-Curran",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nan-labs/fleeet-agent-kit.git"
+  },
+  "homepage": "https://github.com/nan-labs/fleeet-agent-kit",
+  "bin": {
+    "fleeet-emit": "bin/fleeet-emit.mjs"
+  },
+  "bugs": {
+    "url": "https://github.com/nan-labs/fleeet-agent-kit/issues"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
