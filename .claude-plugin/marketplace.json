@@ -15,8 +15,8 @@
       "description": "Report agent work status to fleeet.space: fleeet MCP server + fleeet-reporting skill",
       "version": "1.0.0",
       "author": { "name": "Ronan Flynn-Curran" },
-      "homepage": "https://github.com/nan-labs/fleeet-agent-kit",
-      "repository": "https://github.com/nan-labs/fleeet-agent-kit",
+      "homepage": "https://github.com/nan-labs/fleeet-agent-kit-public",
+      "repository": "https://github.com/nan-labs/fleeet-agent-kit-public",
       "license": "MIT",
       "keywords": ["fleeet", "monitoring", "status-reporting"],
       "category": "productivity"

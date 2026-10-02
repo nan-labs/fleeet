@@ -85,7 +85,7 @@ curl -X POST $FLEEET_ENDPOINT/api/events \
   }'
 ```
 
-See the [event schema](https://github.com/nan-labs/fleeet-agent-kit/blob/main/schema/event-schema.json) for full field definitions.
+See the [event schema](https://github.com/nan-labs/fleeet-agent-kit-public/blob/main/schema/event-schema.json) for full field definitions.
 
 ## Event Details
 

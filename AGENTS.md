@@ -64,7 +64,7 @@ export FLEEET_ENDPOINT=https://fleeet.space
 export FLEEET_TOKEN=<your-token>
 ```
 
-See [fleeet-agent-kit README](https://github.com/nan-labs/fleeet-agent-kit) for full installation and configuration.
+See [fleeet-agent-kit README](https://github.com/nan-labs/fleeet-agent-kit-public) for full installation and configuration.
 ```
 
 ---
@@ -76,12 +76,12 @@ See [fleeet-agent-kit README](https://github.com/nan-labs/fleeet-agent-kit) for 
 Add to `.cursorrules` or `.github/AGENTS.md`:
 
 ```markdown
-Load the fleeet-reporting skill from https://github.com/nan-labs/fleeet-agent-kit/blob/main/skills/fleeet-reporting/SKILL.md at session start when working on user-initiated tasks.
+Load the fleeet-reporting skill from https://github.com/nan-labs/fleeet-agent-kit-public/blob/main/skills/fleeet-reporting/SKILL.md at session start when working on user-initiated tasks.
 ```
 
 ### For Claude Code
 
-Run `/plugin marketplace add nan-labs/fleeet-agent-kit`, then `/plugin install fleeet-reporting@fleeet-agent-kit`.
+Run `/plugin marketplace add nan-labs/fleeet-agent-kit-public`, then `/plugin install fleeet-reporting@fleeet-agent-kit`.
 
 ### For Codex / Devin / Other Agents
 
@@ -93,5 +93,5 @@ Include the skill in your agent's system prompt or load it as a context file at 
 
 - Skill: `skills/fleeet-reporting/SKILL.md`
 - CLI: `bin/fleeet-emit.mjs --help`
-- Event Schema: https://github.com/nan-labs/fleeet-agent-kit/blob/main/schema/event-schema.json
-- Installation: https://github.com/nan-labs/fleeet-agent-kit
+- Event Schema: https://github.com/nan-labs/fleeet-agent-kit-public/blob/main/schema/event-schema.json
+- Installation: https://github.com/nan-labs/fleeet-agent-kit-public

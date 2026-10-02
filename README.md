@@ -17,7 +17,7 @@ Optional: upload the skill too (Settings → Capabilities → Skills → Upload)
 export FLEEET_TOKEN=<token>          # the plugin's MCP server reads this
 ```
 ```
-/plugin marketplace add nan-labs/fleeet-agent-kit
+/plugin marketplace add nan-labs/fleeet-agent-kit-public
 /plugin install fleeet-reporting@fleeet-agent-kit
 ```
 This installs the `fleeet` MCP server and the `fleeet-reporting` skill.

@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "Report agent work status (start/heartbeat/blocked/end) to fleeet.space for user-initiated tasks",
   "author": { "name": "Ronan Flynn-Curran" },
-  "homepage": "https://github.com/nan-labs/fleeet-agent-kit",
-  "repository": "https://github.com/nan-labs/fleeet-agent-kit",
+  "homepage": "https://github.com/nan-labs/fleeet-agent-kit-public",
+  "repository": "https://github.com/nan-labs/fleeet-agent-kit-public",
   "license": "MIT",
   "keywords": ["fleeet", "agent", "monitoring", "status", "reporting"],
   "mcpServers": {
