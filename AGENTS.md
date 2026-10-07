@@ -91,7 +91,7 @@ Load the fleeet-reporting skill from https://github.com/nan-labs/fleeet/blob/mai
 
 ### For Grok Bot or Any MCP Client
 
-Configure the MCP server at `https://fleeet.space/mcp/<token>`, or include the skill in your agent's instructions.
+Configure the MCP server at `https://fleeet.space/mcp` with the header `Authorization: Bearer <token>` (setup per client: https://docs.fleeet.space/mcp), or include the skill in your agent's instructions.
 
 ---
 

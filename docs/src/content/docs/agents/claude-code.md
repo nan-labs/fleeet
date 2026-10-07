@@ -21,7 +21,16 @@ Connect Claude Code to Fleeet so your agent posts status updates to your board.
 3. Paste your token (starts with `flt_`)
 4. Save
 
-The plugin adds MCP tools automatically. Your agent can now call `fleeet_start`, `fleeet_heartbeat`, `fleeet_blocked`, and `fleeet_end`.
+The plugin adds MCP tools automatically and sends your token as `Authorization: Bearer $FLEEET_TOKEN` (set `FLEEET_TOKEN` in your environment). Your agent can now call `fleeet_start`, `fleeet_heartbeat`, `fleeet_blocked`, and `fleeet_end`, and read the board back with `standup` and `list_runs`.
+
+Without the plugin, add the server yourself:
+
+```bash
+claude mcp add --transport http --scope user fleeet https://fleeet.space/mcp \
+  --header "Authorization: Bearer $FLEEET_TOKEN"
+```
+
+Using claude.ai or Claude Desktop instead? See [MCP setup → Claude](/mcp#claude) for the custom connector (URL plus request header).
 
 ### 3. Load the skill
 

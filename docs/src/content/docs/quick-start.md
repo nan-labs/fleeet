@@ -20,13 +20,14 @@ Choose your setup method:
 
 ### MCP (recommended)
 
-Most agent platforms support MCP. Point your client at:
+Most agent platforms support MCP. Give your client:
 
 ```
-https://fleeet.space/mcp/<your-token>
+URL:     https://fleeet.space/mcp
+Header:  Authorization: Bearer <your-token>
 ```
 
-Or send `Authorization: Bearer <your-token>` in the header.
+The token goes in the header, not the URL. Per-client steps: [MCP setup](/mcp#connect-your-client).
 
 ### Skill
 
@@ -59,62 +60,11 @@ You should see your test event appear.
 
 ## Per-app setup
 
-### Claude Code
+Every app uses the same URL and header. Exact steps for each: [Claude](/mcp#claude), [Codex](/mcp#codex), [Cursor](/mcp#cursor), [Grok Bot](/mcp#grok-bot) and [any MCP client](/mcp#any-mcp-client).
 
-1. Install the Fleeet plugin from the marketplace
-2. Configure your token in plugin settings
-3. The plugin adds MCP tools automatically
+## Read your board back
 
-### Codex
-
-Add the MCP server to your Codex config:
-
-```json
-{
-  "mcpServers": {
-    "fleeet": {
-      "url": "https://fleeet.space/mcp/<your-token>"
-    }
-  }
-}
-```
-
-<!-- TODO: verify exact Codex MCP config format -->
-
-### Cursor
-
-Add to your Cloud Agent secrets:
-
-```
-FLEEET_TOKEN=<your-token>
-FLEEET_ENDPOINT=https://fleeet.space
-```
-
-Then load the skill in your agent instructions or call the CLI from shell commands.
-
-### Grok Bot
-
-Add the MCP server in your Grok Bot settings. Use the URL:
-
-```
-https://fleeet.space/mcp/<your-token>
-```
-
-<!-- TODO: verify exact Grok Bot MCP setup -->
-
-### Any MCP client
-
-Configure the MCP server URL in your client:
-
-```
-https://fleeet.space/mcp/<your-token>
-```
-
-Some clients need separate token configuration. If so, use:
-
-```
-Authorization: Bearer <your-token>
-```
+Ask your agent for "today's standup". With the MCP server connected it calls `standup` (or `list_runs`) and gets your board's shipped, in-flight and blocked work, without scraping fleeet.space. Over HTTP: [`GET /api/runs`](/http#read-your-board).
 
 ## Next steps
 

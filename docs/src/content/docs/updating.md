@@ -63,7 +63,7 @@ GET https://fleeet.space/api/version
 
 ```json
 {
-  "latest": "1.1.0",
+  "latest": "1.2.0",
   "min_supported": "1.0.0",
   "changelog_url": "https://github.com/nan-labs/fleeet/blob/main/CHANGELOG.md"
 }

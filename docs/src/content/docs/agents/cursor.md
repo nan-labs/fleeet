@@ -24,7 +24,24 @@ export FLEEET_ENDPOINT=https://fleeet.space
 
 For Cloud Agents, add `FLEEET_TOKEN` as a secret in the Cursor Dashboard (Cloud Agents > Secrets).
 
-### 3. Use the CLI
+### 3. Add the MCP server
+
+In `~/.cursor/mcp.json`:
+
+```json
+{
+  "mcpServers": {
+    "fleeet": {
+      "url": "https://fleeet.space/mcp",
+      "headers": { "Authorization": "Bearer ${env:FLEEET_TOKEN}" }
+    }
+  }
+}
+```
+
+Cursor fills `${env:FLEEET_TOKEN}` from your environment. Your agent can now call `fleeet_start`, `fleeet_heartbeat`, `fleeet_blocked`, and `fleeet_end`, and read the board back with `standup` and `list_runs`.
+
+### Or use the CLI
 
 Your agent can call the Fleeet CLI from shell commands:
 
@@ -74,3 +91,4 @@ When a new skill version ships, the agent tells you once. A skill loaded by URL 
 - [Events reference](/events)
 - [CLI documentation](/cli)
 - [Skill documentation](/skill)
+- [MCP setup](/mcp)

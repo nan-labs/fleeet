@@ -80,13 +80,14 @@ Add the fleeet MCP server to `~/.cursor/mcp.json` (global) or `.cursor/mcp.json`
 {
   "mcpServers": {
     "fleeet": {
-      "url": "https://fleeet.space/mcp/<your-token>"
+      "url": "https://fleeet.space/mcp",
+      "headers": { "Authorization": "Bearer ${env:FLEEET_TOKEN}" }
     }
   }
 }
 ```
 
-Then agents can call `fleeet_start`, `fleeet_heartbeat`, `fleeet_blocked`, and `fleeet_end` directly. Don't commit a project `mcp.json` that contains your token.
+Cursor fills `${env:FLEEET_TOKEN}` from your environment, so the token never sits in the file. Then agents can call `fleeet_start`, `fleeet_heartbeat`, `fleeet_blocked`, and `fleeet_end` directly, and read the board back with `standup` and `list_runs`. Don't commit a project `mcp.json` that contains your token.
 
 ## Environment Setup
 

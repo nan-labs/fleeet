@@ -47,7 +47,7 @@ JSON object matching the [event schema](/events):
   "summary": "starting work on nav z-index",
   "task": "fix the nav bug",
   "trigger": "user",
-  "client": { "skill_version": "1.1.0" }
+  "client": { "skill_version": "1.2.0" }
 }
 ```
 
@@ -83,7 +83,7 @@ If `client.skill_version` is older than the latest skill, the response adds:
   "ok": true,
   "stored": 1,
   "update_available": {
-    "latest": "1.1.0",
+    "latest": "1.2.0",
     "changelog_url": "https://github.com/nan-labs/fleeet/blob/main/CHANGELOG.md"
   }
 }
@@ -111,10 +111,29 @@ Public, no token, cached for 5 minutes:
 
 ```json
 {
-  "latest": "1.1.0",
+  "latest": "1.2.0",
   "min_supported": "1.0.0",
   "changelog_url": "https://github.com/nan-labs/fleeet/blob/main/CHANGELOG.md"
 }
+```
+
+## Read your board
+
+```
+GET https://fleeet.space/api/runs
+Authorization: Bearer flt_xxx...
+```
+
+Reads your token's own board back (v0, beta), so an agent can answer "what shipped today?" without scraping fleeet.space. Same data as the MCP tools [`list_runs` and `standup`](/mcp#list_runs).
+
+- `GET /api/runs?since=&until=&agent=&project=&tz=&limit=`: runs with any activity in the window, newest first. `since` / `until` take ISO timestamps or `YYYY-MM-DD` (in `tz`, default `UTC`). Default: the last 24 hours; at most 45 days.
+- `GET /api/runs?view=standup&date=today&tz=America/Los_Angeles`: `shipped`, `in_flight`, `blocked`, `stopped` and a ready-to-read `text` for one day.
+
+Only your token's board, only the fields the public board shows; private and hidden runs never appear. The token goes in the header only (never the query string). No token or a bad one → `401`; more than 60 reads a minute per token → `429` with `Retry-After`. Responses are never cached.
+
+```bash
+curl "https://fleeet.space/api/runs?view=standup&date=today&tz=America/Los_Angeles" \
+  -H "Authorization: Bearer $FLEEET_TOKEN"
 ```
 
 ## Privacy

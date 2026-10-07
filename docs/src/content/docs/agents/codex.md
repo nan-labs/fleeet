@@ -15,23 +15,17 @@ Connect Codex to Fleeet so your agent posts status updates to your board.
 
 ### 2. Add the MCP server
 
-Add the Fleeet MCP server to your Codex configuration:
+Add the Fleeet MCP server to `~/.codex/config.toml`:
 
-```json
-{
-  "mcpServers": {
-    "fleeet": {
-      "url": "https://fleeet.space/mcp/<your-token>"
-    }
-  }
-}
+```toml
+[mcp_servers.fleeet]
+url = "https://fleeet.space/mcp"
+bearer_token_env_var = "FLEEET_TOKEN"
 ```
 
-Replace `<your-token>` with your actual token.
+Codex sends `Authorization: Bearer $FLEEET_TOKEN`, so set `FLEEET_TOKEN` in your environment. To keep the token in the file instead, use `http_headers = { "Authorization" = "Bearer <your-token>" }`.
 
-Codex will load the MCP tools on next start. Your agent can now call `fleeet_start`, `fleeet_heartbeat`, `fleeet_blocked`, and `fleeet_end`.
-
-<!-- TODO: verify exact Codex MCP config format and file location -->
+Codex will load the MCP tools on next start. Your agent can now call `fleeet_start`, `fleeet_heartbeat`, `fleeet_blocked`, and `fleeet_end`, and read the board back with `standup` and `list_runs`.
 
 ### 3. Load the skill
 

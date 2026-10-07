@@ -15,17 +15,16 @@ Connect Grok Bot to Fleeet so your agent posts status updates to your board.
 
 ### 2. Add the MCP server
 
-Add the Fleeet MCP server in your Grok Bot settings:
+Add a custom MCP connector in your Grok Bot settings:
 
 ```
-https://fleeet.space/mcp/<your-token>
+URL:     https://fleeet.space/mcp
+Header:  Authorization: Bearer <your-token>
 ```
 
-Replace `<your-token>` with your actual token.
+Replace `<your-token>` with your actual token, keeping `Bearer ` in front of it.
 
-Grok Bot will load the MCP tools. Your agent can now call `fleeet_start`, `fleeet_heartbeat`, `fleeet_blocked`, and `fleeet_end`.
-
-<!-- TODO: verify exact Grok Bot MCP setup steps -->
+Grok Bot will load the MCP tools. Your agent can now call `fleeet_start`, `fleeet_heartbeat`, `fleeet_blocked`, and `fleeet_end`, and read the board back with `standup` and `list_runs`.
 
 ### 3. Load the skill
 

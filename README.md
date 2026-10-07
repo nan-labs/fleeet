@@ -22,7 +22,9 @@ Prefer to wire it up yourself? Grab a token from **Add agent**, then use any of 
 
 **MCP**
 
-Point your client at `https://fleeet.space/mcp/<token>`, or send `Authorization: Bearer <token>`.
+Point your client at `https://fleeet.space/mcp` and send your token in the header `Authorization: Bearer <token>`. Per-client setup (Claude, Codex, Cursor, Grok Bot, any MCP client): [docs.fleeet.space/mcp](https://docs.fleeet.space/mcp). The old `https://fleeet.space/mcp/<token>` form still works but is deprecated, because URLs end up in client UIs and logs.
+
+Your agent can also read its own board back: the MCP tools `standup` and `list_runs`, or `GET https://fleeet.space/api/runs` (v0, beta), both scoped to the token's board.
 
 **Skill**
 

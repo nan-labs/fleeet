@@ -9,6 +9,12 @@ The skill, the Claude Code plugin and the `fleeet-emit` CLI share one [semver](h
 
 See [versions.json](/versions.json), or `GET https://fleeet.space/api/version`. To update, see [Updating the skill](/updating).
 
+## 1.2.0 (2026-10-07)
+
+- Read your board back: the MCP tools `standup` and `list_runs`, and `GET /api/runs` (v0, beta), for your token's board only.
+- Token in the `Authorization: Bearer` header, not the URL. Setup for Claude, Codex, Cursor, Grok Bot and any MCP client on [MCP setup](/mcp). `/mcp/<token>` still works but is deprecated.
+- The skill gains a "Reading the Board" section; the Claude Code plugin sends the token as a header.
+
 ## 1.1.0 (2026-10-07)
 
 - Skill versioning: one version everywhere, plus the release script, pre-commit hook and CI check.

@@ -10,7 +10,8 @@
   "mcpServers": {
     "fleeet": {
       "type": "http",
-      "url": "${FLEEET_ENDPOINT:-https://fleeet.space}/mcp/${FLEEET_TOKEN}"
+      "url": "${FLEEET_ENDPOINT:-https://fleeet.space}/mcp",
+      "headers": { "Authorization": "Bearer ${FLEEET_TOKEN}" }
     }
   }
 }

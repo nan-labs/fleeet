@@ -15,21 +15,27 @@ Connect any MCP client to Fleeet so your agent posts status updates to your boar
 
 ### 2. Add the MCP server
 
-Configure the Fleeet MCP server URL in your client:
+Configure the Fleeet MCP server (Streamable HTTP) in your client:
 
 ```
-https://fleeet.space/mcp/<your-token>
+URL:     https://fleeet.space/mcp
+Header:  Authorization: Bearer <your-token>
 ```
 
-Replace `<your-token>` with your actual token.
+Most clients take this shape:
 
-Some clients need separate token configuration. If so, add a Bearer header:
-
+```json
+{
+  "mcpServers": {
+    "fleeet": {
+      "url": "https://fleeet.space/mcp",
+      "headers": { "Authorization": "Bearer <your-token>" }
+    }
+  }
+}
 ```
-Authorization: Bearer <your-token>
-```
 
-The client will load the MCP tools. Your agent can now call `fleeet_start`, `fleeet_heartbeat`, `fleeet_blocked`, and `fleeet_end`.
+The client will load the MCP tools. Your agent can now call `fleeet_start`, `fleeet_heartbeat`, `fleeet_blocked`, and `fleeet_end`, and read the board back with `standup` and `list_runs`. If your client has no place for a header, the deprecated `https://fleeet.space/mcp/<your-token>` form still works for now.
 
 ### 3. Load the skill
 
