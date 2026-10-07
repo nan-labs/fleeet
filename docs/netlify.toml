@@ -1,32 +1,114 @@
 [build]
   command = "npm run build"
   publish = "dist"
+  # Only build when docs, skills, schema, package.json, or CHANGELOG change
+  # Paths are relative to base directory (docs/)
+  # Exit 0 = skip build, exit 1 = build
+  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- . ../skills ../schema ../package.json ../CHANGELOG.md"
 
 [build.environment]
   NODE_VERSION = "22"
 
-# Only build when docs, skills, schema, package.json, or CHANGELOG change
-# Paths are relative to base directory (docs/)
-[build.ignore]
-  command = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- . ../skills ../schema ../package.json ../CHANGELOG.md || exit 1"
-
 # Serve markdown and text files with correct content types
-[[headers]]
-  for = "/*.md"
-  [headers.values]
-    Content-Type = "text/markdown; charset=utf-8"
-
-[[headers]]
-  for = "/llms*.txt"
-  [headers.values]
-    Content-Type = "text/plain; charset=utf-8"
-
+# Netlify headers use glob patterns; explicit paths for non-root files
 [[headers]]
   for = "/skill.md"
   [headers.values]
     Content-Type = "text/markdown; charset=utf-8"
 
 [[headers]]
+  for = "/llms.txt"
+  [headers.values]
+    Content-Type = "text/plain; charset=utf-8"
+
+[[headers]]
+  for = "/llms-full.txt"
+  [headers.values]
+    Content-Type = "text/plain; charset=utf-8"
+
+[[headers]]
+  for = "/llms-small.txt"
+  [headers.values]
+    Content-Type = "text/plain; charset=utf-8"
+
+[[headers]]
   for = "/versions.json"
   [headers.values]
     Content-Type = "application/json; charset=utf-8"
+
+# Agent page markdown files
+[[headers]]
+  for = "/agents/any-mcp-client.md"
+  [headers.values]
+    Content-Type = "text/markdown; charset=utf-8"
+
+[[headers]]
+  for = "/agents/claude-code.md"
+  [headers.values]
+    Content-Type = "text/markdown; charset=utf-8"
+
+[[headers]]
+  for = "/agents/codex.md"
+  [headers.values]
+    Content-Type = "text/markdown; charset=utf-8"
+
+[[headers]]
+  for = "/agents/cursor.md"
+  [headers.values]
+    Content-Type = "text/markdown; charset=utf-8"
+
+[[headers]]
+  for = "/agents/grok-bot.md"
+  [headers.values]
+    Content-Type = "text/markdown; charset=utf-8"
+
+# Root-level markdown files
+[[headers]]
+  for = "/changelog.md"
+  [headers.values]
+    Content-Type = "text/markdown; charset=utf-8"
+
+[[headers]]
+  for = "/cli.md"
+  [headers.values]
+    Content-Type = "text/markdown; charset=utf-8"
+
+[[headers]]
+  for = "/events.md"
+  [headers.values]
+    Content-Type = "text/markdown; charset=utf-8"
+
+[[headers]]
+  for = "/faq.md"
+  [headers.values]
+    Content-Type = "text/markdown; charset=utf-8"
+
+[[headers]]
+  for = "/http.md"
+  [headers.values]
+    Content-Type = "text/markdown; charset=utf-8"
+
+[[headers]]
+  for = "/index.md"
+  [headers.values]
+    Content-Type = "text/markdown; charset=utf-8"
+
+[[headers]]
+  for = "/mcp.md"
+  [headers.values]
+    Content-Type = "text/markdown; charset=utf-8"
+
+[[headers]]
+  for = "/micro-logs.md"
+  [headers.values]
+    Content-Type = "text/markdown; charset=utf-8"
+
+[[headers]]
+  for = "/public-by-design.md"
+  [headers.values]
+    Content-Type = "text/markdown; charset=utf-8"
+
+[[headers]]
+  for = "/quick-start.md"
+  [headers.values]
+    Content-Type = "text/markdown; charset=utf-8"
