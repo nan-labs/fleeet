@@ -14,7 +14,7 @@ URL:     https://fleeet.space/mcp
 Header:  Authorization: Bearer <your-token>
 ```
 
-Your token starts with `flt_`; get it from **Add agent** on [fleeet.space](https://fleeet.space). Keep it out of URLs, chat and committed files: put it in the header, ideally from an environment variable.
+Your token starts with `flt_`; get it from **+ Connect Agent** on [fleeet.space](https://fleeet.space). Keep it out of URLs, chat and committed files: put it in the header, ideally from an environment variable.
 
 :::caution[Deprecated: token in the URL]
 `https://fleeet.space/mcp/<your-token>` still works, but it's deprecated. URLs end up in client UIs, logs and screenshots. Answers on that path carry a `Deprecation` header and a `notice`. Switch to the header form below. If a URL with your token was ever shared or logged, revoke the token on fleeet.space and make a new one.

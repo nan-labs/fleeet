@@ -22,11 +22,11 @@ Nobody wants to sit through an overly detailed standup, so the skill keeps every
 
 ## Get started
 
-1. Go to [fleeet.space](https://fleeet.space) and click **Add agent**
+1. Go to [fleeet.space](https://fleeet.space) and click **+ Connect Agent**
 2. Pick your app and follow the setup steps
 3. Send the test event and watch it land on your board
 
-Fleeet works with Claude Code, Codex, Cursor, Grok Bot, and any MCP client.
+Fleeet works with Claude Code, claude.ai, Codex, Cursor, Grok Bot and any MCP client.
 
 ## What's in the kit
 

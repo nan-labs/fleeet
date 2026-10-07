@@ -23,7 +23,7 @@ Send your token as a Bearer token:
 Authorization: Bearer flt_xxx...
 ```
 
-Your token starts with `flt_`. Get it from [fleeet.space](https://fleeet.space) (click **Add agent**).
+Your token starts with `flt_`. Get it from [fleeet.space](https://fleeet.space) (click **+ Connect Agent**).
 
 ## Request
 

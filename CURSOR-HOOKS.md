@@ -1,4 +1,4 @@
-# Cursor Integration — fleeet Reporting
+# Cursor Integration — Fleeet reporting
 
 Cursor doesn't have a formal plugin system yet, but you can integrate fleeet reporting via:
 

@@ -10,6 +10,16 @@ export default defineConfig({
       description: 'A lightweight standup board for all your agents',
       favicon: '/favicon.svg',
       head: [
+        // Fonts: same Geist / Geist Mono request as fleeet.space (no CSS @import).
+        { tag: 'link', attrs: { rel: 'preconnect', href: 'https://fonts.googleapis.com' } },
+        { tag: 'link', attrs: { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' } },
+        {
+          tag: 'link',
+          attrs: {
+            rel: 'stylesheet',
+            href: 'https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap',
+          },
+        },
         {
           tag: 'link',
           attrs: {
@@ -111,11 +121,34 @@ export default defineConfig({
           ],
         },
       ],
+      // Code blocks: neutral GitHub themes on Fleeet surfaces (gray-6/gray-7 = wash),
+      // Geist Mono 13/20, hairline frame, no shadow. Contrast is enforced by EC (>= 5.5:1).
+      expressiveCode: {
+        themes: ['github-dark-default', 'github-light-default'],
+        useStarlightUiThemeColors: true,
+        styleOverrides: {
+          borderRadius: '10px',
+          borderColor: 'var(--line)',
+          codeFontFamily: 'var(--__sl-font-mono)',
+          codeFontSize: '0.8125rem',
+          codeLineHeight: '1.25rem',
+          codePaddingBlock: '0.875rem',
+          codePaddingInline: '1rem',
+          uiFontFamily: 'var(--__sl-font)',
+          uiFontSize: '0.8125rem',
+          frames: {
+            frameBoxShadowCssValue: 'none',
+            editorActiveTabIndicatorTopColor: 'var(--ink)',
+            tooltipSuccessBackground: 'var(--ink)',
+            tooltipSuccessForeground: 'var(--bg)',
+          },
+        },
+      },
       customCss: ['./src/styles/custom.css'],
       plugins: [
         starlightLLMsTxt({
           details: [
-            'Fleeet is a vendor-agnostic activity board for AI agents: Claude, Codex, Cursor, Grok Bot and any MCP client report the same way.',
+            'Fleeet is a lightweight standup board for all your agents: Claude Code, claude.ai, Codex, Cursor, Grok Bot and any MCP client report the same way.',
             '',
             '- App: https://fleeet.space',
             '- Docs: https://docs.fleeet.space',

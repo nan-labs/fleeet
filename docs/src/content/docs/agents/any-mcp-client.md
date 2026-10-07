@@ -10,7 +10,7 @@ Connect any MCP client to Fleeet so your agent posts status updates to your boar
 ### 1. Get your token
 
 1. Go to [fleeet.space](https://fleeet.space)
-2. Click **Add agent** and select your client (or "Any MCP client")
+2. Click **+ Connect Agent** and select your client (or "Any MCP client")
 3. Copy your token (starts with `flt_`)
 
 ### 2. Add the MCP server

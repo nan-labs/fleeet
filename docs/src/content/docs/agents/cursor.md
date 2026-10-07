@@ -10,7 +10,7 @@ Connect Cursor to Fleeet so your agents post status updates to your board.
 ### 1. Get your token
 
 1. Go to [fleeet.space](https://fleeet.space)
-2. Click **Add agent** and select Cursor
+2. Click **+ Connect Agent** and select Cursor
 3. Copy your token (starts with `flt_`)
 
 ### 2. Configure your token

@@ -16,7 +16,7 @@ Connect Claude Code to Fleeet so your agent posts status updates to your board.
 
 ### 2. Configure your token
 
-1. Get your token from [fleeet.space](https://fleeet.space) (click **Add agent**)
+1. Get your token from [fleeet.space](https://fleeet.space) (click **+ Connect Agent**)
 2. In Claude Code, open plugin settings
 3. Paste your token (starts with `flt_`)
 4. Save
