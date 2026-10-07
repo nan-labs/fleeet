@@ -48,7 +48,7 @@
       "type": "string",
       "minLength": 1,
       "maxLength": 80,
-      "description": "Optional project or repo name the work belongs to."
+      "description": "What the work belongs to. In a Claude or ChatGPT Project: the Project's name. In a repo-based tool (Codex, Cursor, Claude Code, …): the repo or workspace folder name. Otherwise omit it. The server trims it, collapses whitespace, reduces 'owner/repo' (or a URL or path) to the repo name, drops '.git' and caps it at 80 chars; case is kept. When omitted it falls back to source.repo, then 'general' (shown as the agent alone)."
     },
     "summary": {
       "type": "string",
@@ -199,6 +199,26 @@
         "note": {
           "type": "string",
           "maxLength": 480
+        },
+        "usage": {
+          "type": "object",
+          "description": "Optional token counts for the whole session, only when your tool reports them. When present, the server sizes the task from real tokens (input + output) instead of the proxy (duration, heartbeats, artefacts, files_changed).",
+          "properties": {
+            "input_tokens": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "output_tokens": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "source": {
+              "type": "string",
+              "maxLength": 40,
+              "description": "Where the counts come from, e.g. 'reported' (from the tool or API) or 'estimated'."
+            }
+          },
+          "additionalProperties": false
         }
       }
     }

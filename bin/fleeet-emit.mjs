@@ -57,13 +57,14 @@ Flags:
   --summary        — one sentence, present tense, no period
   --trigger        — user|routine|agent (default: user)
   --source.repo    — e.g. "owner/repo"
-  --project        — project name (optional)
+  --project        — Claude/ChatGPT Project name, or repo/workspace folder name (omit otherwise)
   --surface        — surface label (overrides FLEEET_SURFACE)
   --progress.commits N
   --blocker.kind   — ambiguity|missing_credential|failing_dep|design_call|access|other
   --blocker.question
   --outcome.status — shipped|abandoned|handed_off|failed
   --outcome.artefacts — JSON array, e.g. '[{"kind":"pr","url":"..."}]'
+  --outcome.usage  — token counts if your tool reports them, e.g. '{"input_tokens":182000,"output_tokens":9400,"source":"reported"}'
 
 Environment:
   FLEEET_ENDPOINT  — base URL (default: https://fleeet.space)

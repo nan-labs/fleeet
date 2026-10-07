@@ -16,7 +16,7 @@ If you have fleeet MCP tools available:
 
 ```
 # At task start
-fleeet_start(task="what you're building", summary="one sentence status")
+fleeet_start(task="what you're building", summary="one sentence status", project="<repo or workspace folder name>")
 → save the run_id
 
 # During work (every 5-10 min of meaningful progress)
