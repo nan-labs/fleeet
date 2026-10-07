@@ -1,6 +1,6 @@
-# fleeet Reporting — AGENTS.md Snippet
+# fleeet Reporting — Agent Instructions Snippet
 
-Include this in your project's `AGENTS.md` (or `.cursorrules`, `.github/AGENTS.md`, etc.) to enable fleeet reporting for agents working in this repo.
+Include this in your agent's instructions file (such as `AGENTS.md`, `CLAUDE.md`, `.cursorrules`, or `.github/AGENTS.md`) to enable fleeet reporting for agents working in this repo.
 
 ```markdown
 ## fleeet Reporting
@@ -71,21 +71,25 @@ See [fleeet-agent-kit README](https://github.com/nan-labs/fleeet-agent-kit-publi
 
 ## Integration Examples
 
+### For Claude Code
+
+Run `/plugin marketplace add nan-labs/fleeet-agent-kit-public`, then `/plugin install fleeet-reporting@fleeet-agent-kit`.
+
+### For Codex
+
+Include the skill in your agent's system prompt or load it as a context file at the start of each session.
+
 ### For Cursor
 
-Add to `.cursorrules` or `.github/AGENTS.md`:
+Add to your agent's instructions file (such as `.cursorrules` or `.github/AGENTS.md`):
 
 ```markdown
 Load the fleeet-reporting skill from https://github.com/nan-labs/fleeet-agent-kit-public/blob/main/skills/fleeet-reporting/SKILL.md at session start when working on user-initiated tasks.
 ```
 
-### For Claude Code
+### For Grok Bot or Any MCP Client
 
-Run `/plugin marketplace add nan-labs/fleeet-agent-kit-public`, then `/plugin install fleeet-reporting@fleeet-agent-kit`.
-
-### For Codex / Devin / Other Agents
-
-Include the skill in your agent's system prompt or load it as a context file at the start of each session.
+Configure the MCP server at `https://fleeet.space/mcp/<token>`, or include the skill in your agent's instructions.
 
 ---
 

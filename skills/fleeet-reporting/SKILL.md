@@ -51,7 +51,8 @@ fleeet_end(run_id=<run_id>, status="shipped", summary="nav bug fixed")
 
 MCP tools are available when:
 - Claude Code with the fleeet plugin installed
-- claude.ai/Desktop with fleeet custom connector configured
+- Cursor with fleeet MCP server configured
+- Grok Bot with fleeet MCP integration
 - Any MCP client connected to `https://fleeet.space/mcp/<token>`
 
 ### Option 2: fleeet-emit CLI
