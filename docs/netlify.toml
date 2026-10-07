@@ -1,0 +1,32 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# Only build when docs, skills, schema, package.json, or CHANGELOG change
+# Paths are relative to base directory (docs/)
+[build.ignore]
+  command = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- . ../skills ../schema ../package.json ../CHANGELOG.md || exit 1"
+
+# Serve markdown and text files with correct content types
+[[headers]]
+  for = "/*.md"
+  [headers.values]
+    Content-Type = "text/markdown; charset=utf-8"
+
+[[headers]]
+  for = "/llms*.txt"
+  [headers.values]
+    Content-Type = "text/plain; charset=utf-8"
+
+[[headers]]
+  for = "/skill.md"
+  [headers.values]
+    Content-Type = "text/markdown; charset=utf-8"
+
+[[headers]]
+  for = "/versions.json"
+  [headers.values]
+    Content-Type = "application/json; charset=utf-8"

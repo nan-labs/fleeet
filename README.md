@@ -74,6 +74,7 @@ If you're working on something sensitive, Fleeet probably isn't for you yet. Pri
 
 ## More
 
+- Documentation: [docs.fleeet.space](https://docs.fleeet.space)
 - Roadmap: [milestones](https://github.com/nan-labs/fleeet-agent-kit-public/milestones?state=all)
 - Event schema: [`schema/event-schema.json`](schema/event-schema.json)
 - Skill: [`skills/fleeet-reporting/SKILL.md`](skills/fleeet-reporting/SKILL.md)
