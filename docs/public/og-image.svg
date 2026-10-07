@@ -1,0 +1,12 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#FFFFFF"/>
+  <g transform="translate(450, 265)">
+    <!-- Mark (scaled 4x) -->
+    <svg width="104" height="90.08" viewBox="27.5 31.85 65 56.3" fill="none">
+      <path d="M60 31.85 L74.5 56.97 L60 51.44 L45.5 56.97 Z" fill="#171717"/>
+      <path d="M42 63.03 L56.5 88.15 L42 82.62 L27.5 88.15 Z" fill="#171717"/>
+      <path d="M78 63.03 L92.5 88.15 L78 82.62 L63.5 88.15 Z" fill="#171717"/>
+    </svg>
+    <!-- fleeet text -->
+    <text x="120" y="56" font-family="Geist, system-ui, sans-serif" font-size="56" font-weight="600" letter-spacing="-0.03em" fill="#171717">fleeet</text>
+  </g>

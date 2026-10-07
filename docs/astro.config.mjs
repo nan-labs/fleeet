@@ -8,7 +8,51 @@ export default defineConfig({
     starlight({
       title: 'Fleeet',
       description: 'A lightweight standup board for all your agents',
+      favicon: '/favicon.svg',
+      head: [
+        {
+          tag: 'link',
+          attrs: {
+            rel: 'icon',
+            href: '/favicon.ico',
+            sizes: '32x32',
+          },
+        },
+        {
+          tag: 'link',
+          attrs: {
+            rel: 'apple-touch-icon',
+            href: '/apple-touch-icon.png',
+          },
+        },
+        {
+          tag: 'meta',
+          attrs: {
+            property: 'og:image',
+            content: 'https://docs.fleeet.space/og-image.svg',
+          },
+        },
+        {
+          tag: 'meta',
+          attrs: {
+            name: 'twitter:image',
+            content: 'https://docs.fleeet.space/og-image.svg',
+          },
+        },
+        {
+          tag: 'meta',
+          attrs: {
+            name: 'twitter:card',
+            content: 'summary_large_image',
+          },
+        },
+      ],
       social: [
+        {
+          icon: 'external',
+          label: 'Fleeet',
+          href: 'https://fleeet.space',
+        },
         {
           icon: 'github',
           label: 'GitHub',
@@ -17,6 +61,9 @@ export default defineConfig({
       ],
       editLink: {
         baseUrl: 'https://github.com/nan-labs/fleeet/edit/main/docs/',
+      },
+      components: {
+        SiteTitle: './src/components/SiteTitle.astro',
       },
       sidebar: [
         {

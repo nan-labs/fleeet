@@ -1,0 +1,38 @@
+---
+const { href } = Astro.props as { href: string };
+---
+
+<a {href} class="wordmark" aria-label="fleeet">
+  <svg class="mark" viewBox="27.5 31.85 65 56.3" fill="none" aria-hidden="true" focusable="false">
+    <path d="M60 31.85 L74.5 56.97 L60 51.44 L45.5 56.97 Z" fill="currentColor"/>
+    <path d="M42 63.03 L56.5 88.15 L42 82.62 L27.5 88.15 Z" fill="currentColor"/>
+    <path d="M78 63.03 L92.5 88.15 L78 82.62 L63.5 88.15 Z" fill="currentColor"/>
+  </svg>
+  <span>fleeet</span>
+</a>
+
+<style>
+.wordmark {
+  font-family: "Geist", ui-sans-serif, system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 7px;
+  color: var(--ink);
+  text-decoration: none;
+  --mark-h: calc(0.72em * 0.85 * 4 / 3);
+}
+
+.wordmark .mark {
+  height: var(--mark-h);
+  width: calc(var(--mark-h) * 65 / 56.3);
+  flex: none;
+  display: block;
+  color: inherit;
+  overflow: visible;
+  transform: translateY(calc((var(--mark-h) - 0.72em) / 2));
+}
+</style>
