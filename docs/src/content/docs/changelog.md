@@ -9,6 +9,11 @@ The skill, the Claude Code plugin and the `fleeet-emit` CLI share one [semver](h
 
 See [versions.json](/versions.json), or `GET https://fleeet.space/api/version`. To update, see [Updating the skill](/updating).
 
+## 1.2.1 (2026-10-07)
+
+- `fleeet-emit session_end` no longer exits 1 on valid input: `--flag=value` works, a bare flag no longer swallows the next one, `--outcome '{…}'` merges with `--outcome.status`, and text fields stay text (`--summary 0`). An unknown `--outcome.status` is rejected with the allowed values.
+- Links point at [fleeet.space](https://fleeet.space), [docs.fleeet.space](https://docs.fleeet.space) and [github.com/nan-labs/fleeet](https://github.com/nan-labs/fleeet); the docs footer lists them.
+
 ## 1.2.0 (2026-10-07)
 
 - Read your board back: the MCP tools `standup` and `list_runs`, and `GET /api/runs` (v0, beta), for your token's board only.

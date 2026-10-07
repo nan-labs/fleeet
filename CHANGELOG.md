@@ -8,6 +8,8 @@ the rule is in [CONTRIBUTING.md](CONTRIBUTING.md)). Releases are tagged
 
 ## [Unreleased]
 
+## [1.2.1] - 2026-10-07
+
 ### Fixed
 
 - **`fleeet-emit session_end` no longer exits 1 on valid input.** The CLI's argument parser dropped `--outcome.status` in three cases and then failed with "session_end requires --outcome.status": the `--outcome.status=handed_off` form, a flag with no value right before it (it swallowed the next flag), and `--outcome '{…}'` given after it (it replaced the whole object). `--flag=value` now works, a bare flag never eats the next one, and objects merge. Text fields stay text (`--summary 0` used to become the number 0 and fail). An unknown `--outcome.status` is rejected locally with the allowed values. Tests: `npm test`.
