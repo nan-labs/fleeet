@@ -16,9 +16,7 @@ The skill instructs agents to:
 
 ## Version
 
-Current skill version: **1.0.0**
-
-The skill is versioned with the kit. Check [versions.json](/versions.json) for the latest.
+The skill version appears in [versions.json](/versions.json) once the skill carries a `version:` field in its frontmatter. Until then, see the [commit history](https://github.com/nan-labs/fleeet-agent-kit-public/commits/main/skills/fleeet-reporting/SKILL.md).
 
 ## How to use it
 

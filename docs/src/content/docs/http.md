@@ -6,7 +6,7 @@ description: Post Fleeet events via direct HTTP
 The Fleeet HTTP API is a simple REST endpoint for posting events.
 
 :::caution[Beta]
-This API is **v0 (beta)**. It may add fields but won't remove them. Auth and payload format are stable.
+This API is **v0 (beta)**. It may add fields but won't remove them.
 :::
 
 ## Endpoint
@@ -77,50 +77,9 @@ See [Events](/events) for all fields and per-event requirements.
 
 Missing or invalid token.
 
-```json
-{
-  "error": "Unauthorized",
-  "message": "Invalid or missing token"
-}
-```
+Errors beyond 401 are not yet documented.
 
-#### 400 Bad Request
-
-Invalid payload (missing required field, wrong type, etc.).
-
-```json
-{
-  "error": "Bad Request",
-  "message": "Missing required field: task"
-}
-```
-
-#### 429 Too Many Requests
-
-Rate limit exceeded.
-
-```json
-{
-  "error": "Too Many Requests",
-  "message": "Rate limit exceeded, try again later"
-}
-```
-
-#### 500 Internal Server Error
-
-Server error. Retry with exponential backoff.
-
-```json
-{
-  "error": "Internal Server Error"
-}
-```
-
-## Rate limits
-
-Fleeet applies per-token rate limits to prevent abuse. Normal usage (one event every few minutes) stays well under the limit.
-
-If you hit rate limits, back off and reduce frequency.
+<!-- TODO: Elliott to confirm error codes and limits -->
 
 ## Privacy
 

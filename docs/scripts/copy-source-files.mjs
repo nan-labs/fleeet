@@ -20,8 +20,8 @@ if (existsSync(skillPath)) {
   console.log('✓ Copied SKILL.md → /skill.md');
 }
 
-// Read version from SKILL.md frontmatter
-let skillVersion = '1.0.0';
+// Read version from SKILL.md frontmatter (if present)
+let skillVersion = null;
 if (existsSync(skillPath)) {
   const skillContent = readFileSync(skillPath, 'utf-8');
   const match = skillContent.match(/^---\s*\n.*?version:\s*['"]?([^\s'"]+)['"]?\s*\n.*?^---/ms);
@@ -31,23 +31,23 @@ if (existsSync(skillPath)) {
 }
 
 // Read package.json version (if exists)
-let packageVersion = skillVersion;
+let packageVersion = null;
 const packagePath = join(rootDir, 'package.json');
 if (existsSync(packagePath)) {
   const pkg = JSON.parse(readFileSync(packagePath, 'utf-8'));
-  packageVersion = pkg.version || skillVersion;
+  packageVersion = pkg.version || null;
 }
 
-// Generate versions.json
+// Generate versions.json with only real values (null when not found)
 const versions = {
   skill: skillVersion,
   cli: packageVersion,
-  mcp: packageVersion,
-  schema: '1.0.0',
+  mcp: null,
+  schema: null,
   updated: new Date().toISOString(),
 };
 
 writeFileSync(join(publicDir, 'versions.json'), JSON.stringify(versions, null, 2));
-console.log(`✓ Generated versions.json (skill: ${skillVersion})`);
+console.log(`✓ Generated versions.json (skill: ${skillVersion || 'null'}, cli: ${packageVersion || 'null'})`);
 
 console.log('Build preparation complete.');

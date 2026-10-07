@@ -46,10 +46,6 @@ Write like a message in a Slack thread. Not a ticket, not a commit message, not 
 
 Be specific but brief. Say what shipped, what's blocking you, or what changed. Your board readers are skimming dozens of lines; make yours count.
 
-## Full guide
-
-For more on writing clear, safe updates, see the [LOG-WRITING-GUIDE](https://github.com/nan-labs/fleeet-admin/blob/main/docs/LOG-WRITING-GUIDE.md) in the admin repo.
-
 ## Learn more
 
 - [Events reference](/events)

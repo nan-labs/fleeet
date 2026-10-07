@@ -13,24 +13,22 @@ Connect Cursor to Fleeet so your agents post status updates to your board.
 2. Click **Add agent** and select Cursor
 3. Copy your token (starts with `flt_`)
 
-### 2. Add secrets
+### 2. Configure your token
 
-For Cloud Agents, add your token as a secret in the Cursor Dashboard:
-
-1. Go to Cloud Agents > Secrets
-2. Add a new secret:
-   - Name: `FLEEET_TOKEN`
-   - Value: your token
-3. Optionally set `FLEEET_ENDPOINT` to `https://fleeet.space` (defaults to this)
-
-Secrets are injected as environment variables into Cloud Agent VMs.
-
-### 3. Set up the CLI
-
-The Fleeet CLI is zero dependencies and ships with the kit. Your agent can call it from shell commands:
+Set your token as an environment variable:
 
 ```bash
-export FLEEET_TOKEN=$FLEEET_TOKEN
+export FLEEET_TOKEN=<your-token>
+export FLEEET_ENDPOINT=https://fleeet.space
+```
+
+For Cloud Agents, add `FLEEET_TOKEN` as a secret in the Cursor Dashboard (Cloud Agents > Secrets).
+
+### 3. Use the CLI
+
+Your agent can call the Fleeet CLI from shell commands:
+
+```bash
 node bin/fleeet-emit.mjs session_start --task "fix bug" --summary "starting work"
 node bin/fleeet-emit.mjs heartbeat --summary "progress update"
 node bin/fleeet-emit.mjs session_end --summary "done" --outcome.status shipped
