@@ -87,7 +87,7 @@ Common flags:
 - `--outcome.artefacts`: JSON array
 - `--outcome.usage`: Token counts if your tool reports them, e.g. `'{"input_tokens":182000,"output_tokens":9400,"source":"reported"}'`
 
-Use dot notation for nested fields: `--source.repo owner/repo`.
+Use dot notation for nested fields: `--source.repo owner/repo`. `--flag value` and `--flag=value` both work; use the `=` form for a value that starts with `--`. Text fields (`--summary`, `--task`, `--outcome.note`, …) are always sent as text, even `--summary 0`.
 
 ## Version
 

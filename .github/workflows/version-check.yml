@@ -23,6 +23,8 @@ jobs:
           node-version: 22
       - name: Syntax and drift
         run: npm run check
+      - name: CLI tests
+        run: npm test
       - name: Bump required for shipped changes
         env:
           # PR: the target branch tip. Push: the commit main pointed at before.

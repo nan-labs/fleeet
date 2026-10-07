@@ -91,31 +91,71 @@ Examples:
 `);
 }
 
+// Values stay strings unless the field is a number in the schema (progress.*,
+// outcome.usage token counts) or the value is a JSON array/object. Before
+// 1.2.1 every value went through JSON.parse, so `--summary 0` became the
+// number 0 (and failed "--summary is required"), `--summary true` a boolean.
+const NUMERIC_FIELDS = new Set([
+  "progress.commits", "progress.files_changed", "progress.tests_passing", "progress.tests_failing",
+  "outcome.usage.input_tokens", "outcome.usage.output_tokens",
+]);
+// Free-text fields are never parsed, even when they look like JSON ("[WIP] …").
+const TEXT_FIELDS = new Set([
+  "summary", "task", "project", "trigger", "agent", "surface", "visibility",
+  "outcome.status", "outcome.note", "blocker.kind", "blocker.question",
+]);
+const OUTCOME_STATUSES = ["shipped", "abandoned", "handed_off", "failed"];
+
+const isPlainObject = (v) => v !== null && typeof v === "object" && !Array.isArray(v);
+function mergeInto(target, key, value) {
+  // --outcome.status x --outcome '{"note":"y"}' keeps both (it used to drop status).
+  if (isPlainObject(target[key]) && isPlainObject(value)) {
+    for (const [k, v] of Object.entries(value)) mergeInto(target[key], k, v);
+  } else {
+    target[key] = value;
+  }
+}
+
+function coerce(path, raw) {
+  if (typeof raw !== "string") return raw;
+  if (TEXT_FIELDS.has(path)) return raw;
+  const t = raw.trim();
+  if (t.startsWith("{") || t.startsWith("[")) {
+    try { return JSON.parse(t); } catch { return raw; }
+  }
+  if (NUMERIC_FIELDS.has(path) && t !== "" && !Number.isNaN(Number(t))) return Number(t);
+  return raw;
+}
+
+// Accepts `--key value` and `--key=value`, with dot notation for nested
+// fields (--source.repo foo → { source: { repo: "foo" } }). A flag with no
+// value is `true` and never swallows the flag after it.
 function parseArgs(argv) {
   const event = argv[0];
   const flags = {};
   for (let i = 1; i < argv.length; i++) {
-    if (!argv[i].startsWith("--")) continue;
-    const key = argv[i].slice(2);
-    const val = argv[i + 1] && !argv[i + 1].startsWith("--") ? argv[i + 1] : "true";
-    i++;
+    const arg = argv[i];
+    if (!arg.startsWith("--") || arg === "--") continue;
+    let key = arg.slice(2);
+    let val;
+    const eq = key.indexOf("=");
+    if (eq > 0) {
+      val = key.slice(eq + 1);
+      key = key.slice(0, eq);
+    } else if (i + 1 < argv.length && !argv[i + 1].startsWith("--")) {
+      val = argv[++i];
+    } else {
+      val = true;
+    }
 
-    // Handle dot notation: --source.repo foo → { source: { repo: "foo" } }
-    const parts = key.split(".");
+    const parts = key.split(".").filter(Boolean);
+    if (!parts.length) continue;
     let target = flags;
     for (let j = 0; j < parts.length - 1; j++) {
-      if (!target[parts[j]]) target[parts[j]] = {};
+      if (!isPlainObject(target[parts[j]])) target[parts[j]] = {};
       target = target[parts[j]];
     }
-    const leaf = parts[parts.length - 1];
-
-    // Try parsing as JSON first (for arrays/objects), then number, then string
-    try {
-      target[leaf] = JSON.parse(val);
-    } catch {
-      const num = Number(val);
-      target[leaf] = Number.isNaN(num) ? val : num;
-    }
+    mergeInto(target, parts[parts.length - 1], coerce(parts.join("."), val));
   }
   return { event, flags };
 }
@@ -147,8 +187,9 @@ function buildEvent({ event, flags }) {
   };
 
   // Validate required fields
-  if (!payload.summary) {
-    console.error(`Error: --summary is required`);
+  const isText = (v) => typeof v === "string" && v.trim() !== "";
+  if (!isText(payload.summary)) {
+    console.error(`Error: --summary is required (one plain line, e.g. --summary "nav fixed")`);
     process.exit(1);
   }
   if (event === "session_start" && !payload.task) {
@@ -159,9 +200,16 @@ function buildEvent({ event, flags }) {
     console.error("Error: blocked requires --blocker.kind and --blocker.question");
     process.exit(1);
   }
-  if (event === "session_end" && !(payload.outcome && payload.outcome.status)) {
-    console.error("Error: session_end requires --outcome.status");
-    process.exit(1);
+  if (event === "session_end") {
+    const status = payload.outcome && payload.outcome.status;
+    if (!isText(status)) {
+      console.error(`Error: session_end requires --outcome.status (${OUTCOME_STATUSES.join(" | ")})`);
+      process.exit(1);
+    }
+    if (!OUTCOME_STATUSES.includes(status)) {
+      console.error(`Error: --outcome.status must be one of ${OUTCOME_STATUSES.join(", ")} (got "${status}")`);
+      process.exit(1);
+    }
   }
 
   return { payload, runId };
