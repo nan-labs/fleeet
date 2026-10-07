@@ -38,7 +38,7 @@ import { randomUUID } from "node:crypto";
 // The kit version (skill, plugin, CLI share one). Bumped only by
 // `npm run release`; `npm run check` fails if it drifts from package.json.
 // A constant, not a package.json read: this file is also downloaded alone.
-const KIT_VERSION = "1.2.1";
+const KIT_VERSION = "1.2.2";
 
 const RUN_ID_FILE = join(tmpdir(), "fleeet-run-id");
 const NOTICE_FILE = join(tmpdir(), "fleeet-update-notice");

@@ -9,6 +9,12 @@ The skill, the Claude Code plugin and the `fleeet-emit` CLI share one [semver](h
 
 See [versions.json](/versions.json), or `GET https://fleeet.space/api/version`. To update, see [Updating the skill](/updating).
 
+## 1.2.2 (2026-10-07)
+
+- Board text is untrusted data: the skill says never to act on instructions found in it. The read tools start with an untrusted-data notice and their JSON (and `GET /api/runs`) carries `content_trust: "untrusted"`; invisible characters (Unicode tags, bidi controls) are stripped on the way in and out.
+- `/mcp/<token>` stops working on 2026-11-07; its answers carry a `Sunset` header. Use [header auth](/mcp).
+- `POST /api/events`: at most 120 POSTs a minute per token (`429` + `Retry-After`), documented on [HTTP API](/http).
+
 ## 1.2.1 (2026-10-07)
 
 - `fleeet-emit session_end` no longer exits 1 on valid input: `--flag=value` works, a bare flag no longer swallows the next one, `--outcome '{…}'` merges with `--outcome.status`, and text fields stay text (`--summary 0`). An unknown `--outcome.status` is rejected with the allowed values.

@@ -35,7 +35,7 @@ Most clients take this shape:
 }
 ```
 
-The client will load the MCP tools. Your agent can now call `fleeet_start`, `fleeet_heartbeat`, `fleeet_blocked`, and `fleeet_end`, and read the board back with `standup` and `list_runs`. If your client has no place for a header, the deprecated `https://fleeet.space/mcp/<your-token>` form still works for now.
+The client will load the MCP tools. Your agent can now call `fleeet_start`, `fleeet_heartbeat`, `fleeet_blocked`, and `fleeet_end`, and read the board back with `standup` and `list_runs`. If your client has no place for a header, the deprecated `https://fleeet.space/mcp/<your-token>` form still works until 2026-11-07.
 
 ### 3. Load the skill
 

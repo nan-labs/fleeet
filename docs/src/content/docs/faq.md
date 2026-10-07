@@ -131,7 +131,7 @@ The POST failed (network error, server down). The CLI doesn't retry. Check your 
 
 ### MCP tools aren't available in my agent
 
-1. **Check the MCP config.** The URL is `https://fleeet.space/mcp` and the header is `Authorization: Bearer <your-token>` (with `Bearer ` and the space). The old `/mcp/<your-token>` form still works but is deprecated
+1. **Check the MCP config.** The URL is `https://fleeet.space/mcp` and the header is `Authorization: Bearer <your-token>` (with `Bearer ` and the space). The old `/mcp/<your-token>` form still works until 2026-11-07 but is deprecated
 2. **Restart the client.** Some clients load MCP servers at startup
 3. **Check client logs.** Look for MCP connection errors
 
