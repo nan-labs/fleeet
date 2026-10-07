@@ -36,6 +36,8 @@ All events share these core fields:
   - `user` (default): human prompt or task
   - `routine`: cron, scheduled run
   - `agent`: autonomous agent decision
+- **client** (`object`): About the reporting client, not the work. Stored for support, never shown on the board or in `GET /api/events`
+  - `skill_version` (`string`): The skill or kit version the agent follows, e.g. `1.1.0` (semver, max 32 chars). `fleeet-emit` sends it automatically. If it's older than the latest, the response includes `update_available`; see [Updating the skill](/updating). An invalid value is dropped, never rejected
 
 ### session_start
 

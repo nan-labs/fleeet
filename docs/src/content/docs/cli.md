@@ -89,6 +89,10 @@ Common flags:
 
 Use dot notation for nested fields: `--source.repo owner/repo`.
 
+## Version
+
+`fleeet-emit --version` prints the kit version. Every event carries it as `client.skill_version`. When fleeet.space reports a newer version, the CLI prints a one-line notice on stderr (at most once a day) with a link to [Updating the skill](/updating). It never updates itself, and it ignores update info from any endpoint other than fleeet.space.
+
 ## Run ID
 
 The CLI generates `run_id` on `session_start` and stores it in `/tmp/fleeet-run-id`. Subsequent events read it from there.

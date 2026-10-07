@@ -25,6 +25,9 @@
 //   - POSTs to $FLEEET_ENDPOINT/api/events with Bearer $FLEEET_TOKEN
 //   - Falls back to ./.fleeet/events.jsonl on network errors
 //   - Validates required fields per event type
+//   - Sends client.skill_version (KIT_VERSION below); if fleeet.space answers
+//     with update_available, prints a one-line notice (once a day) on stderr.
+//     It never updates anything itself.
 //   - Zero dependencies, Node 18+
 
 import { writeFileSync, readFileSync, existsSync, mkdirSync, appendFileSync } from "node:fs";
@@ -32,7 +35,13 @@ import { tmpdir, userInfo } from "node:os";
 import { join } from "node:path";
 import { randomUUID } from "node:crypto";
 
+// The kit version (skill, plugin, CLI share one). Bumped only by
+// `npm run release`; `npm run check` fails if it drifts from package.json.
+// A constant, not a package.json read: this file is also downloaded alone.
+const KIT_VERSION = "1.0.0";
+
 const RUN_ID_FILE = join(tmpdir(), "fleeet-run-id");
+const NOTICE_FILE = join(tmpdir(), "fleeet-update-notice");
 const LOCAL_SPOOL = join(process.cwd(), ".fleeet", "events.jsonl");
 
 const ENDPOINT = (process.env.FLEEET_ENDPOINT || "https://fleeet.space").replace(/\/+$/, "");
@@ -41,7 +50,7 @@ const AGENT = process.env.FLEEET_AGENT || process.env.USER || userInfo().usernam
 const SURFACE = (process.env.FLEEET_SURFACE || "").trim().slice(0, 32);
 
 function help() {
-  console.log(`fleeet-emit — emit fleeet events from the command line
+  console.log(`fleeet-emit ${KIT_VERSION} — emit fleeet events from the command line
 
 Usage:
   fleeet-emit <event-type> [flags]
@@ -65,6 +74,7 @@ Flags:
   --outcome.status — shipped|abandoned|handed_off|failed
   --outcome.artefacts — JSON array, e.g. '[{"kind":"pr","url":"..."}]'
   --outcome.usage  — token counts if your tool reports them, e.g. '{"input_tokens":182000,"output_tokens":9400,"source":"reported"}'
+  --version        — print the kit version and exit
 
 Environment:
   FLEEET_ENDPOINT  — base URL (default: https://fleeet.space)
@@ -132,6 +142,8 @@ function buildEvent({ event, flags }) {
     trigger: flags.trigger || "user",
     ...(SURFACE && { surface: SURFACE }),
     ...flags,
+    // Which kit/skill version sent this (stored by fleeet, never public).
+    client: { skill_version: KIT_VERSION },
   };
 
   // Validate required fields
@@ -178,13 +190,29 @@ async function postEvent(payload) {
       return false;
     }
 
-    const result = await res.json();
+    const result = await res.json().catch(() => ({}));
     console.log(`✓ Posted to ${ENDPOINT}/api/events`);
+    noticeUpdate(result.update_available);
     return true;
   } catch (err) {
     console.error(`Network error: ${err.message}`);
     return false;
   }
+}
+
+// Update info is trusted only from fleeet.space itself (not a custom
+// FLEEET_ENDPOINT, not anything else). Tell the user at most once a day per
+// version; updating is their call.
+function noticeUpdate(update) {
+  try {
+    if (!update || !/^(.+\.)?fleeet\.space$/.test(new URL(ENDPOINT).hostname)) return;
+    const latest = String(update.latest || "");
+    if (!/^\d+\.\d+\.\d+$/.test(latest)) return;
+    const stamp = `${latest} ${new Date().toISOString().slice(0, 10)}`;
+    if (existsSync(NOTICE_FILE) && readFileSync(NOTICE_FILE, "utf8").trim() === stamp) return;
+    writeFileSync(NOTICE_FILE, stamp);
+    console.error(`fleeet: kit ${latest} is available (this is ${KIT_VERSION}). What changed: https://github.com/nan-labs/fleeet/blob/main/CHANGELOG.md · how to update: https://docs.fleeet.space/updating`);
+  } catch {}
 }
 
 function spoolLocal(payload) {
@@ -198,6 +226,10 @@ async function main() {
   const argv = process.argv.slice(2);
   if (argv.length === 0 || argv.includes("--help") || argv.includes("-h")) {
     help();
+    process.exit(0);
+  }
+  if (argv[0] === "--version" || argv[0] === "-v") {
+    console.log(KIT_VERSION);
     process.exit(0);
   }
 

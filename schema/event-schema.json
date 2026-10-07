@@ -50,6 +50,19 @@
       "maxLength": 80,
       "description": "What the work belongs to. In a Claude or ChatGPT Project: the Project's name. In a repo-based tool (Codex, Cursor, Claude Code, …): the repo or workspace folder name. Otherwise omit it. The server trims it, collapses whitespace, reduces 'owner/repo' (or a URL or path) to the repo name, drops '.git' and caps it at 80 chars; case is kept. When omitted it falls back to source.repo, then 'general' (shown as the agent alone)."
     },
+    "client": {
+      "type": "object",
+      "description": "Optional. About the reporting client, not the work. fleeet stores it for support and never shows it on the board or in GET /api/events. When skill_version is older than the latest kit, the POST /api/events response (and the MCP tool result) includes update_available {latest, changelog_url}. Old versions are never rejected; an invalid value is dropped.",
+      "properties": {
+        "skill_version": {
+          "type": "string",
+          "maxLength": 32,
+          "pattern": "^v?\\d{1,6}\\.\\d{1,6}\\.\\d{1,6}(-[0-9A-Za-z.-]+)?(\\+[0-9A-Za-z.-]+)?$",
+          "description": "The fleeet-reporting skill / agent kit version, from the skill's frontmatter `version:` (fleeet-emit sends its own KIT_VERSION). Semver, e.g. '1.1.0'."
+        }
+      },
+      "additionalProperties": false
+    },
     "summary": {
       "type": "string",
       "minLength": 1,

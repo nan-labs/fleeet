@@ -35,6 +35,7 @@ Begin work on a task.
 - `summary` (required): One sentence, present tense, no period
 - `trigger` (optional): `user`, `routine`, or `agent` (default: `user`)
 - `source` (optional): Object with `repo`, `branch`, `linear_issue`, etc.
+- `skill_version` (optional, all four tools): The skill version you follow, e.g. `1.1.0`
 
 **Returns:**
 
@@ -46,6 +47,8 @@ Begin work on a task.
 ```
 
 Save the `run_id` for subsequent calls.
+
+If `skill_version` is older than the latest skill, any tool result also includes `"update_available": {"latest": "…", "changelog_url": "…"}`. See [Updating the skill](/updating).
 
 ### fleeet_heartbeat
 

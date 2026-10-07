@@ -5,7 +5,10 @@
   "type": "module",
   "scripts": {
     "pack-skill": "rm -rf dist && mkdir -p dist && python3 -m zipfile -c dist/fleeet-skill.zip skills/fleeet-reporting",
-    "check": "node --check bin/fleeet-emit.mjs && node -e \"for (const f of ['package.json','.claude-plugin/plugin.json','.claude-plugin/marketplace.json','schema/event-schema.json']) JSON.parse(require('fs').readFileSync(f,'utf8'))\""
+    "check": "node --check bin/fleeet-emit.mjs && node scripts/check-version.mjs",
+    "check:version": "node scripts/check-version.mjs",
+    "release": "node scripts/release.mjs",
+    "prepare": "node scripts/install-hooks.mjs"
   },
   "keywords": [
     "fleeet",
@@ -29,5 +32,11 @@
   },
   "engines": {
     "node": ">=18"
+  },
+  "devDependencies": {
+    "simple-git-hooks": "^2.14.0"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "node scripts/check-version.mjs --staged"
   }
 }

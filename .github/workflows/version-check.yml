@@ -1,0 +1,32 @@
+# Fails when the kit version drifts between its copies, or when the skill,
+# schema, CLI or plugin manifests change without a version bump.
+# Same script as `npm run check` and the pre-commit hook.
+name: version-check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0 # full history: the base commit must be reachable
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+      - name: Syntax and drift
+        run: npm run check
+      - name: Bump required for shipped changes
+        env:
+          # PR: the target branch tip. Push: the commit main pointed at before.
+          # Empty / all zeros (first push) or missing (force-push) falls back to
+          # HEAD~1 inside the script; a root commit gets the drift check only.
+          BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: node scripts/check-version.mjs --range "$BASE" HEAD

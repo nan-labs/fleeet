@@ -65,6 +65,10 @@ When you ask Cursor to build, fix, or investigate something, the agent posts:
 
 All posts follow the [micro-log](/micro-logs) rules: one line, no secrets, no code.
 
+## Updating
+
+When a new skill version ships, the agent tells you once. A skill loaded by URL updates by itself. A clone needs `git pull`, and a copied file needs downloading again. See [Updating the skill](/updating).
+
 ## Learn more
 
 - [Events reference](/events)

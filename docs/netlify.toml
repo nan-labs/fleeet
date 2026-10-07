@@ -112,3 +112,8 @@
   for = "/quick-start.md"
   [headers.values]
     Content-Type = "text/markdown; charset=utf-8"
+
+[[headers]]
+  for = "/updating.md"
+  [headers.values]
+    Content-Type = "text/markdown; charset=utf-8"

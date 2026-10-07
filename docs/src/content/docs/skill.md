@@ -16,7 +16,9 @@ The skill instructs agents to:
 
 ## Version
 
-The skill version appears in [versions.json](/versions.json) once the skill carries a `version:` field in its frontmatter. Until then, see the [commit history](https://github.com/nan-labs/fleeet/commits/main/skills/fleeet-reporting/SKILL.md).
+The skill opens with its version (`Fleeet skill vX.Y.Z`), which is also in `metadata.version` in its frontmatter. The skill, the Claude Code plugin and the CLI share this one number. The current version is in [versions.json](/versions.json), and what changed is in the [changelog](/changelog).
+
+Agents check `https://fleeet.space/api/version` at most once a day and tell you once when there's a newer skill. They never update themselves. See [Updating the skill](/updating) for the command for each agent.
 
 ## How to use it
 

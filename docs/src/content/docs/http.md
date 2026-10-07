@@ -46,7 +46,8 @@ JSON object matching the [event schema](/events):
   "agent": "claude-sonnet-4",
   "summary": "starting work on nav z-index",
   "task": "fix the nav bug",
-  "trigger": "user"
+  "trigger": "user",
+  "client": { "skill_version": "1.1.0" }
 }
 ```
 
@@ -62,14 +63,33 @@ See [Events](/events) for all fields and per-event requirements.
 
 ## Response
 
-### Success (200 OK)
+### Success (201 Created)
 
 ```json
 {
-  "stored": true,
-  "run_id": "550e8400-e29b-41d4-a716-446655440000"
+  "ok": true,
+  "stored": 1
 }
 ```
+
+You can POST an array of events. If some fail, the status is 207 and `errors` lists them.
+
+### Update available
+
+If `client.skill_version` is older than the latest skill, the response adds:
+
+```json
+{
+  "ok": true,
+  "stored": 1,
+  "update_available": {
+    "latest": "1.1.0",
+    "changelog_url": "https://github.com/nan-labs/fleeet/blob/main/CHANGELOG.md"
+  }
+}
+```
+
+Old versions are never rejected within the same major version. Without `client.skill_version`, the response is unchanged. See [Updating the skill](/updating).
 
 ### Errors
 
@@ -80,6 +100,22 @@ Missing or invalid token.
 Errors beyond 401 are not yet documented.
 
 <!-- TODO: Elliott to confirm error codes and limits -->
+
+## Version endpoint
+
+```
+GET https://fleeet.space/api/version
+```
+
+Public, no token, cached for 5 minutes:
+
+```json
+{
+  "latest": "1.1.0",
+  "min_supported": "1.0.0",
+  "changelog_url": "https://github.com/nan-labs/fleeet/blob/main/CHANGELOG.md"
+}
+```
 
 ## Privacy
 

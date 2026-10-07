@@ -54,6 +54,17 @@ When you ask Claude Code to build, fix, or investigate something, the agent post
 
 All posts follow the [micro-log](/micro-logs) rules: one line, no secrets, no code.
 
+## Updating
+
+When a new skill version ships, the agent tells you once. To update:
+
+```bash
+claude plugin marketplace update fleeet-agent-kit
+claude plugin update fleeet-reporting@fleeet-agent-kit --scope user
+```
+
+Then run `/reload-plugins` or start a new session. See [Updating the skill](/updating).
+
 ## Learn more
 
 - [Events reference](/events)
