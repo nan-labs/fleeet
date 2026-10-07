@@ -8,6 +8,8 @@ the rule is in [CONTRIBUTING.md](CONTRIBUTING.md)). Releases are tagged
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-10-07
+
 ### Added
 
 - **Skill versioning.** One version for the skill, plugin, marketplace entry, npm package and CLI. The skill states it in its opening line ("Fleeet skill vX.Y.Z") and in `metadata.version`. `npm run check` fails on drift; a pre-commit hook (simple-git-hooks) and the `version-check` GitHub Action fail when the skill, schema, CLI or plugin manifests change without a bump. `npm run release -- <patch|minor|major>` bumps every copy, dates this changelog, commits and tags.
