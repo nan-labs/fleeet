@@ -1,7 +1,7 @@
 {
   "name": "fleeet-agent-kit",
   "version": "1.0.0",
-  "description": "fleeet.space reporting kit for coding agents: skill, MCP server, zero-dependency CLI",
+  "description": "Skill, schema, CLI, and MCP for posting micro-logs to fleeet.space",
   "type": "module",
   "scripts": {
     "pack-skill": "rm -rf dist && mkdir -p dist && python3 -m zipfile -c dist/fleeet-skill.zip skills/fleeet-reporting",
