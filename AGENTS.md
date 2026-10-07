@@ -66,7 +66,7 @@ export FLEEET_ENDPOINT=https://fleeet.space
 export FLEEET_TOKEN=<your-token>
 ```
 
-See [fleeet-agent-kit README](https://github.com/nan-labs/fleeet) for full installation and configuration.
+See the [Fleeet kit README](https://github.com/nan-labs/fleeet) and the docs at [docs.fleeet.space](https://docs.fleeet.space) for full installation and configuration.
 ```
 
 ---
@@ -101,3 +101,5 @@ Configure the MCP server at `https://fleeet.space/mcp` with the header `Authoriz
 - CLI: `bin/fleeet-emit.mjs --help`
 - Event Schema: https://github.com/nan-labs/fleeet/blob/main/schema/event-schema.json
 - Installation: https://github.com/nan-labs/fleeet
+- Docs: https://docs.fleeet.space
+- App: https://fleeet.space

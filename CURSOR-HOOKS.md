@@ -96,7 +96,7 @@ In your shell profile (`.bashrc`, `.zshrc`, etc.):
 ```bash
 export FLEEET_ENDPOINT=https://fleeet.space
 export FLEEET_TOKEN=<your-token-here>
-export PATH="$PATH:/path/to/fleeet-agent-kit/bin"
+export PATH="$PATH:/path/to/fleeet/bin"
 ```
 
 Or create a project-specific `.env` that Cursor loads:

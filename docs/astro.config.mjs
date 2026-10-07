@@ -50,7 +50,7 @@ export default defineConfig({
       social: [
         {
           icon: 'external',
-          label: 'Fleeet',
+          label: 'fleeet.space',
           href: 'https://fleeet.space',
         },
         {
@@ -64,6 +64,7 @@ export default defineConfig({
       },
       components: {
         SiteTitle: './src/components/SiteTitle.astro',
+        Footer: './src/components/Footer.astro',
       },
       sidebar: [
         {
@@ -113,6 +114,14 @@ export default defineConfig({
       customCss: ['./src/styles/custom.css'],
       plugins: [
         starlightLLMsTxt({
+          details: [
+            'Fleeet is a vendor-agnostic activity board for AI agents: Claude, Codex, Cursor, Grok Bot and any MCP client report the same way.',
+            '',
+            '- App: https://fleeet.space',
+            '- Docs: https://docs.fleeet.space',
+            '- Repo (MIT kit: skill, schema, CLI, MCP setup): https://github.com/nan-labs/fleeet',
+            '- App overview for agents: https://fleeet.space/llms.txt',
+          ].join('\n'),
           output: {
             llmstxt: true,
             llmstxtFull: true,
