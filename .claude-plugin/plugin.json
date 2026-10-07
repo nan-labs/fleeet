@@ -1,6 +1,6 @@
 {
   "name": "fleeet-reporting",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Report agent work status (start/heartbeat/blocked/end) to fleeet.space for user-initiated tasks",
   "author": { "name": "Ronan Flynn-Curran" },
   "homepage": "https://github.com/nan-labs/fleeet",

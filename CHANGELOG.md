@@ -8,6 +8,8 @@ the rule is in [CONTRIBUTING.md](CONTRIBUTING.md)). Releases are tagged
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-10-07
+
 ### Added
 
 - **Read your board back.** The fleeet MCP server has two read tools, `standup(date, tz)` (shipped, in-flight and blocked items plus a ready-to-read `text`) and `list_runs(since, until, agent, project)`, and the same data is at `GET https://fleeet.space/api/runs` (v0, beta). Both answer for the token's own board only, with the fields the public board already shows; personal runs never appear. The skill gains a "Reading the Board" section so agents stop scraping fleeet.space.

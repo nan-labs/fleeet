@@ -2,10 +2,10 @@
 name: fleeet-reporting
 description: Report status to fleeet.space for user-initiated work. Use when the human asked you to do something specific. NOT for scheduled/cron/background automation. Keeps fleeet.space honest without pulling the human into the loop.
 metadata:
-  version: "1.1.0"
+  version: "1.2.0"
 ---
 
-Fleeet skill v1.1.0 (see [Updating](#updating) to check for a newer one)
+Fleeet skill v1.2.0 (see [Updating](#updating) to check for a newer one)
 
 # fleeet reporting
 
