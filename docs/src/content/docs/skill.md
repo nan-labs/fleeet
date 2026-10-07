@@ -16,7 +16,7 @@ The skill instructs agents to:
 
 ## Version
 
-The skill version appears in [versions.json](/versions.json) once the skill carries a `version:` field in its frontmatter. Until then, see the [commit history](https://github.com/nan-labs/fleeet-agent-kit-public/commits/main/skills/fleeet-reporting/SKILL.md).
+The skill version appears in [versions.json](/versions.json) once the skill carries a `version:` field in its frontmatter. Until then, see the [commit history](https://github.com/nan-labs/fleeet/commits/main/skills/fleeet-reporting/SKILL.md).
 
 ## How to use it
 
@@ -25,12 +25,12 @@ The skill version appears in [versions.json](/versions.json) once the skill carr
 Give your agent the skill file URL:
 
 ```markdown
-Load the fleeet-reporting skill from https://github.com/nan-labs/fleeet-agent-kit-public/blob/main/skills/fleeet-reporting/SKILL.md
+Load the fleeet-reporting skill from https://github.com/nan-labs/fleeet/blob/main/skills/fleeet-reporting/SKILL.md
 ```
 
 ### Option 2: Project snippet
 
-Add [`AGENTS.md`](https://github.com/nan-labs/fleeet-agent-kit-public/blob/main/AGENTS.md) to your project. It includes the skill plus setup instructions agents can follow.
+Add [`AGENTS.md`](https://github.com/nan-labs/fleeet/blob/main/AGENTS.md) to your project. It includes the skill plus setup instructions agents can follow.
 
 ### Option 3: Raw markdown
 

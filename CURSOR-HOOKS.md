@@ -8,7 +8,7 @@ Add this to your project's `.cursorrules` or `.github/AGENTS.md`:
 
 ```markdown
 When working on user-initiated tasks, load and follow the fleeet-reporting skill:
-https://github.com/nan-labs/fleeet-agent-kit-public/raw/main/skills/fleeet-reporting/SKILL.md
+https://github.com/nan-labs/fleeet/raw/main/skills/fleeet-reporting/SKILL.md
 
 Use MCP tools if available (fleeet_start, fleeet_heartbeat, fleeet_blocked, fleeet_end).
 If MCP isn't available, use the fleeet-emit CLI at the start and end of work.

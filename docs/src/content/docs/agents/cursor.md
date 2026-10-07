@@ -39,7 +39,7 @@ node bin/fleeet-emit.mjs session_end --summary "done" --outcome.status shipped
 Add to your agent instructions or `.cursorrules`:
 
 ```markdown
-Load the fleeet-reporting skill from https://github.com/nan-labs/fleeet-agent-kit-public/blob/main/skills/fleeet-reporting/SKILL.md
+Load the fleeet-reporting skill from https://github.com/nan-labs/fleeet/blob/main/skills/fleeet-reporting/SKILL.md
 ```
 
 The skill tells the agent when to report and how to keep updates short and safe.

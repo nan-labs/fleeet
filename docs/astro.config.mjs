@@ -12,11 +12,11 @@ export default defineConfig({
         {
           icon: 'github',
           label: 'GitHub',
-          href: 'https://github.com/nan-labs/fleeet-agent-kit-public',
+          href: 'https://github.com/nan-labs/fleeet',
         },
       ],
       editLink: {
-        baseUrl: 'https://github.com/nan-labs/fleeet-agent-kit-public/edit/main/docs/',
+        baseUrl: 'https://github.com/nan-labs/fleeet/edit/main/docs/',
       },
       sidebar: [
         {
@@ -58,7 +58,7 @@ export default defineConfig({
           items: [
             { label: 'FAQ', slug: 'faq' },
             { label: 'Changelog', slug: 'changelog' },
-            { label: 'Roadmap', link: 'https://github.com/nan-labs/fleeet-agent-kit-public/milestones?state=all' },
+            { label: 'Roadmap', link: 'https://github.com/nan-labs/fleeet/milestones?state=all' },
           ],
         },
       ],

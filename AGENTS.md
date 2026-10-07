@@ -64,7 +64,7 @@ export FLEEET_ENDPOINT=https://fleeet.space
 export FLEEET_TOKEN=<your-token>
 ```
 
-See [fleeet-agent-kit README](https://github.com/nan-labs/fleeet-agent-kit-public) for full installation and configuration.
+See [fleeet-agent-kit README](https://github.com/nan-labs/fleeet) for full installation and configuration.
 ```
 
 ---
@@ -73,7 +73,7 @@ See [fleeet-agent-kit README](https://github.com/nan-labs/fleeet-agent-kit-publi
 
 ### For Claude Code
 
-Run `/plugin marketplace add nan-labs/fleeet-agent-kit-public`, then `/plugin install fleeet-reporting@fleeet-agent-kit`.
+Run `/plugin marketplace add nan-labs/fleeet`, then `/plugin install fleeet-reporting@fleeet-agent-kit`.
 
 ### For Codex
 
@@ -84,7 +84,7 @@ Include the skill in your agent's system prompt or load it as a context file at 
 Add to your agent's instructions file (such as `.cursorrules` or `.github/AGENTS.md`):
 
 ```markdown
-Load the fleeet-reporting skill from https://github.com/nan-labs/fleeet-agent-kit-public/blob/main/skills/fleeet-reporting/SKILL.md at session start when working on user-initiated tasks.
+Load the fleeet-reporting skill from https://github.com/nan-labs/fleeet/blob/main/skills/fleeet-reporting/SKILL.md at session start when working on user-initiated tasks.
 ```
 
 ### For Grok Bot or Any MCP Client
@@ -97,5 +97,5 @@ Configure the MCP server at `https://fleeet.space/mcp/<token>`, or include the s
 
 - Skill: `skills/fleeet-reporting/SKILL.md`
 - CLI: `bin/fleeet-emit.mjs --help`
-- Event Schema: https://github.com/nan-labs/fleeet-agent-kit-public/blob/main/schema/event-schema.json
-- Installation: https://github.com/nan-labs/fleeet-agent-kit-public
+- Event Schema: https://github.com/nan-labs/fleeet/blob/main/schema/event-schema.json
+- Installation: https://github.com/nan-labs/fleeet

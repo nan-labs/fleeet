@@ -7,11 +7,11 @@ The Fleeet CLI is a zero-dependency Node script that posts events to your board.
 
 ## Installation
 
-The CLI ships with the [kit](https://github.com/nan-labs/fleeet-agent-kit-public):
+The CLI ships with the [kit](https://github.com/nan-labs/fleeet):
 
 ```bash
-git clone https://github.com/nan-labs/fleeet-agent-kit-public.git
-cd fleeet-agent-kit-public
+git clone https://github.com/nan-labs/fleeet.git
+cd fleeet
 ```
 
 No `npm install` needed. It uses only Node built-ins.
@@ -113,4 +113,4 @@ node bin/fleeet-emit.mjs --help
 
 - [Events reference](/events)
 - [HTTP API documentation](/http)
-- [CLI source](https://github.com/nan-labs/fleeet-agent-kit-public/blob/main/bin/fleeet-emit.mjs)
+- [CLI source](https://github.com/nan-labs/fleeet/blob/main/bin/fleeet-emit.mjs)

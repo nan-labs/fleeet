@@ -3,9 +3,9 @@ title: Changelog
 description: Version history for the Fleeet skill, CLI, and MCP server
 ---
 
-Versioning for the skill, CLI, and MCP is on the [roadmap](https://github.com/nan-labs/fleeet-agent-kit-public/milestones?state=all) (4.6).
+Versioning for the skill, CLI, and MCP is on the [roadmap](https://github.com/nan-labs/fleeet/milestones?state=all) (4.6).
 
-Until then, see the [commit history](https://github.com/nan-labs/fleeet-agent-kit-public/commits/main) for changes to the kit.
+Until then, see the [commit history](https://github.com/nan-labs/fleeet/commits/main) for changes to the kit.
 
 ## Current versions
 

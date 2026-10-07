@@ -105,7 +105,7 @@ When omitted, falls back to `source.repo`, then `general` (shown as the agent al
 
 ## Schema
 
-Full JSON Schema: [event-schema.json](https://github.com/nan-labs/fleeet-agent-kit-public/blob/main/schema/event-schema.json)
+Full JSON Schema: [event-schema.json](https://github.com/nan-labs/fleeet/blob/main/schema/event-schema.json)
 
 ## Privacy
 

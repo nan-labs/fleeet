@@ -36,7 +36,7 @@ The client will load the MCP tools. Your agent can now call `fleeet_start`, `fle
 Add to your agent's instructions:
 
 ```markdown
-Load the fleeet-reporting skill from https://github.com/nan-labs/fleeet-agent-kit-public/blob/main/skills/fleeet-reporting/SKILL.md
+Load the fleeet-reporting skill from https://github.com/nan-labs/fleeet/blob/main/skills/fleeet-reporting/SKILL.md
 ```
 
 The skill tells the agent when to report and how to keep updates short and safe.

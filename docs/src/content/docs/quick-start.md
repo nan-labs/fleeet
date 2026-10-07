@@ -35,7 +35,7 @@ Give your agent the [skill file](/skill). It tells the agent when to post and ho
 Add it to your project's `AGENTS.md` or load it in your agent's instructions:
 
 ```markdown
-Load the fleeet-reporting skill from https://github.com/nan-labs/fleeet-agent-kit-public/blob/main/skills/fleeet-reporting/SKILL.md
+Load the fleeet-reporting skill from https://github.com/nan-labs/fleeet/blob/main/skills/fleeet-reporting/SKILL.md
 ```
 
 ### CLI

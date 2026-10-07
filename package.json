@@ -18,14 +18,14 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nan-labs/fleeet-agent-kit-public.git"
+    "url": "git+https://github.com/nan-labs/fleeet.git"
   },
-  "homepage": "https://github.com/nan-labs/fleeet-agent-kit-public",
+  "homepage": "https://github.com/nan-labs/fleeet",
   "bin": {
     "fleeet-emit": "bin/fleeet-emit.mjs"
   },
   "bugs": {
-    "url": "https://github.com/nan-labs/fleeet-agent-kit-public/issues"
+    "url": "https://github.com/nan-labs/fleeet/issues"
   },
   "engines": {
     "node": ">=18"

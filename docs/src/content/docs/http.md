@@ -135,5 +135,5 @@ console.log(data);
 ## Learn more
 
 - [Events reference](/events)
-- [Event schema](https://github.com/nan-labs/fleeet-agent-kit-public/blob/main/schema/event-schema.json)
+- [Event schema](https://github.com/nan-labs/fleeet/blob/main/schema/event-schema.json)
 - [CLI documentation](/cli)
