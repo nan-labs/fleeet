@@ -25,6 +25,8 @@
 //   - POSTs to $FLEEET_ENDPOINT/api/events with Bearer $FLEEET_TOKEN
 //   - Falls back to ./.fleeet/events.jsonl on network errors
 //   - Validates required fields per event type
+//   - Skips (exit 0, nothing posted or spooled) events that look personal:
+//     job search, health, family, finances, legal, errands, emails, phones
 //   - Sends client.skill_version (KIT_VERSION below); if fleeet.space answers
 //     with update_available, prints a one-line notice (once a day) on stderr.
 //     It never updates anything itself.
@@ -38,7 +40,7 @@ import { randomUUID } from "node:crypto";
 // The kit version (skill, plugin, CLI share one). Bumped only by
 // `npm run release`; `npm run check` fails if it drifts from package.json.
 // A constant, not a package.json read: this file is also downloaded alone.
-const KIT_VERSION = "1.2.2";
+const KIT_VERSION = "1.3.0";
 
 const RUN_ID_FILE = join(tmpdir(), "fleeet-run-id");
 const NOTICE_FILE = join(tmpdir(), "fleeet-update-notice");
@@ -48,6 +50,30 @@ const ENDPOINT = (process.env.FLEEET_ENDPOINT || "https://fleeet.space").replace
 const TOKEN = process.env.FLEEET_TOKEN;
 const AGENT = process.env.FLEEET_AGENT || process.env.USER || userInfo().username || "unknown";
 const SURFACE = (process.env.FLEEET_SURFACE || "").trim().slice(0, 32);
+
+// Personal-topic guard: Fleeet is a public work log. Personal sessions
+// (job search, health, family, money, legal, errands) are never posted.
+const PERSONAL_TOPICS = [
+  ["job search", /\b(job (search|hunt|application|offer|posting)s?|applied (to|for)|application (to|for|at)|interview(s|ed|ing)?|referrals?|referred me|recruit(er|ers|ing)|offer letter|hiring (me|manager)|r[eé]sum[eé]s?\b(?! (work|the|it|from|after|session))|\/resume\b|cover letter|cv\b|plan[ -]b|career page|role (scan|hunt|posting)|new[- ]role)\b/i],
+  ["health", /\b(doctor|dentist|medical|medication|prescription|therap(y|ist)|diagnos(is|ed)|hospital|clinic|symptoms?|surgery|health (insurance|appointment))\b/i],
+  ["family", /\b(my (kids?|son|daughter|wife|husband|partner|mum|mom|dad|family)|kids?'? (school|pickup|birthday)|babysit\w*|childcare|daycare|birthday (party|gift))\b/i],
+  ["finances", /\b(tax(es| return)|mortgage|salary|bank account|credit card|loan|401k|brokerage|net worth|personal (budget|finances?))\b/i],
+  ["legal", /\b(lawyer|attorney|lawsuit|court (case|filing|date)|landlord|tenant|eviction|small claims|legal (advice|filing|case))\b/i],
+  ["personal errand", /\b(barber|haircut|groceries|grocery|laundry|dry clean\w*|kitchen (remodel|elevation)|home (repair|renovation)|personal errand)\b/i],
+  ["email address", /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i],
+  ["phone number", /(\+?\d{1,2}[\s.-]?)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}\b/],
+];
+
+// Returns the first matching topic label, or null. Checks task, summary,
+// blocker and outcome (text only, artefact URLs ignored).
+function personalTopic(e) {
+  const strip = (v) => (v && typeof v === "object" ? { ...v, artefacts: undefined } : v);
+  const text = [e?.task, e?.summary, strip(e?.blocker), strip(e?.outcome)]
+    .map((v) => (typeof v === "string" ? v : v ? JSON.stringify(v) : ""))
+    .join(" \n ");
+  for (const [label, re] of PERSONAL_TOPICS) if (re.test(text)) return label;
+  return null;
+}
 
 function help() {
   console.log(`fleeet-emit ${KIT_VERSION} — emit fleeet events from the command line
@@ -294,6 +320,14 @@ async function main() {
   if (event === "session_start") {
     writeFileSync(RUN_ID_FILE, runId);
     console.log(`run_id: ${runId}`);
+  }
+
+  // Personal-topic guard: skip (never post or spool), exit 0.
+  // FLEEET_ALLOW_PERSONAL=1 overrides for a deliberate false positive.
+  const topic = process.env.FLEEET_ALLOW_PERSONAL === "1" ? null : personalTopic(payload);
+  if (topic) {
+    console.error(`fleeet-emit: skipped, looks personal (${topic}). Fleeet is a public work log; personal sessions are never emitted.`);
+    process.exit(0);
   }
 
   // Try POST, fall back to local spool

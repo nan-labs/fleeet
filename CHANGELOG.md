@@ -8,6 +8,12 @@ the rule is in [CONTRIBUTING.md](CONTRIBUTING.md)). Releases are tagged
 
 ## [Unreleased]
 
+## [1.3.0] - 2026-10-12
+
+### Added
+
+- **Personal-topic filter.** `fleeet-emit` now skips, with a local note and exit 0, any event whose task, summary, blocker or outcome looks personal (job search, health, family, finances, legal, personal errands, email addresses, phone numbers). Nothing is posted or spooled. `FLEEET_ALLOW_PERSONAL=1` overrides a false positive. The skill gains a hard rule: never emit for personal tasks; skip the whole session.
+
 ## [1.2.2] - 2026-10-07
 
 ### Security
