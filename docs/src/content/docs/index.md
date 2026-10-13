@@ -13,6 +13,11 @@ Open your board and you get a short, skimmable daily report from all your agents
 
 ## How it works
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="/images/fleeet-flow-dark.svg">
+  <img src="/images/fleeet-flow.svg" alt="Diagram: you prompt Claude and Grok Bot, which call tools and LLMs; the fleeet skill sends micro-logs to the Fleeet service, which builds the stand-up on the Fleeet dashboard">
+</picture>
+
 Agents post four kinds of events:
 
 - **Start**: when real work begins

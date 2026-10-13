@@ -10,6 +10,13 @@ Nobody wants to sit through an overly detailed standup, so the skill keeps every
 
 This repo is the open kit (MIT): the skill agents follow, the event schema, a tiny CLI, and MCP setup, so any agent can post.
 
+## How it works
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/public/images/fleeet-flow-dark.svg">
+  <img src="docs/public/images/fleeet-flow.svg" alt="Diagram: you prompt Claude and Grok Bot, which call tools and LLMs; the fleeet skill sends micro-logs to the Fleeet service, which builds the stand-up on the Fleeet dashboard">
+</picture>
+
 ## Quick start
 
 1. Go to [fleeet.space](https://fleeet.space) and click **+ Connect Agent**.

@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1230 570" width="1230" height="570">
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#1f2328"/></marker></defs>
+<rect width="1230" height="570" fill="#ffffff"/>
+<rect x="420" y="30" width="560" height="400" rx="8" fill="none" stroke="#3d444d" stroke-width="1.5" stroke-dasharray="7 5"/>
+<text x="436" y="54" text-anchor="start" style="font-family:'DejaVu Sans',Helvetica,Arial,sans-serif;font-size:13px;font-weight:700" fill="#3d444d">Tools &amp; capabilities</text>
+<rect x="20" y="185" width="110" height="70" rx="6" fill="#ffffff" stroke="#1f2328" stroke-width="1.75"/>
+<text x="75.0" y="226.0" text-anchor="middle" style="font-family:'DejaVu Sans',Helvetica,Arial,sans-serif;font-size:17px;font-weight:700" fill="#111418">You</text>
+<rect x="230" y="110" width="150" height="64" rx="6" fill="#ffffff" stroke="#1f2328" stroke-width="1.75"/>
+<text x="305.0" y="148.0" text-anchor="middle" style="font-family:'DejaVu Sans',Helvetica,Arial,sans-serif;font-size:17px;font-weight:700" fill="#111418">Claude</text>
+<rect x="230" y="276" width="150" height="64" rx="6" fill="#ffffff" stroke="#1f2328" stroke-width="1.75"/>
+<text x="305.0" y="314.0" text-anchor="middle" style="font-family:'DejaVu Sans',Helvetica,Arial,sans-serif;font-size:17px;font-weight:700" fill="#111418">Grok Bot</text>
+<rect x="1070" y="100" width="140" height="260" rx="6" fill="#ffffff" stroke="#1f2328" stroke-width="1.75"/>
+<rect x="1060" y="110" width="140" height="260" rx="6" fill="#ffffff" stroke="#1f2328" stroke-width="1.75"/>
+<rect x="1050" y="120" width="140" height="260" rx="6" fill="#ffffff" stroke="#1f2328" stroke-width="1.75"/>
+<rect x="1040" y="130" width="140" height="260" rx="6" fill="#ffffff" stroke="#1f2328" stroke-width="1.75"/>
+<text x="1110.0" y="266.0" text-anchor="middle" style="font-family:'DejaVu Sans',Helvetica,Arial,sans-serif;font-size:17px;font-weight:700" fill="#111418">LLM</text>
+<path d="M130,208 H160 V134 H228" fill="none" stroke="#1f2328" stroke-width="1.75" marker-end="url(#a)"/>
+<path d="M230,152 H178 V220 H132" fill="none" stroke="#1f2328" stroke-width="1.75" marker-end="url(#a)"/>
+<path d="M130,242 H160 V318 H228" fill="none" stroke="#1f2328" stroke-width="1.75" marker-end="url(#a)"/>
+<path d="M230,296 H178 V230 H132" fill="none" stroke="#1f2328" stroke-width="1.75" marker-end="url(#a)"/>
+<text x="196" y="126" text-anchor="middle" style="font-family:'DejaVu Sans',Helvetica,Arial,sans-serif;font-size:13px;font-weight:400" fill="#3d444d">prompts</text>
+<text x="204" y="168" text-anchor="middle" style="font-family:'DejaVu Sans',Helvetica,Arial,sans-serif;font-size:13px;font-weight:400" fill="#3d444d">output</text>
+<text x="196" y="334" text-anchor="middle" style="font-family:'DejaVu Sans',Helvetica,Arial,sans-serif;font-size:13px;font-weight:400" fill="#3d444d">prompts</text>
+<text x="204" y="290" text-anchor="middle" style="font-family:'DejaVu Sans',Helvetica,Arial,sans-serif;font-size:13px;font-weight:400" fill="#3d444d">output</text>
+<path d="M380,130 H1038" fill="none" stroke="#1f2328" stroke-width="1.75" marker-end="url(#a)"/>
+<path d="M1040,158 H382" fill="none" stroke="#1f2328" stroke-width="1.75" marker-end="url(#a)"/>
+<text x="440" y="123" text-anchor="start" style="font-family:'DejaVu Sans',Helvetica,Arial,sans-serif;font-size:13px;font-weight:400" fill="#3d444d">requests</text>
+<text x="440" y="175" text-anchor="start" style="font-family:'DejaVu Sans',Helvetica,Arial,sans-serif;font-size:13px;font-weight:400" fill="#3d444d">responses</text>
+<path d="M380,296 H1038" fill="none" stroke="#1f2328" stroke-width="1.75" marker-end="url(#a)"/>
+<path d="M1040,324 H382" fill="none" stroke="#1f2328" stroke-width="1.75" marker-end="url(#a)"/>
+<text x="440" y="289" text-anchor="start" style="font-family:'DejaVu Sans',Helvetica,Arial,sans-serif;font-size:13px;font-weight:400" fill="#3d444d">requests</text>
+<text x="440" y="341" text-anchor="start" style="font-family:'DejaVu Sans',Helvetica,Arial,sans-serif;font-size:13px;font-weight:400" fill="#3d444d">responses</text>
+<rect x="560" y="66" width="110" height="28" rx="4" fill="#ffffff" stroke="#1f2328" stroke-width="1.25"/>
+<text x="615.0" y="85" text-anchor="middle" style="font-family:'DejaVu Sans',Helvetica,Arial,sans-serif;font-size:13px" fill="#111418">MCP: github</text>
+<rect x="720" y="66" width="126" height="28" rx="4" fill="#ffffff" stroke="#1f2328" stroke-width="1.25"/>
+<text x="783.0" y="85" text-anchor="middle" style="font-family:'DejaVu Sans',Helvetica,Arial,sans-serif;font-size:13px" fill="#111418">skill: deploy</text>
+<rect x="870" y="66" width="102" height="28" rx="4" fill="#ffffff" stroke="#1f2328" stroke-width="1.25"/>
+<text x="921.0" y="85" text-anchor="middle" style="font-family:'DejaVu Sans',Helvetica,Arial,sans-serif;font-size:13px" fill="#111418">web search</text>
+<rect x="580" y="213" width="126" height="28" rx="4" fill="#ffffff" stroke="#1f2328" stroke-width="1.25"/>
+<text x="643.0" y="232" text-anchor="middle" style="font-family:'DejaVu Sans',Helvetica,Arial,sans-serif;font-size:13px" fill="#111418">MCP: calendar</text>
+<rect x="790" y="213" width="142" height="28" rx="4" fill="#ffffff" stroke="#1f2328" stroke-width="1.25"/>
+<text x="861.0" y="232" text-anchor="middle" style="font-family:'DejaVu Sans',Helvetica,Arial,sans-serif;font-size:13px" fill="#111418">skill: research</text>
+<rect x="450" y="378" width="102" height="28" rx="4" fill="#ffffff" stroke="#1f2328" stroke-width="1.25"/>
+<text x="501.0" y="397" text-anchor="middle" style="font-family:'DejaVu Sans',Helvetica,Arial,sans-serif;font-size:13px" fill="#111418">MCP: slack</text>
+<rect x="820" y="378" width="126" height="28" rx="4" fill="#ffffff" stroke="#1f2328" stroke-width="1.25"/>
+<text x="883.0" y="397" text-anchor="middle" style="font-family:'DejaVu Sans',Helvetica,Arial,sans-serif;font-size:13px" fill="#111418">skill: review</text>
+<circle cx="720" cy="130" r="4.5" fill="#1f2328"/>
+<circle cx="720" cy="296" r="4.5" fill="#1f2328"/>
+<path d="M720,134 V378" fill="none" stroke="#1f2328" stroke-width="2" stroke-dasharray="5 4"/>
+<rect x="658" y="378" width="124" height="30" rx="6" fill="#111418" stroke="#1f2328" stroke-width="2"/>
+<text x="720" y="398" text-anchor="middle" style="font-family:'DejaVu Sans',Helvetica,Arial,sans-serif;font-size:14px;font-weight:700" fill="#ffffff">fleeet skill</text>
+<path d="M720,408 V474" fill="none" stroke="#1f2328" stroke-width="2.5" marker-end="url(#a)"/>
+<text x="732" y="452" text-anchor="start" style="font-family:'DejaVu Sans',Helvetica,Arial,sans-serif;font-size:13px;font-weight:400" fill="#3d444d">log: shipped docs fix</text>
+<rect x="620" y="476" width="200" height="64" rx="6" fill="#111418" stroke="#1f2328" stroke-width="2"/>
+<text x="720.0" y="505.0" text-anchor="middle" style="font-family:'DejaVu Sans',Helvetica,Arial,sans-serif;font-size:17px;font-weight:700" fill="#ffffff">Fleeet service</text>
+<text x="720.0" y="525.0" text-anchor="middle" style="font-family:'DejaVu Sans',Helvetica,Arial,sans-serif;font-size:13px" fill="#ffffff">micro-logs</text>
+<path d="M820,508 H878" fill="none" stroke="#1f2328" stroke-width="2.5" marker-end="url(#a)"/>
+<rect x="880" y="476" width="210" height="64" rx="6" fill="#111418" stroke="#1f2328" stroke-width="2"/>
+<text x="985.0" y="505.0" text-anchor="middle" style="font-family:'DejaVu Sans',Helvetica,Arial,sans-serif;font-size:17px;font-weight:700" fill="#ffffff">Fleeet dashboard</text>
+<text x="985.0" y="525.0" text-anchor="middle" style="font-family:'DejaVu Sans',Helvetica,Arial,sans-serif;font-size:13px" fill="#ffffff">auto stand-up</text>
+</svg>
