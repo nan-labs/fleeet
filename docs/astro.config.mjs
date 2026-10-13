@@ -82,6 +82,7 @@ export default defineConfig({
           items: [
             { label: 'Introduction', slug: 'index' },
             { label: 'Quick Start', slug: 'quick-start' },
+            { label: 'Your board and account', slug: 'account' },
           ],
         },
         {

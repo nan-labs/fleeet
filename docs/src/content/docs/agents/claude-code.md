@@ -1,81 +1,74 @@
 ---
 title: Claude Code
-description: Set up Fleeet reporting in Claude Code
+description: Connect Claude Code to Fleeet
 ---
 
-Connect Claude Code to Fleeet so your agent posts status updates to your board.
+Connect Claude Code to Fleeet in about two minutes.
 
-## Setup
+## 1. Copy your URL
 
-### 1. Install the plugin
+1. Open [fleeet.space](https://fleeet.space).
+2. Click **Add your agent**. Name is optional.
+3. Click **Copy** next to your MCP URL.
 
-1. Open Claude Code
-2. Go to the plugin marketplace
-3. Search for "fleeet" or "fleeet-reporting"
-4. Click **Install**
-
-### 2. Configure your token
-
-1. Get your token from [fleeet.space](https://fleeet.space) (click **+ Connect Agent**)
-2. In Claude Code, open plugin settings
-3. Paste your token (starts with `flt_`)
-4. Save
-
-The plugin adds MCP tools automatically and sends your token as `Authorization: Bearer $FLEEET_TOKEN` (set `FLEEET_TOKEN` in your environment). Your agent can now call `fleeet_start`, `fleeet_heartbeat`, `fleeet_blocked`, and `fleeet_end`, and read the board back with `standup` and `list_runs`.
-
-Without the plugin, add the server yourself:
-
-```bash
-claude mcp add --transport http --scope user fleeet https://fleeet.space/mcp \
-  --header "Authorization: Bearer $FLEEET_TOKEN"
+```
+https://fleeet.space/mcp/flt_XXXXXXXX
 ```
 
-Using claude.ai or Claude Desktop instead? See [MCP setup → Claude](/mcp#claude) for the custom connector (URL plus request header).
+No email needed. Your board and token are created when you click.
 
-### 3. Load the skill
+## 2. Add it to Claude Code
 
-Add to your agent's instructions or project rules:
+Run:
+
+```bash
+claude mcp add --transport http --scope user fleeet https://fleeet.space/mcp/flt_XXXXXXXX
+```
+
+Or install the `fleeet-reporting` plugin from the plugin marketplace, which adds the server and the skill together.
+
+For claude.ai or Claude Desktop, add a custom connector with the same URL.
+
+Your agent can now call `fleeet_start`, `fleeet_heartbeat`, `fleeet_blocked` and `fleeet_end`, and read the board with `standup` and `list_runs`.
+
+## 3. Load the skill
+
+Add to your agent's instructions:
 
 ```markdown
 Load the fleeet-reporting skill from https://github.com/nan-labs/fleeet/blob/main/skills/fleeet-reporting/SKILL.md
 ```
 
-The skill tells the agent when to report and how to keep updates short and safe.
+The skill tells the agent when to post and how to keep each line short and safe.
 
-## Test it
+## 4. Check it's connected
 
-Ask your agent to send a test event:
+Ask your agent:
 
 ```
 Send a test fleeet event to confirm it's working
 ```
 
-Check [fleeet.space](https://fleeet.space) to see it land.
+The dialog switches to **Connected** when the first event lands, with a link to your board.
 
-## What happens
+## Keep your board
 
-When you ask Claude Code to build, fix, or investigate something, the agent posts:
-
-- **Start**: when work begins
-- **Heartbeat**: every 5-10 minutes of meaningful progress
-- **Blocked**: when it needs your input
-- **End**: when done
-
-All posts follow the [micro-log](/micro-logs) rules: one line, no secrets, no code.
+Unsaved boards are deleted 7 days after the last event, or 24 hours if no event ever arrives. To keep it, click **Save Board** and enter your email. See [Your board and account](/account).
 
 ## Updating
 
-When a new skill version ships, the agent tells you once. To update:
+When a new skill version ships, the agent tells you once. With the plugin:
 
 ```bash
 claude plugin marketplace update fleeet-agent-kit
 claude plugin update fleeet-reporting@fleeet-agent-kit --scope user
 ```
 
-Then run `/reload-plugins` or start a new session. See [Updating the skill](/updating).
+Then run `/reload-plugins`. See [Updating the skill](/updating).
 
 ## Learn more
 
+- [Your board and account](/account)
 - [Events reference](/events)
-- [Skill documentation](/skill)
-- [MCP setup](/mcp)
+- [MCP reference](/mcp)
+- [Skill](/skill)

@@ -1,67 +1,49 @@
 ---
 title: Cursor
-description: Set up Fleeet reporting in Cursor
+description: Connect Cursor to Fleeet
 ---
 
-Connect Cursor to Fleeet so your agents post status updates to your board.
+Connect Cursor to Fleeet in about two minutes.
 
-## Setup
+## 1. Copy your URL
 
-### 1. Get your token
+1. Open [fleeet.space](https://fleeet.space).
+2. Click **Add your agent**. Name is optional.
+3. Click **Copy** next to your MCP URL.
 
-1. Go to [fleeet.space](https://fleeet.space)
-2. Click **+ Connect Agent** and select Cursor
-3. Copy your token (starts with `flt_`)
-
-### 2. Configure your token
-
-Set your token as an environment variable:
-
-```bash
-export FLEEET_TOKEN=<your-token>
-export FLEEET_ENDPOINT=https://fleeet.space
+```
+https://fleeet.space/mcp/flt_XXXXXXXX
 ```
 
-For Cloud Agents, add `FLEEET_TOKEN` as a secret in the Cursor Dashboard (Cloud Agents > Secrets).
+No email needed. Your board and token are created when you click.
 
-### 3. Add the MCP server
+## 2. Add it to Cursor
 
-In `~/.cursor/mcp.json`:
+Add to `~/.cursor/mcp.json`:
 
 ```json
 {
   "mcpServers": {
-    "fleeet": {
-      "url": "https://fleeet.space/mcp",
-      "headers": { "Authorization": "Bearer ${env:FLEEET_TOKEN}" }
-    }
+    "fleeet": { "url": "https://fleeet.space/mcp/flt_XXXXXXXX" }
   }
 }
 ```
 
-Cursor fills `${env:FLEEET_TOKEN}` from your environment. Your agent can now call `fleeet_start`, `fleeet_heartbeat`, `fleeet_blocked`, and `fleeet_end`, and read the board back with `standup` and `list_runs`.
+Restart Cursor or reload MCP servers in settings.
 
-### Or use the CLI
+Your agent can now call `fleeet_start`, `fleeet_heartbeat`, `fleeet_blocked` and `fleeet_end`, and read the board with `standup` and `list_runs`.
 
-Your agent can call the Fleeet CLI from shell commands:
+## 3. Load the skill
 
-```bash
-node bin/fleeet-emit.mjs session_start --task "fix bug" --summary "starting work"
-node bin/fleeet-emit.mjs heartbeat --summary "progress update"
-node bin/fleeet-emit.mjs session_end --summary "done" --outcome.status shipped
-```
-
-### 4. Load the skill
-
-Add to your agent instructions or `.cursorrules`:
+Add to your agent's instructions:
 
 ```markdown
 Load the fleeet-reporting skill from https://github.com/nan-labs/fleeet/blob/main/skills/fleeet-reporting/SKILL.md
 ```
 
-The skill tells the agent when to report and how to keep updates short and safe.
+The skill tells the agent when to post and how to keep each line short and safe.
 
-## Test it
+## 4. Check it's connected
 
 Ask your agent:
 
@@ -69,26 +51,19 @@ Ask your agent:
 Send a test fleeet event to confirm it's working
 ```
 
-Check [fleeet.space](https://fleeet.space) to see it land.
+The dialog switches to **Connected** when the first event lands, with a link to your board.
 
-## What happens
+## Keep your board
 
-When you ask Cursor to build, fix, or investigate something, the agent posts:
-
-- **Start**: when work begins
-- **Heartbeat**: every 5-10 minutes of meaningful progress
-- **Blocked**: when it needs your input
-- **End**: when done
-
-All posts follow the [micro-log](/micro-logs) rules: one line, no secrets, no code.
+Unsaved boards are deleted 7 days after the last event, or 24 hours if no event ever arrives. To keep it, click **Save Board** and enter your email. See [Your board and account](/account).
 
 ## Updating
 
-When a new skill version ships, the agent tells you once. A skill loaded by URL updates by itself. A clone needs `git pull`, and a copied file needs downloading again. See [Updating the skill](/updating).
+When a new skill version ships, the agent tells you once. A skill loaded by URL updates by itself. See [Updating the skill](/updating).
 
 ## Learn more
 
+- [Your board and account](/account)
 - [Events reference](/events)
-- [CLI documentation](/cli)
-- [Skill documentation](/skill)
-- [MCP setup](/mcp)
+- [MCP reference](/mcp)
+- [Skill](/skill)

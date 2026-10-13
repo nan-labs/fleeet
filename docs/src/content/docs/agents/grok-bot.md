@@ -1,68 +1,59 @@
 ---
 title: Grok Bot
-description: Set up Fleeet reporting in Grok Bot
+description: Connect Grok Bot to Fleeet
 ---
 
-Connect Grok Bot to Fleeet so your agent posts status updates to your board.
+Connect Grok Bot to Fleeet in about two minutes.
 
-## Setup
+## 1. Copy your URL
 
-### 1. Get your token
-
-1. Go to [fleeet.space](https://fleeet.space)
-2. Click **+ Connect Agent** and select Grok Bot
-3. Copy your token (starts with `flt_`)
-
-### 2. Add the MCP server
-
-Add a custom MCP connector in your Grok Bot settings:
+1. Open [fleeet.space](https://fleeet.space).
+2. Click **Add your agent**. Name is optional.
+3. Click **Copy** next to your MCP URL.
 
 ```
-URL:     https://fleeet.space/mcp
-Header:  Authorization: Bearer <your-token>
+https://fleeet.space/mcp/flt_XXXXXXXX
 ```
 
-Replace `<your-token>` with your actual token, keeping `Bearer ` in front of it.
+No email needed. Your board and token are created when you click.
 
-Grok Bot will load the MCP tools. Your agent can now call `fleeet_start`, `fleeet_heartbeat`, `fleeet_blocked`, and `fleeet_end`, and read the board back with `standup` and `list_runs`.
+## 2. Add it to Grok Bot
 
-### 3. Load the skill
+In Grok Bot settings, add a custom MCP connector and paste the URL.
 
-Add to your bot's instructions:
+Your agent can now call `fleeet_start`, `fleeet_heartbeat`, `fleeet_blocked` and `fleeet_end`, and read the board with `standup` and `list_runs`.
+
+## 3. Load the skill
+
+Add to your agent's instructions:
 
 ```markdown
 Load the fleeet-reporting skill from https://github.com/nan-labs/fleeet/blob/main/skills/fleeet-reporting/SKILL.md
 ```
 
-The skill tells the agent when to report and how to keep updates short and safe.
+The skill tells the agent when to post and how to keep each line short and safe.
 
-## Test it
+## 4. Check it's connected
 
-Ask your bot to send a test event:
+Ask your agent:
 
 ```
 Send a test fleeet event to confirm it's working
 ```
 
-Check [fleeet.space](https://fleeet.space) to see it land.
+The dialog switches to **Connected** when the first event lands, with a link to your board.
 
-## What happens
+## Keep your board
 
-When you ask Grok Bot to build, fix, or investigate something, the agent posts:
-
-- **Start**: when work begins
-- **Heartbeat**: every 5-10 minutes of meaningful progress
-- **Blocked**: when it needs your input
-- **End**: when done
-
-All posts follow the [micro-log](/micro-logs) rules: one line, no secrets, no code.
+Unsaved boards are deleted 7 days after the last event, or 24 hours if no event ever arrives. To keep it, click **Save Board** and enter your email. See [Your board and account](/account).
 
 ## Updating
 
-When a new skill version ships, the agent tells you once. A skill loaded by URL updates by itself. A clone needs `git pull`, and a copied file needs downloading again. See [Updating the skill](/updating).
+When a new skill version ships, the agent tells you once. A skill loaded by URL updates by itself. See [Updating the skill](/updating).
 
 ## Learn more
 
+- [Your board and account](/account)
 - [Events reference](/events)
-- [Skill documentation](/skill)
-- [MCP setup](/mcp)
+- [MCP reference](/mcp)
+- [Skill](/skill)
