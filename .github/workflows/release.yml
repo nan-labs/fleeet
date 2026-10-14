@@ -1,0 +1,100 @@
+# Publishes a GitHub Release whenever main carries a kit version that has no
+# published release yet. Ronan's protocol: pm/RELEASE.md in fleeet-admin.
+#
+# 1. Reads the version from package.json.
+# 2. Skips if the GitHub Release vX.Y.Z already exists.
+# 3. Runs the version-sync check, lint (syntax), tests and docs build.
+# 4. On green: creates the annotated tag vX.Y.Z on this commit if it doesn't
+#    exist yet (an existing tag is reused, never moved), then publishes the
+#    GitHub Release with that version's CHANGELOG.md section as notes.
+name: release
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+
+      - name: Version and release state
+        id: v
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          TAG="v$VERSION"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            echo "Release $TAG already published; nothing to do."
+            echo "needed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "needed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Version sync check
+        if: steps.v.outputs.needed == 'true'
+        run: npm run check:version
+      - name: Lint (syntax + drift)
+        if: steps.v.outputs.needed == 'true'
+        run: npm run check
+      - name: Test
+        if: steps.v.outputs.needed == 'true'
+        run: npm test
+      - name: Build skill zip
+        if: steps.v.outputs.needed == 'true'
+        run: npm run pack-skill
+      - name: Build docs
+        if: steps.v.outputs.needed == 'true'
+        working-directory: docs
+        run: npm ci && npm run build
+
+      - name: Release notes from CHANGELOG
+        if: steps.v.outputs.needed == 'true'
+        env:
+          VERSION: ${{ steps.v.outputs.version }}
+        run: |
+          awk -v v="$VERSION" '
+            $0 ~ "^## \\[" v "\\]" { on=1; next }
+            on && /^## \[/ { exit }
+            on { print }
+          ' CHANGELOG.md > release-notes.md
+          if ! grep -q '[^[:space:]]' release-notes.md; then
+            echo "::error::CHANGELOG.md has no notes for [$VERSION]"; exit 1
+          fi
+          cat release-notes.md
+
+      - name: Tag and publish
+        if: steps.v.outputs.needed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.v.outputs.tag }}
+        run: |
+          if git rev-parse -q --verify "refs/tags/$TAG" >/dev/null; then
+            echo "Tag $TAG exists at $(git rev-list -n1 "$TAG"); reusing it."
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git tag -a "$TAG" -m "$TAG" "$GITHUB_SHA"
+            git push origin "refs/tags/$TAG"
+          fi
+          gh release create "$TAG" --repo "$GITHUB_REPOSITORY" --verify-tag \
+            --title "$TAG" --notes-file release-notes.md --latest \
+            dist/fleeet-skill.zip
