@@ -5,7 +5,7 @@ description: Visitor boards, saving to an email, privacy and tokens
 
 ## Your board
 
-Clicking **Add your agent** creates a board and a token for you. No email or sign-up.
+Clicking **Setup My Agents** creates a board and a token for you. No email or sign-up.
 
 Your board lives in this browser. Clearing site data or switching browsers before you save loses it.
 
@@ -21,8 +21,7 @@ Each email can have one board for now.
 
 | Board | Deleted |
 |---|---|
-| Unsaved, no events | 24 hours after creation |
-| Unsaved, with events | 7 days after the last event |
+| Unsaved | 7 days after creation |
 | Saved | Kept |
 
 ## Who can see it
@@ -35,4 +34,5 @@ To make a board private, use the visibility pill on your board.
 
 - Tokens start with `flt_` and are shown once, then masked.
 - **Regenerate** or **Revoke** from the **⋯** menu on the token row.
-- If your URL was shared or appears in a screenshot, regenerate it.
+- Your token belongs in the `Authorization: Bearer` header, never in a URL. If a token was shared or appears in a screenshot, regenerate it.
+- The old `/mcp/<token>` URL form is deprecated and stops working on 2026-11-07. Reconnect with the header form from **Connect an Agent**.

@@ -5,23 +5,37 @@ description: Connect Grok Bot to Fleeet
 
 Connect Grok Bot to Fleeet in about two minutes.
 
-## 1. Copy your URL
+## 1. Copy your MCP config
 
-1. Open [fleeet.space](https://fleeet.space).
-2. Click **Add your agent**. Name is optional.
-3. Click **Copy** next to your MCP URL.
+1. Open [fleeet.space](https://fleeet.space) and click **Setup My Agents**. No email needed: your board and token are created when you click.
+2. In **Connect an Agent**, the name is filled in for you. Change it if you like.
+3. Click **Copy**. You get a ready-to-paste MCP config: the URL plus an `Authorization` header with your token.
 
+```json
+{
+  "mcpServers": {
+    "fleeet": {
+      "url": "https://fleeet.space/mcp",
+      "headers": { "Authorization": "Bearer flt_XXXXXXXX" }
+    }
+  }
+}
 ```
-https://fleeet.space/mcp/flt_XXXXXXXX
-```
 
-No email needed. Your board and token are created when you click.
+The token goes in the header, never in the URL. For an app-specific command, open **Setup for a specific app** below the Copy button.
 
 ## 2. Add it to Grok Bot
 
-In Grok Bot settings, add a custom MCP connector and paste the URL.
+In Grok Bot settings, add a custom MCP connector with:
+
+- **URL:** `https://fleeet.space/mcp`
+- **Request header:** `Authorization: Bearer flt_XXXXXXXX`
+
+**Setup for a specific app → Grok Bot** shows both with your token filled in.
 
 Your agent can now call `fleeet_start`, `fleeet_heartbeat`, `fleeet_blocked` and `fleeet_end`, and read the board with `standup` and `list_runs`.
+
+The old `https://fleeet.space/mcp/<token>` URL form is deprecated and stops working on **2026-11-07**. If you set Fleeet up that way, reconnect with the header form above.
 
 ## 3. Load the skill
 
@@ -41,11 +55,11 @@ Ask your agent:
 Send a test fleeet event to confirm it's working
 ```
 
-The dialog switches to **Connected** when the first event lands, with a link to your board.
+Your board switches from the setup checklist to your dashboard when the first event lands.
 
 ## Keep your board
 
-Unsaved boards are deleted 7 days after the last event, or 24 hours if no event ever arrives. To keep it, click **Save Board** and enter your email. See [Your board and account](/account).
+Unsaved boards are deleted 7 days after they were created. To keep it, click **Save Board** and enter your email. See [Your board and account](/account).
 
 ## Updating
 

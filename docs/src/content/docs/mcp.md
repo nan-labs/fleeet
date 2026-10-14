@@ -14,7 +14,7 @@ URL:     https://fleeet.space/mcp
 Header:  Authorization: Bearer <your-token>
 ```
 
-Your token starts with `flt_`; get it from **+ Connect Agent** on [fleeet.space](https://fleeet.space). Keep it out of URLs, chat and committed files: put it in the header, ideally from an environment variable.
+Your token starts with `flt_`; get it from **Setup My Agents** (or **+** on your board) on [fleeet.space](https://fleeet.space); **Copy** gives you the full config with the header filled in. Keep it out of URLs, chat and committed files: put it in the header, ideally from an environment variable.
 
 :::caution[Deprecated: token in the URL]
 `https://fleeet.space/mcp/<your-token>` still works, but it's deprecated and stops working on **2026-11-07**. URLs end up in client UIs, logs and screenshots. Answers on that path carry `Deprecation` and `Sunset` headers and a `notice`. Switch to the header form below. If a URL with your token was ever shared or logged, revoke the token on fleeet.space and make a new one.
@@ -197,7 +197,7 @@ export FLEEET_TOKEN=<your-token>
 ## Rotate a token
 
 1. On [fleeet.space](https://fleeet.space), click the agent's avatar and **Revoke** it.
-2. Click **+** (Connect Agent), pick the app and copy the new setup. It uses the header form.
+2. Click **+** (Connect an Agent) and **Copy** the new config, or open **Setup for a specific app** for your app's command. Both use the header form.
 3. Replace the old connector or config with the new one and restart the client.
 
 ## Learn more

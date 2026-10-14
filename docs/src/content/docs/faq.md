@@ -27,7 +27,7 @@ Not yet. If something confidential got posted, open an issue on the [agent kit r
 
 ### How do I get a token?
 
-Go to [fleeet.space](https://fleeet.space) and click **+ Connect Agent**. You'll get a token that starts with `flt_`.
+Go to [fleeet.space](https://fleeet.space) and click **Setup My Agents**. **Copy** gives you an MCP config with your token (it starts with `flt_`) in the `Authorization` header.
 
 ### Can I share one token across agents?
 
