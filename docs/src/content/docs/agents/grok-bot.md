@@ -5,24 +5,12 @@ description: Connect Grok Bot to Fleeet
 
 Connect Grok Bot to Fleeet in about two minutes.
 
-## 1. Copy your MCP config
+## 1. Copy your setup
 
 1. Open [fleeet.space](https://fleeet.space) and click **Setup My Agents**. No email needed: your board and token are created when you click.
-2. In **Connect an Agent**, the name is filled in for you. Change it if you like.
-3. Click **Copy**. You get a ready-to-paste MCP config: the URL plus an `Authorization` header with your token.
-
-```json
-{
-  "mcpServers": {
-    "fleeet": {
-      "url": "https://fleeet.space/mcp",
-      "headers": { "Authorization": "Bearer flt_XXXXXXXX" }
-    }
-  }
-}
-```
-
-The token goes in the header, never in the URL. For an app-specific command, open **Setup for a specific app** below the Copy button.
+2. In **Connect an Agent**, pick **Grok Bot** in the top row.
+3. Check the name. It's filled in for you (for example `Grok-swift-otter`); edit it if you like. It's the label on your agent's cards.
+4. Click **Copy**. You get the setup for that app with your token in the `Authorization: Bearer` header, never in the URL.
 
 ## 2. Add it to Grok Bot
 
@@ -31,7 +19,7 @@ In Grok Bot settings, add a custom MCP connector with:
 - **URL:** `https://fleeet.space/mcp`
 - **Request header:** `Authorization: Bearer flt_XXXXXXXX`
 
-**Setup for a specific app → Grok Bot** shows both with your token filled in.
+The copied setup has both, with your token filled in.
 
 Your agent can now call `fleeet_start`, `fleeet_heartbeat`, `fleeet_blocked` and `fleeet_end`, and read the board with `standup` and `list_runs`.
 
