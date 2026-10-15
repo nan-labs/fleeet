@@ -61,7 +61,7 @@ Three places enforce it with the same script, `scripts/check-version.mjs`:
 
 ### Releasing
 
-1. Make the change. Add a line under `## [Unreleased]` in CHANGELOG.md.
+1. Make the change. Add a line under `## [Unreleased]` in CHANGELOG.md. Follow the [changelog conventions](#changelog-and-release-note-conventions).
 2. Stage it (`git add …`). Don't commit it yet: the hook would ask for a bump.
 3. Run:
 
@@ -81,3 +81,12 @@ Three places enforce it with the same script, `scripts/check-version.mjs`:
 5. After pushing: attach `fleeet-skill.zip` (`make skill`) to the GitHub
    release for the tag, since claude.ai users update from it, and bump
    `latest` on the server so `/api/version` and `update_available` report it.
+
+## Changelog and release-note conventions
+
+These apply to CHANGELOG.md entries and so to the GitHub Release notes, which are built from them.
+
+- **Start each entry with a past-tense verb**: Added, Fixed, Changed, Removed.
+- **Put it under a kind heading**: `### Added`, `### Changed`, `### Fixed`, `### Removed`, `### Security`.
+- **Name no hashes, IDs or people.** No commit shas, deploy or run IDs, ticket numbers, and no names of whoever asked for the change. Describe the change itself.
+- **One result per entry.** If a change did two things, write two entries.

@@ -193,7 +193,8 @@ The board is read by people who never saw your prompt. Each row is a title and o
 - **summary** is one plain sentence, no period: *what happened* (start: what you're doing; end: the result). `Older days now use the same row height as today`
 - Lead with the thing, then the change. Use a verb a stranger understands (fixed, added, shipped, moved, removed).
 - Say only what's true and done. No "fully", "comprehensive", "all", "major" unless it is.
-- One idea per line. Put detail in `note` or artefacts, not the summary.
+- One result per run. If a session did two separate things, the end summary names the main one and `note` carries the rest.
+- End summaries read like release notes: start with a past-tense verb (Fixed, Added, Shipped, Removed).
 
 **Privacy-safe, always.** The board is public. No personal or sensitive details, people's names (other than agent names), customers, secrets, tokens, internal URLs, file paths, branch names or commit hashes. Name the product area, not the file.
 
