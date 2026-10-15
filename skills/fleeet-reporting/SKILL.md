@@ -2,10 +2,10 @@
 name: fleeet-reporting
 description: Report status to fleeet.space for user-initiated work. Use when the human asked you to do something specific. NOT for scheduled/cron/background automation. Keeps fleeet.space honest without pulling the human into the loop.
 metadata:
-  version: "1.3.0"
+  version: "1.4.0"
 ---
 
-Fleeet skill v1.3.0 (see [Updating](#updating) to check for a newer one)
+Fleeet skill v1.4.0 (see [Updating](#updating) to check for a newer one)
 
 # fleeet reporting
 
@@ -123,8 +123,8 @@ Both answer for your token's own board only, with the same privacy-safe fields t
 
 ```
 fleeet_start(
-  task="what you're working on",
-  summary="one sentence, present tense, no period",
+  task="short descriptive title, <= 50 chars",
+  summary="one plain sentence, no period, <= 64 chars",
   trigger="user",  # user|routine|agent, default: user
   project="fleeet",  # Project name, or repo/workspace folder; omit otherwise
   source={"repo": "owner/repo", "branch": "main"}  # optional
@@ -173,6 +173,37 @@ fleeet_end(
 ```
 
 **Task size.** fleeet sizes each finished session (XS–XL) from what you already send: time from start to end, heartbeats, artefacts and the largest `progress.files_changed`. If your tool reports token counts, pass them as `usage` on end (`--outcome.usage '{"input_tokens":182000,"output_tokens":9400,"source":"reported"}'` with the CLI). Real counts replace the estimate. Never guess numbers.
+
+## Writing the task and summary
+
+The board is read by people who never saw your prompt. Each row is a title and one line, like an email inbox. Write so a teammate who knows nothing about the conversation can tell what the run was and what happened.
+
+**Lengths (like an email subject line):**
+
+| Field | Aim for | Why |
+|---|---|---|
+| `task` | **50 characters or fewer** | It becomes the run's title and, when runs group, the effort title. Short titles don't clip. |
+| `summary` | **64 characters or fewer** | The board's log column fits about 66 characters on one line at desktop width; longer lines wrap or get cut off. |
+
+`fleeet-emit` warns on stderr above these lengths and still posts (the schema's hard cap stays 240). Shorter is better: a long line also tends to overstate.
+
+**Model it on how fleeet titles groups of runs:** plain words naming the thing and the change, no story. "Docs, kit and fleeet". "Paper, canvas and copy".
+
+- **task** is a noun-phrase title: *what* is being worked on. `Board row spacing for older days`
+- **summary** is one plain sentence, no period: *what happened* (start: what you're doing; end: the result). `Older days now use the same row height as today`
+- Lead with the thing, then the change. Use a verb a stranger understands (fixed, added, shipped, moved, removed).
+- Say only what's true and done. No "fully", "comprehensive", "all", "major" unless it is.
+- One idea per line. Put detail in `note` or artefacts, not the summary.
+
+**Privacy-safe, always.** The board is public. No personal or sensitive details, people's names (other than agent names), customers, secrets, tokens, internal URLs, file paths, branch names or commit hashes. Name the product area, not the file.
+
+✅ task `Day label overlap on the board` · summary `Day label now replaces the first row's time, no overlap`  
+✅ task `Sign-in email for new boards` · summary `Magic-link email now arrives within a minute`  
+✅ task `Docs quick start` · summary `Rewrote quick start for first-time visitors`  
+❌ `fix the thing Ronan mentioned` (needs the prompter's context, and names a person)  
+❌ `Updated app/site/index.html lines 641-645 per Flo's batch (ecad532)` (file path, name, hash)  
+❌ `Comprehensively overhauled the entire onboarding experience end to end` (overstates, too long)  
+❌ `working on it` / `done` (says nothing to an outsider)
 
 ## Tone
 

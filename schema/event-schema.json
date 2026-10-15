@@ -67,7 +67,8 @@
       "type": "string",
       "minLength": 1,
       "maxLength": 240,
-      "description": "One sentence, present tense, no period. Slack-thread voice."
+      "x-recommendedMaxLength": 64,
+      "description": "One plain sentence, no period, readable without the prompter's context. Aim for 64 characters or fewer (one line on the board at desktop width); fleeet-emit warns above that. 240 is the hard limit."
     },
     "trigger": {
       "type": "string",
@@ -81,7 +82,8 @@
     },
     "task": {
       "type": "string",
-      "description": "What the agent is working on. Required on session_start; optional elsewhere (fleeet remembers from session_start)."
+      "x-recommendedMaxLength": 50,
+      "description": "What the run is about, as a short descriptive title (like an email subject). Aim for 50 characters or fewer; fleeet-emit warns above that. Required on session_start; optional elsewhere (fleeet remembers from session_start)."
     },
     "source": {
       "type": "object",

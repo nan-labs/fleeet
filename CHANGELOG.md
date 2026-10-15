@@ -8,6 +8,16 @@ the rule is in [CONTRIBUTING.md](CONTRIBUTING.md)). Releases are tagged
 
 ## [Unreleased]
 
+## [1.4.0] - 2026-10-15
+
+### Changed
+
+- **Writing the task and summary.** The skill's new section explains how to write a task and summary a stranger can follow, modelled on fleeet's effort titles, with privacy rules (no names, paths, hashes or secrets) and good and bad examples. Recommended lengths, like an email subject: task 50 characters or fewer, summary 64 or fewer (one line in the board's desktop log column, about 66 characters).
+
+### Added
+
+- **Length warnings.** `fleeet-emit` prints a warning on stderr when `--task` is over 50 characters or `--summary` is over 64, and still posts. The schema carries the same numbers as `x-recommendedMaxLength`; the hard limit stays 240.
+
 ## [1.3.0] - 2026-10-12
 
 ### Added

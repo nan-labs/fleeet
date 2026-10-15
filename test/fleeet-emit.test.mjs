@@ -120,3 +120,15 @@ test("validation still fails clearly, with exit 1 and no POST", async () => {
     assert.equal(posts.length, before, "nothing posted");
   }
 });
+
+test("over-length task/summary warns on stderr but still posts (1.4.0)", async () => {
+  const long = "Rewrote the onboarding guide, fixed three docs links and tidied up the footer copy";
+  const before = posts.length;
+  const r = await emit(["session_start", "--task", "Onboarding guide rewrite for new visitors to the docs site", "--summary", long]);
+  assert.equal(r.code, 0, r.err);
+  assert.equal(posts.length, before + 1, "still posts");
+  assert.match(r.err, /--task is \d+ chars; keep it to 50/);
+  assert.match(r.err, /--summary is \d+ chars; keep it to 64/);
+  const s = await emit(["heartbeat", "--summary", "Docs links fixed, footer next"]);
+  assert.doesNotMatch(s.err, /warning/);
+});

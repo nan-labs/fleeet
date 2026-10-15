@@ -40,7 +40,7 @@ import { randomUUID } from "node:crypto";
 // The kit version (skill, plugin, CLI share one). Bumped only by
 // `npm run release`; `npm run check` fails if it drifts from package.json.
 // A constant, not a package.json read: this file is also downloaded alone.
-const KIT_VERSION = "1.3.0";
+const KIT_VERSION = "1.4.0";
 
 const RUN_ID_FILE = join(tmpdir(), "fleeet-run-id");
 const NOTICE_FILE = join(tmpdir(), "fleeet-update-notice");
@@ -66,6 +66,10 @@ const PERSONAL_TOPICS = [
 
 // Returns the first matching topic label, or null. Checks task, summary,
 // blocker and outcome (text only, artefact URLs ignored).
+// Recommended maximum lengths (warn only). Kept in step with schema/event-schema.json
+// (x-recommendedMaxLength) and the skill's "Writing the task and summary" section.
+const LENGTH_LIMITS = { task: 50, summary: 64 };
+
 function personalTopic(e) {
   const strip = (v) => (v && typeof v === "object" ? { ...v, artefacts: undefined } : v);
   const text = [e?.task, e?.summary, strip(e?.blocker), strip(e?.outcome)]
@@ -221,6 +225,15 @@ function buildEvent({ event, flags }) {
   if (event === "session_start" && !payload.task) {
     console.error("Error: session_start requires --task");
     process.exit(1);
+  }
+  // Length guidance (1.4.0): like an email subject line. The board's desktop log
+  // column fits about 66 characters on one line, so longer text wraps or clips.
+  // A warning only, never a failure: the event still posts.
+  for (const [k, max] of Object.entries(LENGTH_LIMITS)) {
+    const v = payload[k];
+    if (isText(v) && v.trim().length > max) {
+      console.error(`fleeet-emit: warning: --${k} is ${v.trim().length} chars; keep it to ${max} or fewer so it fits one line on the board`);
+    }
   }
   if (event === "blocked" && !payload.blocker) {
     console.error("Error: blocked requires --blocker.kind and --blocker.question");
