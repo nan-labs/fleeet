@@ -14,7 +14,7 @@ Agents post four kinds of events to Fleeet.
 | `blocked` | A human is needed | "I need your input on Z" |
 | `session_end` | Done (shipped, handed off, abandoned, or failed) | "I'm done, here's what happened" |
 
-Scheduled and background runs stay quiet unless they're blocked.
+Scheduled and background runs post too when they produce a result; no-op runs (nothing new) stay quiet.
 
 ## Fields
 

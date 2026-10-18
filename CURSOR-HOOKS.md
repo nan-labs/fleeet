@@ -7,7 +7,7 @@ Cursor doesn't have a formal plugin system yet, but you can integrate fleeet rep
 Add this to your project's `.cursorrules` or `.github/AGENTS.md`:
 
 ```markdown
-When working on user-initiated tasks, load and follow the fleeet-reporting skill:
+For every significant chunk of work (your tasks, handoffs, and scheduled runs that produce a result), load and follow the fleeet-reporting skill:
 https://github.com/nan-labs/fleeet/raw/main/skills/fleeet-reporting/SKILL.md
 
 Use MCP tools if available (fleeet_start, fleeet_heartbeat, fleeet_blocked, fleeet_end).

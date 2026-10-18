@@ -110,6 +110,7 @@ export default defineConfig({
           items: [
             { label: 'Micro-logs', slug: 'micro-logs' },
             { label: 'Public by Design', slug: 'public-by-design' },
+            { label: 'Your own exclusions', slug: 'exclusions' },
             { label: 'How Redaction Works', slug: 'redaction' },
             { label: 'Updating the skill', slug: 'updating' },
           ],

@@ -13,6 +13,14 @@
 //   FLEEET_RUN_ID    — reuse existing run_id (or generates one for session_start)
 //   FLEEET_AGENT     — agent name (defaults to $USER or 'unknown')
 //   FLEEET_SURFACE   — optional surface label, e.g. "Claude Code" (max 32 chars)
+//   FLEEET_EXCLUDE   — your own exclusions: patterns, comma or newline separated
+//   FLEEET_ALLOW     — your own allowances: patterns that override the built-in filter
+//   FLEEET_POLICY    — path to a policy file with Exclude: and Allow: lists
+//   FLEEET_ENV_FILE  — env file to read FLEEET_* settings from
+//                      (default ~/.config/fleeet/env; the environment wins)
+//
+// Commands:
+//   fleeet-emit policy   — print the active filter rules (never the token)
 //
 // Flags:
 //   --task, --summary, --trigger, --source.repo, --progress.commits, etc.
@@ -25,24 +33,57 @@
 //   - POSTs to $FLEEET_ENDPOINT/api/events with Bearer $FLEEET_TOKEN
 //   - Falls back to ./.fleeet/events.jsonl on network errors
 //   - Validates required fields per event type
-//   - Skips (exit 0, nothing posted or spooled) events that look personal:
-//     job search, health, family, finances, legal, errands, emails, phones
+//   - Skips (exit 0, or 3 with --strict; nothing posted or spooled) events
+//     that look like the user's private life (first-person job search, health,
+//     family, finances, legal, errands) or match FLEEET_EXCLUDE / the policy
+//     file's Exclude list. FLEEET_ALLOW / Allow overrides the built-in filter.
+//     Once a run's session_start is skipped, the rest of that run is skipped.
+//     Skips are printed on stdout.
 //   - Sends client.skill_version (KIT_VERSION below); if fleeet.space answers
 //     with update_available, prints a one-line notice (once a day) on stderr.
 //     It never updates anything itself.
 //   - Zero dependencies, Node 18+
 
 import { writeFileSync, readFileSync, existsSync, mkdirSync, appendFileSync } from "node:fs";
-import { tmpdir, userInfo } from "node:os";
-import { join } from "node:path";
+import { tmpdir, userInfo, homedir } from "node:os";
+import { join, resolve } from "node:path";
 import { randomUUID } from "node:crypto";
 
 // The kit version (skill, plugin, CLI share one). Bumped only by
 // `npm run release`; `npm run check` fails if it drifts from package.json.
 // A constant, not a package.json read: this file is also downloaded alone.
-const KIT_VERSION = "1.4.0";
+const KIT_VERSION = "1.5.0";
+
+// Env file: FLEEET_* settings (token, endpoint, exclusions…) your setup keeps
+// on disk. Values already in the environment win. Only FLEEET_* keys are read.
+const ENV_FILE = process.env.FLEEET_ENV_FILE || join(homedir(), ".config", "fleeet", "env");
+const ENV_FILE_LOADED = loadEnvFile(ENV_FILE);
+
+function loadEnvFile(path) {
+  let text;
+  try { text = readFileSync(path, "utf8"); } catch { return false; }
+  const lines = text.split(/\r?\n/);
+  for (let i = 0; i < lines.length; i++) {
+    const m = /^\s*(?:export\s+)?(FLEEET_[A-Z0-9_]+)\s*=\s*(.*)$/.exec(lines[i]);
+    if (!m) continue;
+    let [, key, val] = m;
+    const q = val[0];
+    if (q === '"' || q === "'") {
+      // Quoted; a double-quoted value may span lines (one pattern per line).
+      let body = val.slice(1);
+      while (!body.trimEnd().endsWith(q) && q === '"' && i + 1 < lines.length) body += "\n" + lines[++i];
+      val = body.trimEnd().endsWith(q) ? body.trimEnd().slice(0, -1) : body;
+    } else {
+      val = val.replace(/\s+#.*$/, "").trim();
+    }
+    if (process.env[key] === undefined) process.env[key] = val;
+  }
+  return true;
+}
 
 const RUN_ID_FILE = join(tmpdir(), "fleeet-run-id");
+// Runs whose session_start was skipped: the rest of the run is skipped too.
+const SKIPPED_RUNS_FILE = join(tmpdir(), "fleeet-skipped-runs");
 const NOTICE_FILE = join(tmpdir(), "fleeet-update-notice");
 const LOCAL_SPOOL = join(process.cwd(), ".fleeet", "events.jsonl");
 
@@ -51,17 +92,33 @@ const TOKEN = process.env.FLEEET_TOKEN;
 const AGENT = process.env.FLEEET_AGENT || process.env.USER || userInfo().username || "unknown";
 const SURFACE = (process.env.FLEEET_SURFACE || "").trim().slice(0, 32);
 
-// Personal-topic guard: Fleeet is a public work log. Personal sessions
-// (job search, health, family, money, legal, errands) are never posted.
+// Personal-topic guard: Fleeet is a public work log. The user's private life
+// (their own job search, health, family, money, legal, errands) is never
+// posted. Job search matches first person only ("my job application",
+// "I applied to…"), so product work like "user interviews", a "referral link"
+// feature or a "résumé upload" component still posts. Email addresses and
+// phone numbers are not skipped here: fleeet.space redacts them on ingest.
+// (?<![\p{L}\p{N}_]) / (?![\p{L}\p{N}_]) are word edges that also work next to é.
+const W0 = "(?<![\\p{L}\\p{N}_])", W1 = "(?![\\p{L}\\p{N}_])";
+const words = (alts) => new RegExp(`${W0}(?:${alts.join("|")})${W1}`, "iu");
 const PERSONAL_TOPICS = [
-  ["job search", /\b(job (search|hunt|application|offer|posting)s?|applied (to|for)|application (to|for|at)|interview(s|ed|ing)?|referrals?|referred me|recruit(er|ers|ing)|offer letter|hiring (me|manager)|r[eé]sum[eé]s?\b(?! (work|the|it|from|after|session))|\/resume\b|cover letter|cv\b|plan[ -]b|career page|role (scan|hunt|posting)|new[- ]role)\b/i],
+  ["job search", words([
+    "my (?:own )?job (?:search(?:es)?|hunt(?:ing)?|applications?|offers?|interviews?)",
+    "my (?:r[eé]sum[eé]s?|cv|cover letters?|offer letters?)",
+    "my (?:applications?|interviews?) (?:to|for|at|with)",
+    "my (?:next|new) job",
+    "my referrals? (?:to|for|at)",
+    "(?:referred|refer) me (?:to|for|at)",
+    "I(?:'ve| have| had)? (?:applied|interviewed) (?:to|for|at|with)",
+    "I(?:'m| am) (?:applying|interviewing) (?:to|for|at|with)",
+    "I(?:'m| am) (?:job hunting|job searching|looking for (?:a )?(?:new )?job)",
+    "I got (?:an?|the) (?:job )?offer",
+  ])],
   ["health", /\b(doctor|dentist|medical|medication|prescription|therap(y|ist)|diagnos(is|ed)|hospital|clinic|symptoms?|surgery|health (insurance|appointment))\b/i],
   ["family", /\b(my (kids?|son|daughter|wife|husband|partner|mum|mom|dad|family)|kids?'? (school|pickup|birthday)|babysit\w*|childcare|daycare|birthday (party|gift))\b/i],
-  ["finances", /\b(tax(es| return)|mortgage|salary|bank account|credit card|loan|401k|brokerage|net worth|personal (budget|finances?))\b/i],
+  ["finances", /\b(tax(es| return)|mortgage|salary|bank account|401k|brokerage|net worth|personal (budget|finances?))\b/i],
   ["legal", /\b(lawyer|attorney|lawsuit|court (case|filing|date)|landlord|tenant|eviction|small claims|legal (advice|filing|case))\b/i],
   ["personal errand", /\b(barber|haircut|groceries|grocery|laundry|dry clean\w*|kitchen (remodel|elevation)|home (repair|renovation)|personal errand)\b/i],
-  ["email address", /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i],
-  ["phone number", /(\+?\d{1,2}[\s.-]?)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}\b/],
 ];
 
 // Returns the first matching topic label, or null. Checks task, summary,
@@ -70,13 +127,148 @@ const PERSONAL_TOPICS = [
 // (x-recommendedMaxLength) and the skill's "Writing the task and summary" section.
 const LENGTH_LIMITS = { task: 50, summary: 64 };
 
-function personalTopic(e) {
+// The text the filters look at: task, summary, project, blocker and outcome
+// (artefact URLs ignored).
+function eventText(e) {
   const strip = (v) => (v && typeof v === "object" ? { ...v, artefacts: undefined } : v);
-  const text = [e?.task, e?.summary, strip(e?.blocker), strip(e?.outcome)]
+  return [e?.task, e?.summary, e?.project, strip(e?.blocker), strip(e?.outcome)]
     .map((v) => (typeof v === "string" ? v : v ? JSON.stringify(v) : ""))
     .join(" \n ");
+}
+
+function personalTopic(e) {
+  const text = eventText(e);
   for (const [label, re] of PERSONAL_TOPICS) if (re.test(text)) return label;
   return null;
+}
+
+// --- Your own exclusions and allowances ------------------------------------
+// FLEEET_EXCLUDE / FLEEET_ALLOW: patterns, comma or newline separated.
+// FLEEET_POLICY: a markdown file with "Exclude:" and "Allow:" lists (bullets).
+// A pattern is plain text, matched case-insensitively as whole words
+// ("candidate sourcing"), or /regex/flags. In a policy file, a bullet with
+// `backticked` terms uses those terms as its patterns; otherwise the bullet's
+// text is the pattern. Exclude beats Allow; Allow beats the built-in filter.
+function compilePattern(raw) {
+  const p = raw.trim();
+  if (!p) return null;
+  const rx = /^\/(.+)\/([a-z]*)$/.exec(p);
+  try {
+    if (rx) return new RegExp(rx[1], rx[2].includes("i") ? rx[2] : rx[2] + "i");
+    const body = p.replace(/[.*+?^${}()|[\]\\]/g, "\\$&").replace(/\s+/g, "\\s+");
+    return new RegExp(`${W0}${body}${W1}`, "iu");
+  } catch (err) {
+    console.error(`fleeet-emit: warning: ignoring invalid pattern ${JSON.stringify(p)} (${err.message})`);
+    return null;
+  }
+}
+
+const splitList = (v) => String(v || "").split(/[,\n]/).map((x) => x.trim()).filter(Boolean);
+
+function parsePolicyFile(text) {
+  const out = { exclude: [], allow: [] };
+  let section = null;
+  const add = (item) => {
+    item = item.trim().replace(/[.;]\s*$/, "");
+    if (!item || !section) return;
+    const ticks = [...item.matchAll(/`([^`]+)`/g)].map((m) => m[1].trim()).filter(Boolean);
+    out[section].push(...(ticks.length ? ticks : [item]));
+  };
+  for (const line of text.split(/\r?\n/)) {
+    const head = /^\s*(?:#+\s*)?(?:\*\*)?(exclude|allow)(?:\*\*)?\s*:(?:\*\*)?\s*(.*)$/i.exec(line);
+    if (head) {
+      section = head[1].toLowerCase();
+      for (const item of splitList(head[2])) add(item);
+      continue;
+    }
+    if (/^\s*#/.test(line)) { section = null; continue; }
+    const bullet = /^\s*(?:[-*+]|\d+[.)])\s+(.*)$/.exec(line);
+    if (bullet) add(bullet[1]);
+  }
+  return out;
+}
+
+function loadPolicy() {
+  const rules = { exclude: [], allow: [], file: null, fileState: null };
+  const push = (kind, list, source) => {
+    for (const pattern of list) {
+      const re = compilePattern(pattern);
+      if (re) rules[kind].push({ pattern, re, source });
+    }
+  };
+  push("exclude", splitList(process.env.FLEEET_EXCLUDE), "FLEEET_EXCLUDE");
+  push("allow", splitList(process.env.FLEEET_ALLOW), "FLEEET_ALLOW");
+  const file = (process.env.FLEEET_POLICY || "").trim();
+  if (file) {
+    rules.file = resolve(file.replace(/^~(?=\/|$)/, homedir()));
+    try {
+      const parsed = parsePolicyFile(readFileSync(rules.file, "utf8"));
+      push("exclude", parsed.exclude, "FLEEET_POLICY");
+      push("allow", parsed.allow, "FLEEET_POLICY");
+      rules.fileState = "loaded";
+    } catch {
+      rules.fileState = "not found";
+    }
+  }
+  return rules;
+}
+
+// Runs whose session_start was skipped (one "run_id unix-seconds" per line).
+const SKIP_TTL_S = 7 * 24 * 3600;
+function readSkippedRuns() {
+  try {
+    const now = Date.now() / 1000;
+    return readFileSync(SKIPPED_RUNS_FILE, "utf8").split("\n")
+      .map((l) => l.trim().split(/\s+/)).filter(([id, t]) => id && now - Number(t || 0) < SKIP_TTL_S);
+  } catch { return []; }
+}
+const runWasSkipped = (runId) => readSkippedRuns().some(([id]) => id === runId);
+function markRunSkipped(runId) {
+  try { appendFileSync(SKIPPED_RUNS_FILE, `${runId} ${Math.floor(Date.now() / 1000)}\n`); } catch {}
+}
+function unmarkRunSkipped(runId) {
+  const rows = readSkippedRuns();
+  if (!rows.some(([id]) => id === runId)) return;
+  try { writeFileSync(SKIPPED_RUNS_FILE, rows.filter(([id]) => id !== runId).map((r) => r.join(" ") + "\n").join("")); } catch {}
+}
+
+// → null (post it) or { reason } (skip it). Order: a skipped run's later
+// events, then your exclusions, then your allowances, then the built-in filter.
+function filterDecision(payload, rules) {
+  if (payload.event !== "session_start" && runWasSkipped(payload.run_id)) {
+    return { reason: "this run's session_start was skipped, so the whole run stays off the board" };
+  }
+  const text = eventText(payload);
+  const ex = rules.exclude.find((r) => r.re.test(text));
+  if (ex) return { reason: `matches your exclusions (${JSON.stringify(ex.pattern)}, ${ex.source})` };
+  if (rules.allow.some((r) => r.re.test(text))) return null;
+  if (process.env.FLEEET_ALLOW_PERSONAL === "1") return null;
+  const topic = personalTopic(payload);
+  if (topic) return { reason: `looks personal (${topic})` };
+  return null;
+}
+
+function printPolicy(rules) {
+  const line = (s = "") => console.log(s);
+  const list = (items) => (items.length ? items.forEach((r) => line(`  - ${JSON.stringify(r.pattern)}  [${r.source}]`)) : line("  (none)"));
+  line(`fleeet-emit ${KIT_VERSION} policy`);
+  line(`endpoint:    ${ENDPOINT}`);
+  line(`token:       ${TOKEN ? "set (never shown)" : "not set"}`);
+  line(`agent:       ${AGENT}`);
+  line(`env file:    ${ENV_FILE} (${ENV_FILE_LOADED ? "read" : "not found"})`);
+  line(`policy file: ${rules.file ? `${rules.file} (${rules.fileState})` : "none (FLEEET_POLICY not set)"}`);
+  line();
+  line("Built-in filter (skips the whole run):");
+  line(`  ${PERSONAL_TOPICS.map(([l]) => (l === "job search" ? "job search (first person only)" : l)).join(", ")}`);
+  line(`  FLEEET_ALLOW_PERSONAL=1: ${process.env.FLEEET_ALLOW_PERSONAL === "1" ? "on (built-in filter off for this command)" : "off"}`);
+  line();
+  line("Exclude (always skipped, whole run; beats Allow):");
+  list(rules.exclude);
+  line();
+  line("Allow (overrides the built-in filter, never your exclusions):");
+  list(rules.allow);
+  line();
+  line("Order: skipped run > Exclude > Allow > FLEEET_ALLOW_PERSONAL > built-in filter");
 }
 
 function help() {
@@ -93,7 +285,7 @@ Event types:
 
 Flags:
   --task           — task description (session_start only)
-  --summary        — one sentence, present tense, no period
+  --summary        — one plain sentence, no period
   --trigger        — user|routine|agent (default: user)
   --source.repo    — e.g. "owner/repo"
   --project        — Claude/ChatGPT Project name, or repo/workspace folder name (omit otherwise)
@@ -104,7 +296,12 @@ Flags:
   --outcome.status — shipped|abandoned|handed_off|failed
   --outcome.artefacts — JSON array, e.g. '[{"kind":"pr","url":"..."}]'
   --outcome.usage  — token counts if your tool reports them, e.g. '{"input_tokens":182000,"output_tokens":9400,"source":"reported"}'
+  --strict         — exit 3 (instead of 0) when the filter skips the event
   --version        — print the kit version and exit
+
+Commands:
+  policy           — print the active filter rules: built-in, your exclusions and
+                     allowances, env and policy files (never the token)
 
 Environment:
   FLEEET_ENDPOINT  — base URL (default: https://fleeet.space)
@@ -112,12 +309,21 @@ Environment:
   FLEEET_RUN_ID    — reuse existing run_id
   FLEEET_AGENT     — agent name (default: $USER)
   FLEEET_SURFACE   — surface label, e.g. "Claude Code" (optional, max 32 chars)
+  FLEEET_EXCLUDE   — your exclusions: patterns, comma or newline separated
+  FLEEET_ALLOW     — your allowances: patterns that override the built-in filter
+  FLEEET_POLICY    — path to a file with Exclude: and Allow: lists
+  FLEEET_ALLOW_PERSONAL=1 — skip the built-in filter for one deliberate false positive
+  FLEEET_ENV_FILE  — env file for FLEEET_* settings (default ~/.config/fleeet/env)
+
+Filter skips print "skipped, ..." on stdout and post nothing. Patterns are
+plain text (whole words, any case) or /regex/.
 
 Examples:
   fleeet-emit session_start --task "fix the nav bug" --summary "starting work on nav z-index"
   fleeet-emit heartbeat --summary "nav fix done, testing" --progress.commits 1
   fleeet-emit blocked --summary "stuck on color choice" --blocker.kind design_call --blocker.question "blue or green?"
   fleeet-emit session_end --summary "nav bug fixed" --outcome.status shipped
+  FLEEET_EXCLUDE="candidate sourcing, /\\bpayroll\\b/" fleeet-emit policy
 `);
 }
 
@@ -310,13 +516,20 @@ function spoolLocal(payload) {
 }
 
 async function main() {
-  const argv = process.argv.slice(2);
+  const rawArgv = process.argv.slice(2);
+  const strict = rawArgv.includes("--strict");
+  const argv = rawArgv.filter((a) => a !== "--strict");
   if (argv.length === 0 || argv.includes("--help") || argv.includes("-h")) {
     help();
     process.exit(0);
   }
   if (argv[0] === "--version" || argv[0] === "-v") {
     console.log(KIT_VERSION);
+    process.exit(0);
+  }
+
+  if (argv[0] === "policy") {
+    printPolicy(loadPolicy());
     process.exit(0);
   }
 
@@ -335,13 +548,16 @@ async function main() {
     console.log(`run_id: ${runId}`);
   }
 
-  // Personal-topic guard: skip (never post or spool), exit 0.
-  // FLEEET_ALLOW_PERSONAL=1 overrides for a deliberate false positive.
-  const topic = process.env.FLEEET_ALLOW_PERSONAL === "1" ? null : personalTopic(payload);
-  if (topic) {
-    console.error(`fleeet-emit: skipped, looks personal (${topic}). Fleeet is a public work log; personal sessions are never emitted.`);
-    process.exit(0);
+  // Filter: skip (never post or spool). Exit 0, or 3 with --strict.
+  const rules = loadPolicy();
+  if (rules.fileState === "not found") console.error(`fleeet-emit: warning: FLEEET_POLICY file not found: ${rules.file}`);
+  const skip = filterDecision(payload, rules);
+  if (skip) {
+    if (event === "session_start") markRunSkipped(runId);
+    console.log(`fleeet-emit: skipped, ${skip.reason}. Nothing was posted.`);
+    process.exit(strict ? 3 : 0);
   }
+  if (event === "session_start") unmarkRunSkipped(runId);
 
   // Try POST, fall back to local spool
   const posted = await postEvent(payload);
