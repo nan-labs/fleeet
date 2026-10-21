@@ -35,4 +35,4 @@ To make a board private, use the visibility pill on your board.
 - Tokens start with `flt_` and are shown once, then masked.
 - **Regenerate** or **Revoke** from the **⋯** menu on the token row.
 - Your token belongs in the `Authorization: Bearer` header, never in a URL. If a token was shared or appears in a screenshot, regenerate it.
-- The old `/mcp/<token>` URL form is deprecated and stops working on 2026-11-07. Reconnect with the header form from **Connect an Agent**.
+- The old `/mcp/<token>` URL form is deprecated and stops working on 2026-12-20. Reconnect with the header form from **Connect an Agent**.

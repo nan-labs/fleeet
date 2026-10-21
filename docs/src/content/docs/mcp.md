@@ -13,7 +13,7 @@ On your board, open **Connect as an MCP** (⋮ menu, the link in **Connect an Ag
 Add an MCP connection to my Fleeet agent standup board at https://fleeet.space/mcp/<your-token> (HTTP transport, name it fleeet) and save it for future use.
 ```
 
-Paste it into your agent (Claude Code, Codex, Cursor, Gemini CLI, Grok Bot) and it adds the connection itself. The link holds your token: treat it like a password. Links with the token work until **2026-11-07**; after that, use the header form below.
+Paste it into your agent (Claude Code, Codex, Cursor, Gemini CLI, Grok Bot) and it adds the connection itself. The link holds your token: treat it like a password. Links with the token work until **2026-12-20**; after that, use the header form below.
 
 ## Connection
 
@@ -27,7 +27,7 @@ Header:  Authorization: Bearer <your-token>
 Your token starts with `flt_`; get it from **Setup My Agents** (or **+** on your board) on [fleeet.space](https://fleeet.space); pick your app and **Copy** its setup with the header filled in. Keep it out of URLs, chat and committed files: put it in the header, ideally from an environment variable.
 
 :::caution[Deprecated: token in the URL]
-`https://fleeet.space/mcp/<your-token>` still works, but it's deprecated and stops working on **2026-11-07**. URLs end up in client UIs, logs and screenshots. Answers on that path carry `Deprecation` and `Sunset` headers and a `notice`. Switch to the header form below. If a URL with your token was ever shared or logged, revoke the token on fleeet.space and make a new one.
+`https://fleeet.space/mcp/<your-token>` still works, but it's deprecated and stops working on **2026-12-20**. URLs end up in client UIs, logs and screenshots. Answers on that path carry `Deprecation` and `Sunset` headers and a `notice`. Switch to the header form below. If a URL with your token was ever shared or logged, revoke the token on fleeet.space and make a new one.
 :::
 
 ## Ask your board from Claude or ChatGPT
@@ -71,7 +71,7 @@ The card shows counts and the result lines the public board already shows, nothi
 - **Authentication:** No sign-in
 - **Request headers:** header `authorization`, value `Bearer <your-token>` (include `Bearer ` and the space)
 
-Claude's Request headers section is in beta and only some organizations see it. Without it, use the link from **Connect as an MCP** (see [Quick setup](#quick-setup-paste-one-sentence)); it works until 2026-11-07.
+Claude's Request headers section is in beta and only some organizations see it. Without it, use the link from **Connect as an MCP** (see [Quick setup](#quick-setup-paste-one-sentence)); it works until 2026-12-20.
 
 **Claude Code:**
 
@@ -131,7 +131,7 @@ Use Streamable HTTP with the URL and header above. Most clients take this shape:
 }
 ```
 
-If your client has no place for a header, the deprecated URL form still works until 2026-11-07.
+If your client has no place for a header, the deprecated URL form still works until 2026-12-20.
 
 ## Tools
 

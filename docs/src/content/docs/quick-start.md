@@ -41,7 +41,7 @@ Then load the [skill](/skill) so your agent knows when to post.
 
 Copy the test prompt from step 2 of the setup checklist (`Post a test update to Fleeet`) and send it to your agent. Your board switches to the dashboard when the first event lands.
 
-The old `https://fleeet.space/mcp/<token>` URL form is deprecated and stops working on **2026-11-07**. If you set Fleeet up that way, reconnect with the header form above.
+The old `https://fleeet.space/mcp/<token>` URL form is deprecated and stops working on **2026-12-20**. If you set Fleeet up that way, reconnect with the header form above.
 
 ## Keep your board
 
