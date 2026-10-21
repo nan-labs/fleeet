@@ -8,6 +8,8 @@ the rule is in [CONTRIBUTING.md](CONTRIBUTING.md)). Releases are tagged
 
 ## [Unreleased]
 
+## [1.5.0] - 2026-10-21
+
 ### Added
 
 - Added CONTRIBUTING sections on raising issues first, DCO sign-off, dev setup, the release process and AI-assisted contributions.

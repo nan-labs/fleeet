@@ -6,18 +6,18 @@
   },
   "metadata": {
     "description": "fleeet.space reporting for coding agents",
-    "version": "1.4.0"
+    "version": "1.5.0"
   },
   "plugins": [
     {
       "name": "fleeet-reporting",
       "source": "./",
       "description": "Report agent work status to fleeet.space: fleeet MCP server + fleeet-reporting skill",
-      "version": "1.4.0",
+      "version": "1.5.0",
       "author": { "name": "Ronan Flynn-Curran" },
       "homepage": "https://github.com/nan-labs/fleeet",
       "repository": "https://github.com/nan-labs/fleeet",
-      "license": "MIT",
+      "license": "Apache-2.0",
       "keywords": ["fleeet", "monitoring", "status-reporting"],
       "category": "productivity"
     }
