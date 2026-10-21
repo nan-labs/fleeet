@@ -8,6 +8,22 @@ the rule is in [CONTRIBUTING.md](CONTRIBUTING.md)). Releases are tagged
 
 ## [Unreleased]
 
+### Added
+
+- Added CONTRIBUTING sections on raising issues first, DCO sign-off, dev setup, the release process and AI-assisted contributions.
+- Added a Code of Conduct (Contributor Covenant 2.1), a security policy, governance, privacy, trademark and roadmap documents.
+- Added issue and pull request templates, CODEOWNERS and a Dependabot config.
+- Added a DCO check that fails pull requests with unsigned commits.
+- Added SHA-256 checksums and a build-provenance attestation to every GitHub Release.
+- Added an event format versioning and change policy.
+- Added an "Open source and hosted" page to the docs.
+
+### Changed
+
+- Changed releases to publish only from a tag a maintainer created; the workflow no longer creates tags.
+- Changed every workflow to read-only permissions by default, with third-party actions pinned to commit SHAs.
+- Changed the README with a fresh board screenshot, supported agents in tile order, and status and privacy sections.
+
 ## [1.4.0] - 2026-10-15
 
 ### Changed
