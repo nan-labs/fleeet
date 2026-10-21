@@ -27,6 +27,8 @@ Add a Streamable HTTP server. The copied config (pick **Other**) has the shape m
 }
 ```
 
+For example, in **Cursor** paste it into `~/.cursor/mcp.json`, then restart Cursor or reload MCP servers in settings.
+
 Your client needs a place for a request header. Apps that only take a URL aren't supported yet.
 
 No MCP? Post over [HTTP](/http) or the [CLI](/cli) with the same token.

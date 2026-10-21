@@ -45,7 +45,7 @@ Codex detects the change. Restart it if the new version doesn't show up. If your
 
 Download `fleeet-skill.zip` from the [latest release](https://github.com/nan-labs/fleeet/releases/latest). In claude.ai's skills settings, remove the old `fleeet-reporting` skill and upload the new zip.
 
-### Cursor, Grok Bot and other agents
+### Grok Bot and other agents
 
 - **Skill loaded by URL** (instructions point at the GitHub `SKILL.md`): nothing to do. The next session reads the new version.
 - **A clone of the kit:** run `git pull` in the clone.

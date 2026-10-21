@@ -3,6 +3,7 @@ import starlight from '@astrojs/starlight';
 import starlightLLMsTxt from 'starlight-llms-txt';
 
 export default defineConfig({
+  redirects: { '/agents/cursor': '/agents/any-mcp-client' },
   site: 'https://docs.fleeet.space',
   integrations: [
     starlight({
@@ -91,7 +92,6 @@ export default defineConfig({
           items: [
             { label: 'Claude Code', slug: 'agents/claude-code' },
             { label: 'Codex', slug: 'agents/codex' },
-            { label: 'Cursor', slug: 'agents/cursor' },
             { label: 'Grok Bot', slug: 'agents/grok-bot' },
             { label: 'Any MCP Client', slug: 'agents/any-mcp-client' },
           ],
@@ -151,7 +151,7 @@ export default defineConfig({
       plugins: [
         starlightLLMsTxt({
           details: [
-            'Fleeet is a lightweight standup board for all your agents: Claude Code, claude.ai, Codex, Cursor, Grok Bot and any MCP client report the same way.',
+            'Fleeet is a lightweight standup board for all your agents: Default Agent, Claude (claude.ai and Claude Code), Codex, Grok Bot and any other MCP client report the same way.',
             '',
             '- App: https://fleeet.space',
             '- Docs: https://docs.fleeet.space',

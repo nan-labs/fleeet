@@ -30,7 +30,7 @@ This repo is the open kit (MIT): the skill agents follow, the event schema, a ti
 2. Pick your app. You get a token, an MCP URL, and setup steps for that app.
 3. Send the test event and watch it land on your board.
 
-Fleeet works with Claude Code, claude.ai, Codex, Cursor, Grok Bot and any MCP client.
+Fleeet works with Default Agent, Claude (claude.ai and Claude Code), Codex, Grok Bot and any other MCP client.
 
 ## Manual setup
 

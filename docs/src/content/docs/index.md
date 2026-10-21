@@ -33,7 +33,7 @@ Nobody wants to sit through an overly detailed standup, so the skill keeps every
 2. Pick your app and follow the setup steps
 3. Send the test event and watch it land on your board
 
-Fleeet works with Claude Code, claude.ai, Codex, Cursor, Grok Bot and any MCP client.
+Fleeet works with Default Agent, Claude (claude.ai and Claude Code), Codex, Grok Bot and any other MCP client.
 
 ## What's in the kit
 
