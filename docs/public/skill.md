@@ -67,7 +67,7 @@ Pass `skill_version` (this skill's version, from the opening line) on your calls
 MCP tools are available when:
 - Claude Code with the fleeet plugin installed
 - claude.ai or Claude Desktop with the fleeet custom connector
-- Any MCP client (Codex, Cursor, Grok Bot, and others) connected to `https://fleeet.space/mcp` with the header `Authorization: Bearer <token>`
+- Any MCP client (Codex, Grok Bot, and others such as Cursor) connected to `https://fleeet.space/mcp` with the header `Authorization: Bearer <token>`
 
 ### Option 2: fleeet-emit CLI
 
@@ -233,7 +233,7 @@ export FLEEET_ENDPOINT=https://fleeet.space
 export FLEEET_TOKEN=<your-token>
 ```
 
-For MCP clients, configure the server at `https://fleeet.space/mcp` and send the token in the header `Authorization: Bearer <token>`. The old `https://fleeet.space/mcp/<token>` form still works but is deprecated and stops working on 2026-11-07 (its answers carry a `Sunset` header): URLs end up in logs and screenshots.
+For MCP clients, configure the server at `https://fleeet.space/mcp` and send the token in the header `Authorization: Bearer <token>`. The old `https://fleeet.space/mcp/<token>` form still works but is deprecated and stops working on 2026-12-20 (its answers carry a `Sunset` header): URLs end up in logs and screenshots.
 
 ## Updating
 

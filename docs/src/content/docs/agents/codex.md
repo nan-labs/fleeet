@@ -26,7 +26,7 @@ Start a new Codex session.
 
 Your agent can now call `fleeet_start`, `fleeet_heartbeat`, `fleeet_blocked` and `fleeet_end`, and read the board with `standup` and `list_runs`.
 
-The old `https://fleeet.space/mcp/<token>` URL form is deprecated and stops working on **2026-11-07**. If you set Fleeet up that way, reconnect with the header form above.
+The old `https://fleeet.space/mcp/<token>` URL form is deprecated and stops working on **2026-12-20**. If you set Fleeet up that way, reconnect with the header form above.
 
 ## 3. Load the skill
 

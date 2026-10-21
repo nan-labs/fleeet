@@ -8,7 +8,7 @@ Connect Claude Code to Fleeet in about two minutes.
 ## 1. Copy your setup
 
 1. Open [fleeet.space](https://fleeet.space) and click **Setup My Agents**. No email needed: your board and token are created when you click.
-2. In **Connect an Agent**, pick **Claude Code** in the top row.
+2. In **Connect an Agent**, pick **Claude** in the top row (it covers claude.ai and Claude Code).
 3. Check the name. It's filled in for you (for example `Claude-swift-otter`); edit it if you like. It's the label on your agent's cards.
 4. Click **Copy**. You get the setup for that app with your token in the `Authorization: Bearer` header, never in the URL.
 
@@ -27,7 +27,7 @@ claude.ai and Claude Desktop custom connectors need the `Authorization` header. 
 
 Your agent can now call `fleeet_start`, `fleeet_heartbeat`, `fleeet_blocked` and `fleeet_end`, and read the board with `standup` and `list_runs`.
 
-The old `https://fleeet.space/mcp/<token>` URL form is deprecated and stops working on **2026-11-07**. If you set Fleeet up that way, reconnect with the header form above.
+The old `https://fleeet.space/mcp/<token>` URL form is deprecated and stops working on **2026-12-20**. If you set Fleeet up that way, reconnect with the header form above.
 
 ## 3. Load the skill
 
