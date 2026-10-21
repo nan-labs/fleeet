@@ -30,7 +30,25 @@ Add the sign-off with `-s`:
 git commit -s -m "Fix typo in quick start"
 ```
 
-That appends a line like `Signed-off-by: Your Name <you@example.com>`, using your git name and email. To sign off commits you've already made: `git rebase --signoff main`.
+That appends a line like `Signed-off-by: Your Name <you@example.com>`, using your git name and email. To sign off commits you've already made: `git rebase --signoff main`. The `dco` workflow checks every commit in a pull request for the line.
+
+**Cutoff.** The DCO applies to commits after `1368abd` on `main`. Commits up to and including it predate the DCO and are covered by the maintainer's signed remediation commit; see [docs/DCO-REMEDIATION.md](docs/DCO-REMEDIATION.md).
+
+## AI-assisted contributions
+
+AI help is welcome, for code, docs and tests. A human is still responsible for every contribution:
+
+- You review and understand everything you submit, and you sign off the commit yourself (see [Sign-off](#sign-off-dco)). Signing off means you take responsibility for it, whoever or whatever wrote the first draft.
+- Disclose AI help with an `Assisted-by:` trailer naming the tool or bot, next to your sign-off:
+
+  ```text
+  Fix typo in quick start
+
+  Assisted-by: <bot name>
+  Signed-off-by: Your Name <you@example.com>
+  ```
+
+- Commits made by the maintainer's own agents carry `Assisted-by: <bot name>` and `Signed-off-by: Ronan Flynn-Curran <dev@ronan.design>`. The maintainer approved this sign-off for his agents' commits.
 
 ## Dev setup and tests
 
@@ -57,7 +75,7 @@ Never put real tokens in tests, examples or screenshots. Use placeholders like `
 
 ## Release process
 
-A GitHub Release is the source of truth for what's shipped. When `main` carries a kit version without a published release, the `release` workflow runs the checks, tests and docs build, tags `vX.Y.Z`, and publishes the GitHub Release with that version's CHANGELOG section as its notes. Only maintainers cut releases. The steps are under [Releasing](#releasing).
+A GitHub Release is the source of truth for what's shipped. When `main` carries a kit version without a published release, the `release` workflow runs the checks, tests and docs build, tags `vX.Y.Z`, and publishes the GitHub Release with that version's CHANGELOG section as its notes. Only maintainers cut releases. The maintainer creates and pushes the `vX.Y.Z` tag (a tag ruleset stops anyone else); the workflow never creates tags. Each release includes `SHA256SUMS` and a GitHub artifact attestation, which you can check with `gh attestation verify fleeet-skill.zip --repo nan-labs/fleeet`. The steps are under [Releasing](#releasing).
 
 ## Maintainers
 

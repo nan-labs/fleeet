@@ -1,0 +1,5 @@
+# Settings for the DCO GitHub App, if it's installed.
+require:
+  members: true
+allowRemediationCommits:
+  individual: true

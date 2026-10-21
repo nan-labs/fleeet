@@ -109,6 +109,7 @@ export default defineConfig({
         {
           label: 'Guides',
           items: [
+            { label: 'Open source and hosted', slug: 'open-source' },
             { label: 'Micro-logs', slug: 'micro-logs' },
             { label: 'Public by Design', slug: 'public-by-design' },
             { label: 'How Redaction Works', slug: 'redaction' },

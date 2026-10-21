@@ -1,6 +1,8 @@
 # Fleeet reporting — Agent Instructions Snippet
 
 > **Working on this repo itself?** Any change to the skill (`skills/`), the event schema (`schema/`), the CLI (`bin/`) or the plugin manifests (`.claude-plugin/plugin.json`, `marketplace.json`) needs a semver bump made with `npm run release -- <patch|minor|major>`: patch for wording, minor for additive, major for breaking. Never edit version numbers by hand. Add a CHANGELOG line under Unreleased, stage your change, then run the release script. It commits and tags but never pushes. Details are in [CONTRIBUTING.md](CONTRIBUTING.md). The snippet below is for *other* repos.
+>
+> **Commit trailers.** Every commit you make in this repo ends with both trailers: `Assisted-by: <your bot name>` and `Signed-off-by: Ronan Flynn-Curran <dev@ronan.design>`. The maintainer has approved this sign-off for his agents' commits in this repo; never sign off in anyone else's name. See [AI-assisted contributions](CONTRIBUTING.md#ai-assisted-contributions).
 
 Include this in your agent's instructions file (such as `AGENTS.md`, `CLAUDE.md`, `.cursorrules`, or `.github/AGENTS.md`) to enable fleeet reporting for agents working in this repo.
 

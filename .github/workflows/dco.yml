@@ -1,0 +1,35 @@
+# Fails a pull request if any of its commits lacks a Signed-off-by trailer.
+# See CONTRIBUTING.md#sign-off-dco. Read-only, no third-party actions.
+name: dco
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  signoff:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Every commit is signed off
+        env:
+          BASE: ${{ github.event.pull_request.base.sha }}
+          HEAD: ${{ github.event.pull_request.head.sha }}
+        run: |
+          missing=0
+          for c in $(git rev-list --no-merges "$BASE..$HEAD"); do
+            if ! git log -1 --format=%B "$c" | grep -qE '^Signed-off-by: .+ <.+>$'; then
+              echo "::error::Commit $(git log -1 --format='%h %s' "$c") has no Signed-off-by line"
+              missing=1
+            fi
+          done
+          if [ "$missing" = 1 ]; then
+            echo "Fix with: git rebase --signoff $BASE && git push --force-with-lease"
+            exit 1
+          fi
+          echo "All commits are signed off."
