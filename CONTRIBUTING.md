@@ -1,5 +1,68 @@
 # Contributing
 
+Thanks for helping with Fleeet. This repo holds the open kit (the skill, event schema, CLI and MCP setup) and the docs site at [docs.fleeet.space](https://docs.fleeet.space). Everyone taking part agrees to the [Code of Conduct](CODE_OF_CONDUCT.md).
+
+## Issues first
+
+Open an issue before you write code, unless the change is a typo or a small docs fix. Say what problem you're solving and what you'd change. A maintainer will reply on the issue. That saves you building something that won't be merged, and keeps the discussion in one public place.
+
+- Bugs: use the bug report template.
+- Ideas and changes: use the proposal template.
+- Security problems: never in a public issue. See [SECURITY.md](SECURITY.md).
+
+## Pull requests
+
+1. Fork the repo and branch from `main`.
+2. Keep each PR to one change, and link the issue (`Closes #123`).
+3. Sign off every commit (see below).
+4. Make sure `npm run check` and `npm test` pass.
+5. Add a CHANGELOG line if the change ships to users (see [Versioning](#versioning)).
+
+A maintainer reviews it. Changes to `skills/`, `schema/` and `bin/` get extra care, because they reach every agent that uses the kit.
+
+## Sign-off (DCO)
+
+We use the [Developer Certificate of Origin](https://developercertificate.org/) instead of a CLA. By signing off a commit, you certify that you wrote it or otherwise have the right to submit it under the project's license.
+
+Add the sign-off with `-s`:
+
+```bash
+git commit -s -m "Fix typo in quick start"
+```
+
+That appends a line like `Signed-off-by: Your Name <you@example.com>`, using your git name and email. To sign off commits you've already made: `git rebase --signoff main`.
+
+## Dev setup and tests
+
+You need Node 18 or newer (the docs site needs Node 22).
+
+```bash
+git clone https://github.com/nan-labs/fleeet
+cd fleeet
+npm install        # also installs the pre-commit version check
+npm run check      # CLI syntax check and version-sync check
+npm test           # CLI tests
+```
+
+Docs site:
+
+```bash
+cd docs
+npm ci
+npm run dev        # local preview
+npm run build      # what CI runs
+```
+
+Never put real tokens in tests, examples or screenshots. Use placeholders like `<token>`.
+
+## Release process
+
+A GitHub Release is the source of truth for what's shipped. When `main` carries a kit version without a published release, the `release` workflow runs the checks, tests and docs build, tags `vX.Y.Z`, and publishes the GitHub Release with that version's CHANGELOG section as its notes. Only maintainers cut releases. The steps are under [Releasing](#releasing).
+
+## Maintainers
+
+Fleeet currently has one maintainer, [@flynnduism](https://github.com/flynnduism). See [GOVERNANCE.md](GOVERNANCE.md) for how decisions are made and [CODEOWNERS](.github/CODEOWNERS) for who reviews what. Replies can take a few days.
+
 ## Versioning
 
 The kit has **one version**, shared by the fleeet-reporting skill, the Claude
