@@ -1,12 +1,15 @@
 # Publishes a GitHub Release whenever main carries a kit version that has no
-# published release yet. Ronan's protocol: pm/RELEASE.md in fleeet-admin.
+# published release yet. Process: CONTRIBUTING.md#releasing.
 #
 # 1. Reads the version from package.json.
 # 2. Skips if the GitHub Release vX.Y.Z already exists.
 # 3. Runs the version-sync check, lint (syntax), tests and docs build.
-# 4. On green: creates the annotated tag vX.Y.Z on this commit if it doesn't
-#    exist yet (an existing tag is reused, never moved), then publishes the
-#    GitHub Release with that version's CHANGELOG.md section as notes.
+# 4. Needs the tag vX.Y.Z to exist already, created by a maintainer
+#    (`npm run release`, then push the tag). A tag ruleset limits who can
+#    create v* tags, so this workflow never creates or moves tags.
+# 5. On green: writes SHA256SUMS, records a GitHub artifact attestation
+#    (build provenance) for the release files, then publishes the GitHub
+#    Release with that version's CHANGELOG.md section as notes.
 name: release
 
 on:
@@ -15,7 +18,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
   group: release
@@ -24,12 +27,16 @@ concurrency:
 jobs:
   release:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write      # publish the GitHub Release
+      id-token: write      # sign the attestation (Sigstore)
+      attestations: write  # store the attestation
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
         with:
           fetch-depth: 0
           fetch-tags: true
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
         with:
           node-version: 22
 
@@ -81,20 +88,37 @@ jobs:
           fi
           cat release-notes.md
 
-      - name: Tag and publish
+      - name: Require a maintainer-created tag
+        if: steps.v.outputs.needed == 'true'
+        env:
+          TAG: ${{ steps.v.outputs.tag }}
+        run: |
+          if ! git rev-parse -q --verify "refs/tags/$TAG" >/dev/null; then
+            echo "::error::Tag $TAG doesn't exist. A maintainer creates and pushes it (npm run release)."
+            exit 1
+          fi
+          if [ "$(git rev-list -n1 "$TAG")" != "$GITHUB_SHA" ]; then
+            echo "::error::Tag $TAG points at $(git rev-list -n1 "$TAG"), not this commit."
+            exit 1
+          fi
+
+      - name: Checksums
+        if: steps.v.outputs.needed == 'true'
+        working-directory: dist
+        run: sha256sum fleeet-skill.zip > SHA256SUMS && cat SHA256SUMS
+
+      - name: Attest build provenance
+        if: steps.v.outputs.needed == 'true'
+        uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8 # v4.2.2
+        with:
+          subject-path: dist/fleeet-skill.zip
+
+      - name: Publish
         if: steps.v.outputs.needed == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
           TAG: ${{ steps.v.outputs.tag }}
         run: |
-          if git rev-parse -q --verify "refs/tags/$TAG" >/dev/null; then
-            echo "Tag $TAG exists at $(git rev-list -n1 "$TAG"); reusing it."
-          else
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git tag -a "$TAG" -m "$TAG" "$GITHUB_SHA"
-            git push origin "refs/tags/$TAG"
-          fi
           gh release create "$TAG" --repo "$GITHUB_REPOSITORY" --verify-tag \
             --title "$TAG" --notes-file release-notes.md --latest \
-            dist/fleeet-skill.zip
+            dist/fleeet-skill.zip dist/SHA256SUMS

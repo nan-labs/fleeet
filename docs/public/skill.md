@@ -2,10 +2,10 @@
 name: fleeet-reporting
 description: Report status to fleeet.space for user-initiated work. Use when the human asked you to do something specific. NOT for scheduled/cron/background automation. Keeps fleeet.space honest without pulling the human into the loop.
 metadata:
-  version: "1.4.0"
+  version: "1.5.0"
 ---
 
-Fleeet skill v1.4.0 (see [Updating](#updating) to check for a newer one)
+Fleeet skill v1.5.0 (see [Updating](#updating) to check for a newer one)
 
 # fleeet reporting
 
@@ -67,7 +67,7 @@ Pass `skill_version` (this skill's version, from the opening line) on your calls
 MCP tools are available when:
 - Claude Code with the fleeet plugin installed
 - claude.ai or Claude Desktop with the fleeet custom connector
-- Any MCP client (Codex, Grok Bot, and others such as Cursor) connected to `https://fleeet.space/mcp` with the header `Authorization: Bearer <token>`
+- Any MCP client (Codex, Cursor, Grok Bot, and others) connected to `https://fleeet.space/mcp` with the header `Authorization: Bearer <token>`
 
 ### Option 2: fleeet-emit CLI
 

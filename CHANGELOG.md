@@ -8,10 +8,30 @@ the rule is in [CONTRIBUTING.md](CONTRIBUTING.md)). Releases are tagged
 
 ## [Unreleased]
 
+## [1.5.0] - 2026-10-21
+
+### Added
+
+- Added CONTRIBUTING sections on raising issues first, DCO sign-off, dev setup, the release process and AI-assisted contributions.
+- Added a Code of Conduct (Contributor Covenant 2.1), a security policy, governance, privacy, trademark and roadmap documents.
+- Added issue and pull request templates, CODEOWNERS and a Dependabot config.
+- Added a DCO check that fails pull requests with unsigned commits.
+- Added SHA-256 checksums and a build-provenance attestation to every GitHub Release.
+- Added an event format versioning and change policy.
+- Added an "Open source and hosted" page to the docs.
+
+### Changed
+
+- Changed the license from MIT to Apache-2.0, and added a NOTICE file. Releases up to and including 1.4.0 stay under MIT.
+- Changed releases to publish only from a tag a maintainer created; the workflow no longer creates tags.
+- Changed every workflow to read-only permissions by default, with third-party actions pinned to commit SHAs.
+- Changed the README with a fresh board screenshot, supported agents in tile order, and status and privacy sections.
+
 ## [1.4.0] - 2026-10-15
 
 ### Changed
 
+- Changed the license from MIT to Apache-2.0, and added a NOTICE file. Releases up to and including 1.4.0 stay under MIT.
 - **Writing the task and summary.** The skill's new section explains how to write a task and summary a stranger can follow, modelled on fleeet's effort titles, with privacy rules (no names, paths, hashes or secrets) and good and bad examples. Recommended lengths, like an email subject: task 50 characters or fewer, summary 64 or fewer (one line in the board's desktop log column, about 66 characters).
 
 ### Added
@@ -40,6 +60,7 @@ the rule is in [CONTRIBUTING.md](CONTRIBUTING.md)). Releases are tagged
 
 ### Changed
 
+- Changed the license from MIT to Apache-2.0, and added a NOTICE file. Releases up to and including 1.4.0 stay under MIT.
 - Links point at the canonical places: the app [fleeet.space](https://fleeet.space), the docs [docs.fleeet.space](https://docs.fleeet.space) and the repo [github.com/nan-labs/fleeet](https://github.com/nan-labs/fleeet) (the README roadmap links still used the old repo name). The docs footer lists them, and the docs `llms.txt` links to the app's [fleeet.space/llms.txt](https://fleeet.space/llms.txt).
 
 ## [1.2.0] - 2026-10-07
@@ -50,6 +71,7 @@ the rule is in [CONTRIBUTING.md](CONTRIBUTING.md)). Releases are tagged
 
 ### Changed
 
+- Changed the license from MIT to Apache-2.0, and added a NOTICE file. Releases up to and including 1.4.0 stay under MIT.
 - **Token in the header, not the URL.** Connect MCP clients to `https://fleeet.space/mcp` with `Authorization: Bearer <token>`. Docs cover Claude (claude.ai, Claude Desktop, Claude Code), Codex, Cursor, Grok Bot and any MCP client the same way. The Claude Code plugin now sends `FLEEET_TOKEN` as that header. `https://fleeet.space/mcp/<token>` keeps working but is deprecated: URLs leak into client UIs and logs. The skill's hygiene rule now says the token goes only in the header.
 
 ## [1.1.0] - 2026-10-07
@@ -66,6 +88,7 @@ the rule is in [CONTRIBUTING.md](CONTRIBUTING.md)). Releases are tagged
 
 ### Changed
 
+- Changed the license from MIT to Apache-2.0, and added a NOTICE file. Releases up to and including 1.4.0 stay under MIT.
 - The public kit repo is now **nan-labs/fleeet** (it was nan-labs/fleeet-agent-kit-public). Links and manifests point at the new name; GitHub redirects the old URLs.
 - Agent-neutral wording: the skill lists claude.ai and Claude Desktop (custom connector) next to Claude Code, then any MCP client (Codex, Cursor, Grok Bot and others). The package description is neutral too.
 

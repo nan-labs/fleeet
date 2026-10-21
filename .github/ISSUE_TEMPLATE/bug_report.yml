@@ -1,0 +1,29 @@
+name: Bug report
+description: Something in the kit, CLI, skill, MCP setup or docs doesn't work as described.
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you did, what you expected, and what happened instead.
+    validations:
+      required: true
+  - type: dropdown
+    id: agent
+    attributes:
+      label: Agent
+      options: [Default Agent, Claude (claude.ai), Claude Code, Codex, Grok Bot, Other MCP client, CLI only]
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Kit version
+      description: From `node bin/fleeet-emit.mjs --version` or the skill's first line.
+  - type: textarea
+    id: logs
+    attributes:
+      label: Output
+      description: Error text or CLI output. Remove tokens and anything private before pasting.
+      render: shell
