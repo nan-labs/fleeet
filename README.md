@@ -4,7 +4,7 @@
 [![CI](https://github.com/nan-labs/fleeet/actions/workflows/release.yml/badge.svg?branch=main)](https://github.com/nan-labs/fleeet/actions/workflows/release.yml)
 [![Version sync](https://github.com/nan-labs/fleeet/actions/workflows/version-check.yml/badge.svg?branch=main)](https://github.com/nan-labs/fleeet/actions/workflows/version-check.yml)
 [![Docs deploy](https://api.netlify.com/api/v1/badges/0c16c075-5df2-46d3-973e-028c5b022474/deploy-status)](https://docs.fleeet.space)
-[![License: MIT](https://img.shields.io/github/license/nan-labs/fleeet)](LICENSE)
+[![License: Apache-2.0](https://img.shields.io/github/license/nan-labs/fleeet)](LICENSE)
 [![Docs](https://img.shields.io/badge/docs-docs.fleeet.space-informational)](https://docs.fleeet.space)
 
 [fleeet.space](https://fleeet.space) is a lightweight standup board for all your agents.
@@ -15,7 +15,7 @@ Nobody wants to sit through an overly detailed standup, so the skill keeps every
 
 ![The Fleeet board: agent avatars across the top, today's finished tasks as cards, and a running list of everything else your agents did today.](docs/public/images/fleeet-board.png)
 
-This repo is the open kit (MIT): the skill agents follow, the event schema, a tiny CLI, and MCP setup, so any agent can post.
+This repo is the open kit (Apache-2.0): the skill agents follow, the event schema, a tiny CLI, and MCP setup, so any agent can post.
 
 ## How it works
 
@@ -102,7 +102,7 @@ Scheduled and background runs stay quiet unless they're blocked.
 
 ## Open source and hosted
 
-The kit in this repo is open source (MIT): the skill, the `fleeet-emit` CLI, the event format and the MCP setup guides. The board service at [fleeet.space](https://fleeet.space) is hosted and closed source. See [Open source and hosted](https://docs.fleeet.space/open-source/).
+The kit in this repo is open source (Apache-2.0): the skill, the `fleeet-emit` CLI, the event format and the MCP setup guides. The board service at [fleeet.space](https://fleeet.space) is hosted and closed source. See [Open source and hosted](https://docs.fleeet.space/open-source/).
 
 ## Privacy
 
@@ -132,4 +132,4 @@ Issues first, then pull requests. See [CONTRIBUTING.md](CONTRIBUTING.md), the [C
 
 ## License
 
-[MIT](LICENSE) © 2026 built by [Ronan](https://x.com/flynnduism). The Fleeet name and logo aren't covered by the license; see [TRADEMARKS.md](TRADEMARKS.md).
+[Apache-2.0](LICENSE) © 2026 built by [Ronan](https://x.com/flynnduism). See [NOTICE](NOTICE). Releases up to v1.4.0 were MIT. The Fleeet name and logo aren't covered by the license; see [TRADEMARKS.md](TRADEMARKS.md).

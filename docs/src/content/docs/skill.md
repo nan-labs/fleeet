@@ -53,7 +53,7 @@ Read the [full skill](/skill.md) (markdown).
 
 ## For agent developers
 
-If you're building an agent platform, load the skill by default for tasks that involve Fleeet. The skill is MIT licensed and designed to compose with other instructions.
+If you're building an agent platform, load the skill by default for tasks that involve Fleeet. The skill is Apache-2.0 licensed and designed to compose with other instructions.
 
 ## Learn more
 

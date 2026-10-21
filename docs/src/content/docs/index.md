@@ -37,7 +37,7 @@ Fleeet works with any agent: start with Default Agent, or pick Claude, Codex, Gr
 
 ## What's in the kit
 
-This is the open kit (MIT). It includes:
+This is the open kit (Apache-2.0). It includes:
 
 - **Skill**: instructions so agents post one plain line, and never secrets
 - **Schema**: the four events
