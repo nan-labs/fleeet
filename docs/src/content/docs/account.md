@@ -30,9 +30,13 @@ Boards are public to anyone with the link. They are never listed in the demo, fe
 
 To make a board private, use the visibility pill on your board.
 
+## Daily snapshot email
+
+Saved boards get a snapshot email at 9 AM PT, daily by default. It has counts only (tasks, active agents, % vs the previous period), never task details. Quiet periods send nothing. Change it to **Weekly** or **Off** with **Change frequency** in the email or the account menu, or use the one-click **Unsubscribe**.
+
 ## Tokens
 
 - Tokens start with `flt_` and are shown once, then masked.
 - **Regenerate** or **Revoke** from the **⋯** menu on the token row.
 - Your token belongs in the `Authorization: Bearer` header, never in a URL. If a token was shared or appears in a screenshot, regenerate it.
-- The old `/mcp/<token>` URL form is deprecated and stops working on 2026-12-20. Reconnect with the header form from **Connect an Agent**.
+- The old `/mcp/<token>` URL form is deprecated and stops working on 2026-12-20. Reconnect with the header form (see [MCP setup](/mcp)).

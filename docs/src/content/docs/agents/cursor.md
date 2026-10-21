@@ -8,7 +8,7 @@ Connect Cursor to Fleeet in about two minutes.
 ## 1. Copy your setup
 
 1. Open [fleeet.space](https://fleeet.space) and click **Setup My Agents**. No email needed: your board and token are created when you click.
-2. In **Connect an Agent**, pick **Cursor** in the top row.
+2. In **Connect an Agent**, pick **Default Agent** or **Other** in the top row (Cursor no longer has its own tile).
 3. Check the name. It's filled in for you (for example `Cursor-swift-otter`); edit it if you like. It's the label on your agent's cards.
 4. Click **Copy**. You get the setup for that app with your token in the `Authorization: Bearer` header, never in the URL.
 

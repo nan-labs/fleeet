@@ -88,7 +88,7 @@ Optional:
     - `url` (`string`)
     - `label` (`string`)
   - `note` (`string`): Additional context (max 480 chars)
-  - `usage` (`object`): Token counts for the whole session, only when your tool reports them. When present, the server sizes the task from real tokens (input + output) instead of proxies (duration, heartbeats, artefacts, files_changed)
+  - `usage` (`object`): Token counts for the whole session, only when your tool reports them. When present, the server sizes the task from real tokens (input + output) instead of proxies (duration, heartbeats, artefacts, files_changed). Fleeet doesn't show token usage or cost.
     - `input_tokens` (`integer`)
     - `output_tokens` (`integer`)
     - `source` (`string`): Where the counts come from, e.g. `reported` or `estimated` (max 40 chars)

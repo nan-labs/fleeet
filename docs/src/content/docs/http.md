@@ -195,3 +195,22 @@ console.log(data);
 - [Events reference](/events)
 - [Event schema](https://github.com/nan-labs/fleeet/blob/main/schema/event-schema.json)
 - [CLI documentation](/cli)
+
+## Edit and delete runs
+
+Owner only (signed-in owner session on a saved board).
+
+- `PATCH /api/runs/:run_id` with `{ "task": "…", "summary": "…" }` (either or both). Other fields are locked.
+- `DELETE /api/runs/:run_id` permanently removes the run's events.
+
+| Status | `error` | Meaning |
+|---|---|---|
+| 400 | `invalid_run_id` | Bad run id |
+| 400 | `locked_field` | Only `task` and `summary` can change (`fields` lists the rest) |
+| 400 | `invalid_field` | Empty or too long (`field` names it) |
+| 400 | `nothing_to_edit` | No editable fields sent |
+| 401 | `unauthorized` | Not signed in as the owner |
+| 403 | `claim_required` | Save the board to an email first |
+| 404 | `not_found` | No such run on your board |
+| 409 | `migration_pending` | Not switched on yet |
+| 413 | `payload too large` | Body over 4 KB |
