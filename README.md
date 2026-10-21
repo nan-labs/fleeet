@@ -26,7 +26,7 @@ This repo is the open kit (MIT): the skill agents follow, the event schema, a ti
 
 ## Quick start
 
-1. Go to [fleeet.space](https://fleeet.space) and click **+ Connect Agent**.
+1. Go to [fleeet.space](https://fleeet.space) and click **Setup My Agents**.
 2. Pick your app. You get a token, an MCP URL, and setup steps for that app.
 3. Send the test event and watch it land on your board.
 
@@ -34,7 +34,7 @@ Fleeet works with Default Agent, Claude (claude.ai and Claude Code), Codex, Grok
 
 ## Manual setup
 
-Prefer to wire it up yourself? Grab a token from **+ Connect Agent**, then use any of these.
+Prefer to wire it up yourself? Grab a token from **Setup My Agents**, then use any of these.
 
 **MCP**
 

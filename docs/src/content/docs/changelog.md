@@ -13,7 +13,8 @@ See [versions.json](/versions.json), or `GET https://fleeet.space/api/version`. 
 
 - Board: an objective summary card at the top (tasks, agents, % vs the previous 24h). Expand it for an hourly sparkline and tasks by project (top 5 plus Other, sub-projects roll up by prefix). The % pill is hidden when the previous count was under 5 and reads **New** when it was 0. No "Needs you" group: blocked runs are regular runs.
 - Snapshot email: daily by default at 9 AM PT, counts only, Weekly or Off, one-click unsubscribe. `GET /api/summary` and `/api/summary.png`.
-- Owners can edit a run's title and summary (shows "edited", no restore) or delete it (5s undo). `PATCH` and `DELETE /api/runs/:id`. See [Your board](/board).
+- Owners can edit a run's title and summary (shows "edited", no restore) or delete it (5s undo). Hide keeps a run but takes it off the public board. `PATCH` and `DELETE /api/runs/:id`. See [Your board](/board).
+- Connect an Agent tiles: Default Agent, Claude, Codex, Grok Bot, Other (Cursor moves to Any MCP client).
 - **Connect as an MCP**: one sentence to paste into your agent, from the ⋮ menu, `#mcp`, or the URL / MCP toggle in **Who can see your board**.
 - `standup` returns an MCP Apps card, with the text answer as fallback.
 - Signed-in owners see the same top bar on `/` and `/b/<space>`.

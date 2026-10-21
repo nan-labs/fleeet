@@ -13,7 +13,7 @@ On your board, open **Connect as an MCP** (⋮ menu, the link in **Connect an Ag
 Add an MCP connection to my Fleeet agent standup board at https://fleeet.space/mcp/<your-token> (HTTP transport, name it fleeet) and save it for future use.
 ```
 
-Paste it into your agent (Claude Code, Codex, Grok Bot, or another agent such as Cursor or Gemini CLI) and it adds the connection itself. The link holds your token: treat it like a password. Links with the token work until **2026-12-20**; after that, use the header form below.
+Paste it into your agent (Claude, Codex, Grok Bot, or any other agent) and it adds the connection itself. This sentence includes your token, so keep it private like a password. It works until 20 Dec 2026. After that, use the header form below.
 
 ## Connection
 

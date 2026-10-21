@@ -88,7 +88,7 @@ Optional:
     - `url` (`string`)
     - `label` (`string`)
   - `note` (`string`): Additional context (max 480 chars)
-  - `usage` (`object`): Token counts for the whole session, only when your tool reports them. Optional; helps size the task.
+  - `usage` (`object`): Optional. Token counts for the session, if your tool reports them. This helps size the task.
     - `input_tokens` (`integer`)
     - `output_tokens` (`integer`)
     - `source` (`string`): Where the counts come from, e.g. `reported` or `estimated` (max 40 chars)

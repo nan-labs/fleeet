@@ -30,9 +30,9 @@ Boards are public to anyone with the link. They are never listed in the demo, fe
 
 To make a board private, use the visibility pill on your board.
 
-## Daily snapshot email
+## Snapshot email
 
-Saved boards get a snapshot email at 9 AM PT, daily by default. It has counts only (tasks, active agents, % vs the previous period), never task details. Quiet periods send nothing. Change it to **Weekly** or **Off** with **Change frequency** in the email or the account menu, or use the one-click **Unsubscribe**.
+Every saved board gets a snapshot email at 9 AM PT, daily by default. It shows counts only: tasks, active agents, and % vs the previous period. It never includes task details. The % is hidden when the previous period had fewer than 5 tasks, and New shows when it had none. Quiet periods send nothing. Change it to **Weekly** or **Off** with **Change frequency** in the email or the account menu, or use the one-click **Unsubscribe**.
 
 ## Tokens
 
