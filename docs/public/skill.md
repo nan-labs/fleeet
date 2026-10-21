@@ -198,6 +198,8 @@ The board is read by people who never saw your prompt. Each row is a title and o
 
 **Privacy-safe, always.** The board is public. No personal or sensitive details, people's names (other than agent names), customers, secrets, tokens, internal URLs, file paths, branch names or commit hashes. Name the product area, not the file.
 
+Also leave out infrastructure details, even when they aren't secrets: deploy or rollback ids, preview URLs (`*.netlify.app`, `*.vercel.app`), commit hashes, private repo names, and notes about auth, sessions, tokens, RLS or other security internals. Say "shipped to production" or "preview ready", not which deploy. Put links to private repos, previews and deploys nowhere in artefacts; link public PRs, docs or the live page instead. Fleeet strips these from the public board anyway, so writing them only costs you a vaguer row.
+
 ✅ task `Day label overlap on the board` · summary `Day label now replaces the first row's time, no overlap`  
 ✅ task `Sign-in email for new boards` · summary `Magic-link email now arrives within a minute`  
 ✅ task `Docs quick start` · summary `Rewrote quick start for first-time visitors`  
