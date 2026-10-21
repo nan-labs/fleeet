@@ -1,5 +1,6 @@
-# Publishes a GitHub Release whenever main carries a kit version that has no
-# published release yet. Process: CONTRIBUTING.md#releasing.
+# Publishes a GitHub Release when a maintainer pushes a vX.Y.Z tag for a kit
+# version that has no published release yet. It runs on the tag push, not on
+# pushes to main, so merging a release commit never fails for lack of a tag. Process: CONTRIBUTING.md#releasing.
 #
 # 1. Reads the version from package.json.
 # 2. Skips if the GitHub Release vX.Y.Z already exists.
@@ -14,7 +15,7 @@ name: release
 
 on:
   push:
-    branches: [main]
+    tags: ["v*"]
   workflow_dispatch:
 
 permissions:
@@ -99,6 +100,10 @@ jobs:
           fi
           if [ "$(git rev-list -n1 "$TAG")" != "$GITHUB_SHA" ]; then
             echo "::error::Tag $TAG points at $(git rev-list -n1 "$TAG"), not this commit."
+            exit 1
+          fi
+          if ! git merge-base --is-ancestor "$GITHUB_SHA" origin/main; then
+            echo "::error::Tag $TAG isn't on main."
             exit 1
           fi
 

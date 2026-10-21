@@ -75,7 +75,7 @@ Never put real tokens in tests, examples or screenshots. Use placeholders like `
 
 ## Release process
 
-A GitHub Release is the source of truth for what's shipped. When `main` carries a kit version without a published release, the `release` workflow runs the checks, tests and docs build, tags `vX.Y.Z`, and publishes the GitHub Release with that version's CHANGELOG section as its notes. Only maintainers cut releases. The maintainer creates and pushes the `vX.Y.Z` tag (a tag ruleset stops anyone else); the workflow never creates tags. Each release includes `SHA256SUMS` and a GitHub artifact attestation, which you can check with `gh attestation verify fleeet-skill.zip --repo nan-labs/fleeet`. The steps are under [Releasing](#releasing).
+A GitHub Release is the source of truth for what's shipped. To release, the maintainer creates the `vX.Y.Z` tag on `main` and pushes it (a tag ruleset stops anyone else). The tag push runs the `release` workflow: the checks, tests and docs build, then the GitHub Release with that version's CHANGELOG section as its notes. The workflow never creates tags. Each release includes `SHA256SUMS` and a GitHub artifact attestation, which you can check with `gh attestation verify fleeet-skill.zip --repo nan-labs/fleeet`. The steps are under [Releasing](#releasing).
 
 ## Maintainers
 
