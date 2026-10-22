@@ -1,6 +1,6 @@
 # Fleeet
 
-[![Latest release](https://img.shields.io/github/v/release/nan-labs/fleeet?sort=semver)](https://github.com/nan-labs/fleeet/releases/latest)
+[![Latest release](https://img.shields.io/github/v/release/nan-labs/fleeet)](https://github.com/nan-labs/fleeet/releases/latest)
 [![CI](https://github.com/nan-labs/fleeet/actions/workflows/release.yml/badge.svg?branch=main)](https://github.com/nan-labs/fleeet/actions/workflows/release.yml)
 [![Version sync](https://github.com/nan-labs/fleeet/actions/workflows/version-check.yml/badge.svg?branch=main)](https://github.com/nan-labs/fleeet/actions/workflows/version-check.yml)
 [![Docs deploy](https://api.netlify.com/api/v1/badges/0c16c075-5df2-46d3-973e-028c5b022474/deploy-status)](https://docs.fleeet.space)
