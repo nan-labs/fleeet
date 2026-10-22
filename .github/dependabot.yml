@@ -3,13 +3,24 @@
 version: 2
 updates:
   - package-ecosystem: npm
-    directories: ["/", "/docs"]
+    directory: /
     schedule:
       interval: monthly
     open-pull-requests-limit: 2
     groups:
       npm:
         patterns: ["*"]
+  - package-ecosystem: npm
+    directory: /docs
+    schedule:
+      interval: monthly
+    open-pull-requests-limit: 2
+    groups:
+      npm:
+        patterns: ["*"]
+    ignore:
+      - dependency-name: "typescript"
+        update-types: ["version-update:semver-major"]
   - package-ecosystem: github-actions
     directory: /
     schedule:

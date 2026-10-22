@@ -12,6 +12,7 @@ the rule is in [CONTRIBUTING.md](CONTRIBUTING.md)). Releases are tagged
 
 - **Private boards documentation.** Updated the "Public by Design" docs to reflect that private boards have shipped (no longer on the roadmap).
 - **Self-hosting documentation expanded.** README now has a Self-hosting section, and the docs page is expanded with pre-release status, technology stack (Docker + Postgres), no phone-home guarantee, header-token auth details, and honest "not ready yet" warnings.
+- **Dependabot configuration.** Split npm ecosystem into separate entries for root and docs directories, with TypeScript major version updates ignored for /docs (Astro tooling doesn't support TS 7 yet).
 
 ## [1.5.1] - 2026-10-22
 
