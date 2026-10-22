@@ -8,6 +8,8 @@ the rule is in [CONTRIBUTING.md](CONTRIBUTING.md)). Releases are tagged
 
 ## [Unreleased]
 
+## [1.5.1] - 2026-10-22
+
 ### Added
 
 - **Self-hosting documentation.** Added a stub page for the upcoming fleeet-server (v0.1, read-only board, single-tenant, admin + agent tokens, Docker image `ghcr.io/nan-labs/fleeet-server`). Linked from docs navigation.
