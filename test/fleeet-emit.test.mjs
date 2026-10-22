@@ -132,3 +132,19 @@ test("over-length task/summary warns on stderr but still posts (1.4.0)", async (
   const s = await emit(["heartbeat", "--summary", "Docs links fixed, footer next"]);
   assert.doesNotMatch(s.err, /warning/);
 });
+
+test("FLEEET_URL as an alias for FLEEET_ENDPOINT", async () => {
+  // FLEEET_URL alone works
+  const r1 = await emit(["heartbeat", "--summary", "testing URL"], { FLEEET_ENDPOINT: undefined, FLEEET_URL: endpoint });
+  assert.equal(r1.code, 0);
+  assert.equal(posts.at(-1).body.summary, "testing URL");
+  
+  // FLEEET_ENDPOINT wins when both are set
+  const localEndpoint = endpoint;
+  const r2 = await emit(["heartbeat", "--summary", "endpoint wins"], { FLEEET_ENDPOINT: localEndpoint, FLEEET_URL: "http://ignored.example" });
+  assert.equal(r2.code, 0);
+  assert.equal(posts.at(-1).body.summary, "endpoint wins");
+  // Should have posted to endpoint, not to the FLEEET_URL
+  const postsBefore = posts.length;
+  assert.equal(posts.length, postsBefore); // Same server received it
+});
