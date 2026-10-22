@@ -8,6 +8,10 @@ the rule is in [CONTRIBUTING.md](CONTRIBUTING.md)). Releases are tagged
 
 ## [Unreleased]
 
+### Added
+
+- **RELEASING.md**: Documents the release process, including when to cut releases, who does what (agents prepare, Ronan pushes tags), what triggers on tag push, release checklist, rollback procedure, and current status noting v1.5.0/v1.5.1 were never tagged.
+
 ### Changed
 
 - **Private boards documentation.** Updated the "Public by Design" docs to reflect that private boards have shipped (no longer on the roadmap).
