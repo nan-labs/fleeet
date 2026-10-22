@@ -9,6 +9,7 @@
 //
 // Env:
 //   FLEEET_ENDPOINT  — base URL (default https://fleeet.space), appends /api/events
+//   FLEEET_URL       — alias for FLEEET_ENDPOINT (FLEEET_ENDPOINT takes precedence if both set)
 //   FLEEET_TOKEN     — bearer token for auth
 //   FLEEET_RUN_ID    — reuse existing run_id (or generates one for session_start)
 //   FLEEET_AGENT     — agent name (defaults to $USER or 'unknown')
@@ -40,13 +41,13 @@ import { randomUUID } from "node:crypto";
 // The kit version (skill, plugin, CLI share one). Bumped only by
 // `npm run release`; `npm run check` fails if it drifts from package.json.
 // A constant, not a package.json read: this file is also downloaded alone.
-const KIT_VERSION = "1.5.0";
+const KIT_VERSION = "1.5.1";
 
 const RUN_ID_FILE = join(tmpdir(), "fleeet-run-id");
 const NOTICE_FILE = join(tmpdir(), "fleeet-update-notice");
 const LOCAL_SPOOL = join(process.cwd(), ".fleeet", "events.jsonl");
 
-const ENDPOINT = (process.env.FLEEET_ENDPOINT || "https://fleeet.space").replace(/\/+$/, "");
+const ENDPOINT = (process.env.FLEEET_ENDPOINT || process.env.FLEEET_URL || "https://fleeet.space").replace(/\/+$/, "");
 const TOKEN = process.env.FLEEET_TOKEN;
 const AGENT = process.env.FLEEET_AGENT || process.env.USER || userInfo().username || "unknown";
 const SURFACE = (process.env.FLEEET_SURFACE || "").trim().slice(0, 32);
@@ -108,6 +109,7 @@ Flags:
 
 Environment:
   FLEEET_ENDPOINT  — base URL (default: https://fleeet.space)
+  FLEEET_URL       — alias for FLEEET_ENDPOINT (FLEEET_ENDPOINT takes precedence if both set)
   FLEEET_TOKEN     — bearer token
   FLEEET_RUN_ID    — reuse existing run_id
   FLEEET_AGENT     — agent name (default: $USER)
