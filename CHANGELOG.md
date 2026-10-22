@@ -8,6 +8,10 @@ the rule is in [CONTRIBUTING.md](CONTRIBUTING.md)). Releases are tagged
 
 ## [Unreleased]
 
+### Changed
+
+- **Private boards documentation.** Updated the "Public by Design" docs to reflect that private boards have shipped (no longer on the roadmap).
+
 ## [1.5.1] - 2026-10-22
 
 ### Added
