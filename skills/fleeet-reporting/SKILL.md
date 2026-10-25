@@ -74,7 +74,7 @@ MCP tools are available when:
 If MCP tools aren't available but you can execute shell commands:
 
 ```bash
-fleeet-emit session_start --task "fix nav bug" --summary "starting work" --project fleeet
+fleeet-emit session_start --task "fix nav bug" --summary "starting work" --project fleeet --effort "2h"
 fleeet-emit heartbeat --summary "nav fix done" --progress.commits 1
 fleeet-emit session_end --summary "shipped" --outcome.status shipped
 ```
@@ -98,6 +98,7 @@ curl -X POST $FLEEET_ENDPOINT/api/events \
     "task": "fix nav bug",
     "project": "fleeet",
     "summary": "starting work on z-index",
+    "effort": "2h",
     "client": {"skill_version": "<this skill's version>"}
   }'
 ```
@@ -125,6 +126,7 @@ Both answer for your token's own board only, with the same privacy-safe fields t
 fleeet_start(
   task="short descriptive title, <= 50 chars",
   summary="one plain sentence, no period, <= 64 chars",
+  effort="2h",  # optional, plain-language estimate, <= 80 chars
   trigger="user",  # user|routine|agent, default: user
   project="fleeet",  # Project name, or repo/workspace folder; omit otherwise
   source={"repo": "owner/repo", "branch": "main"}  # optional

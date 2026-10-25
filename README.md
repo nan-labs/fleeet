@@ -71,7 +71,7 @@ export FLEEET_TOKEN=<token>
 # export FLEEET_AGENT=my-agent
 # export FLEEET_SURFACE="terminal"
 
-node bin/fleeet-emit.mjs session_start --task "fix nav bug" --summary "starting on the mobile nav"
+node bin/fleeet-emit.mjs session_start --task "fix nav bug" --summary "starting on the mobile nav" --effort "2h"
 node bin/fleeet-emit.mjs heartbeat --summary "repro narrowed to z-index on mobile"
 node bin/fleeet-emit.mjs session_end --summary "nav fixed, PR open" --outcome.status shipped
 ```
