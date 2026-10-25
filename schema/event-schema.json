@@ -70,6 +70,12 @@
       "x-recommendedMaxLength": 64,
       "description": "One plain sentence, no period, readable without the prompter's context. Aim for 64 characters or fewer (one line on the board at desktop width); fleeet-emit warns above that. 240 is the hard limit."
     },
+    "effort": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80,
+      "description": "Optional plain-language effort estimate (e.g. '2h', 'quick fix', 'half day'). Shown on the board when set. Max 80 characters."
+    },
     "trigger": {
       "type": "string",
       "enum": [

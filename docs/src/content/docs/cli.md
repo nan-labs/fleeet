@@ -76,6 +76,7 @@ Common flags:
 
 - `--task`: Task description (session_start only)
 - `--summary`: One sentence, present tense, no period
+- `--effort`: Optional plain-language effort estimate (max 80 chars), e.g. `"2h"` or `"quick fix"`
 - `--trigger`: `user`, `routine`, or `agent` (default: `user`)
 - `--source.repo`: e.g. `owner/repo`
 - `--project`: Claude/ChatGPT Project name, or repo/workspace folder name

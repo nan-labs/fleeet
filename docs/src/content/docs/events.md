@@ -30,6 +30,7 @@ All events share these core fields:
 
 ### Optional
 
+- **effort** (`string`): Optional plain-language effort estimate (max 80 chars), e.g. `2h` or `quick fix`. Shown on the board when set
 - **surface** (`string`): Where the agent runs, e.g. `claude.ai`, `Claude Code`, `Cursor` (max 32 chars)
 - **project** (`string`): What the work belongs to. For repo-based tools: the repo or workspace folder name. For Claude/ChatGPT Projects: the Project name. Server normalizes it to the repo name (max 80 chars). Falls back to `source.repo` then `general`
 - **trigger** (`string`): What initiated this work. One of:

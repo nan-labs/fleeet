@@ -16,7 +16,7 @@
 //   FLEEET_SURFACE   — optional surface label, e.g. "Claude Code" (max 32 chars)
 //
 // Flags:
-//   --task, --summary, --trigger, --source.repo, --progress.commits, etc.
+//   --task, --summary, --effort, --trigger, --source.repo, --progress.commits, etc.
 //   Use dot notation for nested fields: --blocker.kind ambiguity
 //   JSON arrays/objects: --outcome.artefacts '[...]' or --source '{"repo":"x"}'
 //
@@ -41,7 +41,7 @@ import { randomUUID } from "node:crypto";
 // The kit version (skill, plugin, CLI share one). Bumped only by
 // `npm run release`; `npm run check` fails if it drifts from package.json.
 // A constant, not a package.json read: this file is also downloaded alone.
-const KIT_VERSION = "1.5.1";
+const KIT_VERSION = "1.6.0";
 
 const RUN_ID_FILE = join(tmpdir(), "fleeet-run-id");
 const NOTICE_FILE = join(tmpdir(), "fleeet-update-notice");
@@ -95,6 +95,7 @@ Event types:
 Flags:
   --task           — task description (session_start only)
   --summary        — one sentence, present tense, no period
+  --effort         — optional plain-language effort estimate (max 80 chars), e.g. "2h" or "quick fix"
   --trigger        — user|routine|agent (default: user)
   --source.repo    — e.g. "owner/repo"
   --project        — Claude/ChatGPT Project name, or repo/workspace folder name (omit otherwise)
@@ -133,7 +134,7 @@ const NUMERIC_FIELDS = new Set([
 ]);
 // Free-text fields are never parsed, even when they look like JSON ("[WIP] …").
 const TEXT_FIELDS = new Set([
-  "summary", "task", "project", "trigger", "agent", "surface", "visibility",
+  "summary", "task", "effort", "project", "trigger", "agent", "surface", "visibility",
   "outcome.status", "outcome.note", "blocker.kind", "blocker.question",
 ]);
 const OUTCOME_STATUSES = ["shipped", "abandoned", "handed_off", "failed"];
@@ -217,6 +218,23 @@ function buildEvent({ event, flags }) {
     // Which kit/skill version sent this (stored by fleeet, never public).
     client: { skill_version: KIT_VERSION },
   };
+
+  // Validate and truncate effort if present
+  if (payload.effort) {
+    if (typeof payload.effort === "string") {
+      const trimmed = payload.effort.trim();
+      if (trimmed.length > 80) {
+        console.error(`fleeet-emit: warning: --effort is ${trimmed.length} chars; truncating to 80`);
+        payload.effort = trimmed.slice(0, 80);
+      } else if (trimmed.length === 0) {
+        delete payload.effort;
+      } else {
+        payload.effort = trimmed;
+      }
+    } else {
+      delete payload.effort;
+    }
+  }
 
   // Validate required fields
   const isText = (v) => typeof v === "string" && v.trim() !== "";
