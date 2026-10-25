@@ -8,6 +8,8 @@ the rule is in [CONTRIBUTING.md](CONTRIBUTING.md)). Releases are tagged
 
 ## [Unreleased]
 
+## [1.6.0] - 2026-10-25
+
 ### Added
 
 - **`--effort` CLI flag.** `fleeet-emit` now accepts an optional `--effort <string>` flag (max 80 chars) for plain-language effort estimates (e.g., "2h" or "quick fix"). The CLI validates and truncates the value, and includes it in the POST body when set. Event schema, docs, and skill updated to reflect the new field.
